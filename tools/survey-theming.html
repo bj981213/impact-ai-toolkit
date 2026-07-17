@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="將開放式回答分類，保留頻次、代表例句、反對意見與無法判定內容。">
+  <meta name="theme-color" content="#164f4a">
+  <title>問卷文字歸納｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="survey-theming" data-item-title="問卷文字歸納" data-item-kind="提示詞">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>提示詞</span><span>資料整理與證據</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>問卷文字歸納</h1>
+      <p>將開放式回答分類，保留頻次、代表例句、反對意見與無法判定內容。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>將開放式回答分類，保留頻次、代表例句、反對意見與無法判定內容。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>去識別化的開放式回答</li><li>題目原文</li><li>回答代碼</li><li>選填的分群欄位</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>刪除姓名、Email、電話、單位與自由填答中的個資；小樣本分群可能造成重新識別。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>保留每筆回答代碼以便回查</li><li>先做主題定義，再計算涉及回答數</li><li>抽查至少一成原始回答與所有負面回答</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">請分析以下已去識別化的問卷開放式回答。不要把沉默視為同意，也不要以出現次數直接判定重要性。
+
+【問卷題目】[填入]
+【回答資料】[每筆以 R001、R002 編號]
+【可用分群】[若無請填無]
+
+請產出：主題名稱、明確定義、涉及回答數、回答代碼、代表例句、負面或矛盾例句、判定信心。另列出「無法分類」與「需要人工判讀」內容。
+
+最後說明樣本量、未回答與分群可能造成的限制。不得虛構比例或引述。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>主題與頻次表</li><li>代表例句</li><li>負面與矛盾意見</li><li>方法限制</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 頻次是否以回答數而非句子數計算</li><li>□ 代表例句是否真的存在</li><li>□ 負面意見是否被保留</li><li>□ 是否揭露有效回答數與未回答限制</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>R001：比較敢分享；R002：書太難；R003：希望自己選書。</p></div>
+          <div><h3>合理輸出</h3><p>主題包含表達信心、材料難度與選擇自主；三者都只有單筆，不應報成普遍趨勢。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>與量化題目並列製作混合方法摘要</li><li>把待判讀回答交由兩位同仁交叉檢核</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.0・內容更新 2026-07-17</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

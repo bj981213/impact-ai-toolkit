@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="在發布前逐一核對數字的分母、期間、版本、計算方式與原始來源。">
+  <meta name="theme-color" content="#164f4a">
+  <title>數字與來源查核｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="number-source-audit" data-item-title="數字與來源查核" data-item-kind="檢查表">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>檢查表</span><span>個資安全與品質查核</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>NotebookLM</span></div>
+      <h1>數字與來源查核</h1>
+      <p>在發布前逐一核對數字的分母、期間、版本、計算方式與原始來源。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>在發布前逐一核對數字的分母、期間、版本、計算方式與原始來源。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>準備發布的文字或表格</li><li>來源 ID 與數字摘要</li><li>指標定義</li><li>資料版本日期</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>提供彙總數字與來源代碼；原始名冊、財務明細或個案資料應留在核准環境中。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>抽出全文所有數字、比例、比較與時間</li><li>逐項連到來源與計算式</li><li>由未參與撰稿的人進行第二次核對</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">請檢查以下公益成果文字中的所有數字、比例、比較與時間敘述。你只能根據我提供的來源台帳判斷，找不到來源時必須標示，不得自行計算或補來源。
+
+【待查核文字】[填入]
+【來源台帳】[來源 ID／期間／版本／分母／計算方式／數值]
+【指標定義】[填入]
+
+請輸出查核表：原句／數字或比較／來源 ID／期間／分母／重算結果／版本一致性／判定／建議修正。
+
+特別檢查百分點與百分比、累計與單期、報名與完成人數、平均值與有效樣本、四捨五入，以及圖表與內文是否一致。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>數字查核表</li><li>重算結果</li><li>版本差異</li><li>建議修正</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 每個數字是否都有來源 ID</li><li>□ 分母與有效樣本是否明示</li><li>□ 期間與版本是否一致</li><li>□ 圖表、摘要與內文是否使用同一數值</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>32 人報名、27 人完成，文案寫完成率 84%。</p></div>
+          <div><h3>合理輸出</h3><p>27／32=84.375%，四捨五入為 84%；需說明完成定義與分母為報名者。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>發布前與主張證據強度檢查合併使用</li><li>將查核結果留作報告版本紀錄</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.0・內容更新 2026-07-17</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

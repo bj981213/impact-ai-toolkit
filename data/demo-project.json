@@ -1,0 +1,56 @@
+{
+  "fictional": true,
+  "notice": "以下內容完全虛構，僅供教學示範，不對應任何真實組織、學校、兒少或個人。",
+  "project": {
+    "name": "山城閱讀陪伴計畫",
+    "organization": "晨光公益協會（虛構）",
+    "period": "2026 年 2 月至 6 月",
+    "goal": "協助偏遠地區國中生建立穩定閱讀習慣與表達信心",
+    "stakeholders": [
+      "參與學生",
+      "學校教師",
+      "志工陪讀員",
+      "企業贊助者",
+      "家長"
+    ]
+  },
+  "records": {
+    "activities": [
+      "完成 12 場閱讀陪伴活動，每場 90 分鐘",
+      "安排 18 名志工，活動前完成 3 小時線上培訓",
+      "提供 120 本分級讀物與 4 份閱讀引導單"
+    ],
+    "participation": {
+      "registeredStudents": 32,
+      "completedStudents": 27,
+      "averageAttendanceRate": "84%"
+    },
+    "survey": {
+      "preValidResponses": 30,
+      "postValidResponses": 26,
+      "readingConfidenceAverage": {
+        "pre": 2.8,
+        "post": 3.6,
+        "scale": "1 至 5 分"
+      },
+      "openComments": [
+        "以前不敢講自己的想法，現在比較敢在小組分享。",
+        "如果故事太長還是會分心，但有人一起討論比較讀得下去。",
+        "希望下次可以多選自己喜歡的書。"
+      ]
+    },
+    "teacherObservation": "兩位導師認為部分學生在口頭分享時更願意補充理由，但尚未使用一致量表記錄。"
+  },
+  "claimsToReview": [
+    {
+      "claim": "計畫提升了學生的閱讀信心",
+      "availableEvidence": "前後測平均分數由 2.8 上升至 3.6；有效配對樣本尚待確認",
+      "status": "需要補查樣本配對與量表題目一致性"
+    },
+    {
+      "claim": "計畫改善了學生的學業成績",
+      "availableEvidence": "目前沒有成績資料，也沒有比較組",
+      "status": "不可宣稱"
+    }
+  ]
+}

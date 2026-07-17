@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。">
+  <meta name="theme-color" content="#164f4a">
+  <title>利害關係人地圖｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="stakeholder-map" data-item-title="利害關係人地圖" data-item-kind="工作流">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>工作流</span><span>專案設計與目標</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>利害關係人地圖</h1>
+      <p>從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>專案目標與主要活動</li><li>已知參與單位與服務對象</li><li>現有訪談、會議或合作紀錄</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>只提供角色與群體，不貼姓名、聯絡方式、個案身分或可回推特定個人的描述。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>先列出已知角色，不要求 AI 自行補齊真實名單</li><li>請 AI 依影響程度、決策權與參與方式整理</li><li>由專案團隊確認遺漏者與權力不對等風險</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">你是公益專案的利害關係人分析助理。請只根據我提供的內容整理，不要自行創造人物或組織。
+
+【專案目標】
+[填入目標]
+
+【主要活動】
+[填入活動]
+
+【已知相關角色】
+[以角色或群體填寫，不放姓名]
+
+請產出：
+1. 利害關係人表格：角色／受到的正負面影響／影響程度／決策權／目前參與方式。
+2. 目前缺少的觀點與應優先訪談的角色。
+3. 可能存在的權力不對等或代表性風險。
+4. 需要由專案團隊人工確認的假設。
+
+若資料不足，請標示「待確認」，不要自行推測。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>利害關係人矩陣</li><li>缺少觀點清單</li><li>優先訪談建議</li><li>待確認假設</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 是否包含直接與間接受影響者</li><li>□ 是否把決策權高者誤當成影響最大者</li><li>□ 是否有任何 AI 自行補出的真實人物或組織</li><li>□ 是否納入可能承擔負面影響的群體</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>山城閱讀陪伴計畫；角色包含學生、教師、志工、家長與贊助者。</p></div>
+          <div><h3>合理輸出</h3><p>學生為直接受影響者；教師與志工同時是執行者與觀察者。家長觀點尚缺，需補充訪談。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>把優先利害關係人轉成訪談邀請清單</li><li>搭配影響路徑整理，確認每一條成果影響到誰</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.0・內容更新 2026-07-17</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

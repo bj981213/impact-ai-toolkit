@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="從審查者、受影響者與資料方法三個角度找出初稿的誇大與盲點。">
+  <meta name="theme-color" content="#164f4a">
+  <title>AI 初稿反方檢查｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="ai-red-team-review" data-item-title="AI 初稿反方檢查" data-item-kind="檢查表">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>檢查表</span><span>個資安全與品質查核</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>AI 初稿反方檢查</h1>
+      <p>從審查者、受影響者與資料方法三個角度找出初稿的誇大與盲點。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>從審查者、受影響者與資料方法三個角度找出初稿的誇大與盲點。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>AI 產生的初稿</li><li>已核准事實與來源</li><li>主要讀者</li><li>不可跨越的內容邊界</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>先移除初稿中的個資與機密內容；若初稿已含敏感資料，不要再貼入其他公開 AI。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>先把事實來源與初稿分開提供</li><li>要求 AI 只指出風險，不直接美化文字</li><li>由實際受影響者或第一線工作者確認觀點</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">請對這份公益成果初稿做反方檢查，不要先幫我美化。只依據我提供的已核准事實與來源。
+
+【初稿】[填入]
+【已核准事實與來源】[填入]
+【主要讀者】[填入]
+【內容邊界】[不能公開或不能宣稱的事項]
+
+請分別扮演：
+1. 嚴格的企業／基金會審查者。
+2. 可能被代表的服務使用者。
+3. 資料與評估方法審查者。
+
+針對每個角色列出：可能質疑的句子、問題類型、風險程度、需要的證據、較保守的處理方式。特別檢查誇大、因果跳躍、代替受益者發言、只呈現成功案例、忽略負面結果與把 AI 文字當成事實。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>三角色質疑清單</li><li>風險等級</li><li>補證據需求</li><li>保守處理方式</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 是否真的處理高風險句子而非只換語氣</li><li>□ 是否納入受影響者可能不同意的觀點</li><li>□ 是否揭露失敗、負面或未預期結果</li><li>□ 最終稿是否再次完成數字與來源查核</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>初稿：每位孩子都因計畫愛上閱讀。</p></div>
+          <div><h3>合理輸出</h3><p>高風險：全稱主張、代替受益者發言、缺乏證據。應改為呈現實際調查結果與未改善者觀點。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>邀請非專案成員做人工紅隊審查</li><li>將常見問題累積成組織的發布前檢核表</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.0・內容更新 2026-07-17</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
