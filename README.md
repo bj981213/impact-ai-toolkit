@@ -21,7 +21,11 @@ npm run serve
 
 ## 發布邊界
 
-本資料夾是獨立網站來源，不得推送到外層中國信託網站既有的 GitHub origin。若要正式上線，請另建專用 repository 與 GitHub Pages 專案，再以正式網址製作活動 QR Code。
+正式網站：<https://bj981213.github.io/impact-ai-toolkit/>
+
+原始碼：<https://github.com/bj981213/impact-ai-toolkit>
+
+本資料夾使用獨立 repository，推送到 `main` 後會由 GitHub Actions 自動更新 GitHub Pages。不得推送到外層中國信託網站既有的 GitHub origin。
 
 ## 內容原則
 
