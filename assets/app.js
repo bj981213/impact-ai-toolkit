@@ -1,4 +1,4 @@
-import { composeToolContent } from "./tool-content.js";
+import { composeToolContent } from "./tool-content.js?v=2.8.0";
 
 const STORAGE = {
   favorites: "impact-ai-toolkit.favorites",
@@ -26,7 +26,7 @@ init();
 
 async function init() {
   try {
-    const response = await fetch("data/catalog.json");
+    const response = await fetch("data/catalog.json?v=2.8.0", { cache: "no-store" });
     if (!response.ok) throw new Error(`資料讀取失敗（${response.status}）`);
     state.catalog = await response.json();
     state.items = state.catalog.items || [];
@@ -84,12 +84,6 @@ function bindEvents() {
   });
 
   document.addEventListener("click", handleDocumentClick);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "/" && !["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) {
-      event.preventDefault();
-      $("#searchInput").focus();
-    }
-  });
 }
 
 function populateFilters() {

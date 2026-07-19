@@ -38,11 +38,12 @@ function renderPage(item, stage, toolbox) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="description" content="${escapeAttr(item.summary)}">
   <meta name="theme-color" content="#164f4a">
   <title>${escapeHtml(title)}</title>
-  <link rel="stylesheet" href="../assets/styles.css">
-  <script src="../assets/detail.js" type="module"></script>
+  <link rel="stylesheet" href="../assets/styles.css?v=2.8.0">
+  <script src="../assets/detail.js?v=2.8.0" type="module"></script>
 </head>
 <body class="detail-body" data-item-id="${escapeAttr(item.id)}" data-item-title="${escapeAttr(item.title)}" data-item-kind="${escapeAttr(item.kind)}" data-item-toolbox="${escapeAttr(item.toolbox)}">
   <a class="skip-link" href="#main">跳到主要內容</a>
@@ -126,7 +127,7 @@ function renderPage(item, stage, toolbox) {
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.7・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.8・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
