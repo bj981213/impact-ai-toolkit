@@ -7,6 +7,8 @@ const state = {
   catalog: null,
   items: [],
   stages: [],
+  toolboxes: [],
+  toolbox: "prompt",
   query: "",
   stage: "all",
   kind: "all",
@@ -27,6 +29,7 @@ async function init() {
     state.catalog = await response.json();
     state.items = state.catalog.items || [];
     state.stages = state.catalog.stages || [];
+    state.toolboxes = state.catalog.toolboxes || [];
     renderNeedMap();
     populateFilters();
     bindEvents();
@@ -39,6 +42,10 @@ async function init() {
 }
 
 function bindEvents() {
+  document.querySelectorAll("[data-toolbox-choice]").forEach((button) => {
+    button.addEventListener("click", () => selectToolbox(button.dataset.toolboxChoice));
+  });
+
   $("#searchInput").addEventListener("input", (event) => {
     state.query = event.target.value.trim();
     renderLibrary();
@@ -89,13 +96,23 @@ function populateFilters() {
 }
 
 function renderNeedMap() {
-  $("#needMap").innerHTML = state.stages.map((stage, index) => `
+  const stages = state.stages
+    .map((stage) => ({
+      ...stage,
+      visibleIds: (stage.relatedIds || []).filter((id) => {
+        const item = findItem(id);
+        return item && (state.toolbox === "all" || item.toolbox === state.toolbox);
+      })
+    }))
+    .filter((stage) => stage.visibleIds.length);
+
+  $("#needMap").innerHTML = stages.map((stage, index) => `
     <article class="need-card">
       <span class="need-index">0${index + 1}</span>
       <h3>${escapeHtml(stage.title)}</h3>
       <p>${escapeHtml(stage.summary)}</p>
       <div class="need-links">
-        ${(stage.relatedIds || []).map((id) => {
+        ${stage.visibleIds.map((id) => {
           const item = findItem(id);
           return item ? `<a href="tools/${escapeAttr(item.id)}.html" data-open="${escapeAttr(item.id)}">${escapeHtml(item.title)}</a>` : "";
         }).join("")}
@@ -106,7 +123,8 @@ function renderNeedMap() {
 
 function renderLibrary() {
   const items = filteredItems();
-  $("#resultCount").textContent = `顯示 ${items.length}／${state.items.length} 個工具`;
+  const total = toolboxItems().length;
+  $("#resultCount").textContent = `顯示 ${items.length}／${total} 個工具`;
   $("#emptyState").hidden = items.length > 0;
   $("#libraryGrid").innerHTML = items.map(renderCard).join("");
 }
@@ -115,7 +133,7 @@ function filteredItems() {
   const query = normalize(state.query);
   const stageOrder = new Map(state.stages.map((stage, index) => [stage.id, index]));
 
-  return state.items
+  return toolboxItems()
     .filter((item) => {
       if (state.stage !== "all" && item.stage !== state.stage) return false;
       if (state.kind !== "all" && item.kind !== state.kind) return false;
@@ -126,6 +144,7 @@ function filteredItems() {
         item.title,
         item.summary,
         item.kind,
+        findToolbox(item.toolbox)?.title,
         stage?.title,
         ...(item.audiences || []),
         ...(item.supportedTools || []),
@@ -141,11 +160,12 @@ function filteredItems() {
 
 function renderCard(item) {
   const stage = findStage(item.stage);
+  const toolbox = findToolbox(item.toolbox);
   const favorite = state.favorites.has(item.id);
   return `
     <article class="tool-card">
       <div class="card-meta">
-        <div><span class="kind">${escapeHtml(item.kind)}</span> <span class="stage-chip">${escapeHtml(stage?.title || item.stage)}</span></div>
+        <div><span class="toolbox-chip ${escapeAttr(item.toolbox)}">${escapeHtml(toolbox?.title || item.toolbox)}</span> <span class="kind">${escapeHtml(item.kind)}</span> <span class="stage-chip">${escapeHtml(stage?.title || item.stage)}</span></div>
         <button type="button" class="fav-btn ${favorite ? "active" : ""}" data-favorite="${escapeAttr(item.id)}" aria-label="${favorite ? "移除收藏" : "加入收藏"}：${escapeAttr(item.title)}" aria-pressed="${String(favorite)}">${favorite ? "已藏" : "收藏"}</button>
       </div>
       <h3>${escapeHtml(item.title)}</h3>
@@ -217,6 +237,59 @@ function clearFilters() {
   toast("已清除篩選條件");
 }
 
+function selectToolbox(toolbox) {
+  if (!["prompt", "agent", "all"].includes(toolbox)) return;
+  state.toolbox = toolbox;
+  state.stage = "all";
+  state.kind = "all";
+  state.favoritesOnly = false;
+  $("#stageFilter").value = "all";
+  $("#kindFilter").value = "all";
+  $("#favOnlyBtn").setAttribute("aria-pressed", "false");
+  document.querySelectorAll("[data-toolbox-choice]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.toolboxChoice === toolbox));
+  });
+  updateToolboxCopy();
+  renderNeedMap();
+  renderLibrary();
+  $("#needs").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function updateToolboxCopy() {
+  const copy = {
+    prompt: {
+      needsEyebrow: "Prompt 工具箱",
+      needsDescription: "從單次工作開始。選出你現在最需要完成的任務，再開啟對應提示詞。",
+      libraryEyebrow: "20 套 Prompt 流程",
+      libraryTitle: "開啟 Prompt 工具箱",
+      libraryDescription: "複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。"
+    },
+    agent: {
+      needsEyebrow: "AI Agent 工具箱",
+      needsDescription: "先判斷是否適合自動化，再設計觸發、資料、輸出與必須由人確認的關卡。",
+      libraryEyebrow: "5 套 Agent 設計流程",
+      libraryTitle: "開啟 AI Agent 工具箱",
+      libraryDescription: "這裡提供 Agent 規劃藍圖，不會直接執行外部動作，也不需要提供 API。"
+    },
+    all: {
+      needsEyebrow: "全部工具",
+      needsDescription: "依工作階段瀏覽 Prompt 與 AI Agent 的全部流程。",
+      libraryEyebrow: "25 套可複用流程",
+      libraryTitle: "開啟全部工具",
+      libraryDescription: "依任務選擇單次 Prompt 或可重複執行的 Agent 規劃流程。"
+    }
+  }[state.toolbox];
+  $("#needsEyebrow").textContent = copy.needsEyebrow;
+  $("#needsDescription").textContent = copy.needsDescription;
+  $("#libraryEyebrow").textContent = copy.libraryEyebrow;
+  $("#library-title").textContent = copy.libraryTitle;
+  $("#libraryDescription").textContent = copy.libraryDescription;
+}
+
+function toolboxItems() {
+  return state.toolbox === "all" ? state.items : state.items.filter((item) => item.toolbox === state.toolbox);
+}
+
 async function copyText(text, message) {
   try {
     await navigator.clipboard.writeText(text);
@@ -244,6 +317,7 @@ function toast(message) {
 
 function findItem(id) { return state.items.find((item) => item.id === id); }
 function findStage(id) { return state.stages.find((stage) => stage.id === id); }
+function findToolbox(id) { return state.toolboxes.find((toolbox) => toolbox.id === id); }
 function normalize(value = "") { return String(value).normalize("NFKC").toLowerCase(); }
 function formatDate(value) { return new Intl.DateTimeFormat("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value)); }
 

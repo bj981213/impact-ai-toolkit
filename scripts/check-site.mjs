@@ -5,16 +5,20 @@ const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
 const demo = JSON.parse(await readFile("data/demo-project.json", "utf8"));
 const errors = [];
 const requiredFields = [
-  "id", "title", "stage", "kind", "audiences", "supportedTools", "summary",
+  "id", "title", "stage", "kind", "toolbox", "audiences", "supportedTools", "summary",
   "inputs", "sensitiveDataWarning", "steps", "prompt", "outputFormat",
   "reviewChecklist", "example", "extensions", "updatedAt"
 ];
 const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFormat", "reviewChecklist", "extensions"];
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
+const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
 
 if (catalog.items.length !== 25) errors.push(`Expected 25 tools, got ${catalog.items.length}`);
 if (catalog.stages.length !== 5) errors.push(`Expected 5 stages, got ${catalog.stages.length}`);
+if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
+if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 20) errors.push("Prompt toolbox must contain 20 tools");
+if (catalog.items.filter((item) => item.toolbox === "agent").length !== 5) errors.push("AI Agent toolbox must contain 5 tools");
 
 for (const stage of catalog.stages) {
   const count = catalog.items.filter((item) => item.stage === stage.id).length;
@@ -29,6 +33,7 @@ for (const item of catalog.items) {
   itemIds.add(item.id);
   if (!/^[a-z0-9-]+$/.test(item.id)) errors.push(`Invalid item ID: ${item.id}`);
   if (!stageIds.has(item.stage)) errors.push(`Unknown stage ${item.stage} on ${item.id}`);
+  if (!toolboxIds.has(item.toolbox)) errors.push(`Unknown toolbox ${item.toolbox} on ${item.id}`);
   if (!catalog.kinds.includes(item.kind)) errors.push(`Unknown kind ${item.kind} on ${item.id}`);
   for (const field of requiredFields) {
     if (!(field in item)) errors.push(`Missing ${field} on ${item.id}`);
@@ -56,6 +61,9 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 if (indexText.includes("現場示範") || indexText.includes('id="demo"')) errors.push("Homepage must not include a live demo section");
+for (const toolboxChoice of ['data-toolbox-choice="prompt"', 'data-toolbox-choice="agent"', 'data-toolbox-choice="all"']) {
+  if (!indexText.includes(toolboxChoice)) errors.push(`Homepage missing toolbox choice: ${toolboxChoice}`);
+}
 for (const removedBioText of ["講師：江逸之", "《關鍵評論網》總編輯", "人工智慧科技基金會顧問", "聯絡方式請以講師於活動現場提供的管道為準"]) {
   if (indexText.includes(removedBioText)) errors.push(`Homepage must not include removed speaker bio text: ${removedBioText}`);
 }

@@ -17,6 +17,7 @@
       <span><strong>公益影響力 AI 工作箱</strong><small>把資料整理成可查核的影響力</small></span>
     </a>
     <nav aria-label="主要導覽">
+      <a href="#toolboxes">選擇工具箱</a>
       <a href="#needs">找工作情境</a>
       <a href="#library">開啟工具箱</a>
       <a href="#safety">安全使用</a>
@@ -28,10 +29,10 @@
       <div class="hero-copy">
         <p class="eyebrow">課後補充工具箱</p>
         <h1 id="hero-title">公益影響力<br><span>AI 工作箱</span></h1>
-        <p class="hero-lead">給企業 CSR／ESG、基金會與 NPO 的實用工具。從工作情境選一項，就能取得可直接使用的提示詞、輸出格式與查核清單。</p>
+        <p class="hero-lead">給企業 CSR／ESG、基金會與 NPO 的實用工具。先選 Prompt 或 AI Agent，再從工作情境取得可直接使用的流程與查核清單。</p>
         <div class="hero-actions">
-          <a class="button primary" href="#needs">先看工作需求</a>
-          <a class="button secondary" href="#library">查看全部工具</a>
+          <a class="button primary" href="#toolboxes">選擇工具箱</a>
+          <a class="button secondary" href="#library">瀏覽 Prompt 工具</a>
         </div>
         <ul class="trust-list" aria-label="網站特色">
           <li>25 套核心工具</li>
@@ -42,28 +43,49 @@
       <aside class="hero-card" aria-label="網站摘要">
         <p class="step-label">網站摘要</p>
         <h2>從需求找工具，<br>不用先研究 AI。</h2>
-        <p>涵蓋專案設計、資料整理、影響評估、成果溝通與安全查核。</p>
+        <p>Prompt 處理單次任務；AI Agent 協助規劃可重複執行的流程。</p>
         <dl class="hero-stats">
-          <div><dt>5</dt><dd>工作類別</dd></div>
-          <div><dt>25</dt><dd>核心工具</dd></div>
-          <div><dt>0</dt><dd>登入步驟</dd></div>
+          <div><dt>20</dt><dd>Prompt 工具</dd></div>
+          <div><dt>5</dt><dd>Agent 工具</dd></div>
+          <div><dt>0</dt><dd>API 需求</dd></div>
         </dl>
         <p class="hero-note">AI 可以協助整理證據，不能替你創造證據。</p>
       </aside>
     </section>
 
+    <section class="toolbox-section" id="toolboxes" aria-labelledby="toolboxes-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">先選使用方式</p><h2 id="toolboxes-title">兩種工具箱，一個工作入口</h2></div>
+        <p>不知道怎麼選？只做一次就選 Prompt；需要固定週期、固定步驟或多人協作，就先看 AI Agent。</p>
+      </div>
+      <div class="toolbox-chooser" role="group" aria-label="選擇工具箱">
+        <button class="toolbox-choice prompt-choice" type="button" data-toolbox-choice="prompt" aria-pressed="true">
+          <span class="toolbox-number">20</span>
+          <span class="toolbox-choice-copy"><strong>Prompt 工具箱</strong><small>單次整理、分析、寫作與查核</small></span>
+          <span class="toolbox-arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="toolbox-choice agent-choice" type="button" data-toolbox-choice="agent" aria-pressed="false">
+          <span class="toolbox-number">5</span>
+          <span class="toolbox-choice-copy"><strong>AI Agent 工具箱</strong><small>重複流程、資料來源、觸發與人工關卡</small></span>
+          <span class="toolbox-arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="toolbox-all" type="button" data-toolbox-choice="all" aria-pressed="false">顯示全部 25 個工具</button>
+      </div>
+      <p class="agent-boundary">AI Agent 工具箱提供規劃藍圖，不會在網站內自動執行任務，也不需要提供 API。</p>
+    </section>
+
     <section class="needs-section" id="needs" aria-labelledby="needs-title">
       <div class="section-heading">
-        <div><p class="eyebrow">從工作開始</p><h2 id="needs-title">公益工作需求地圖</h2></div>
-        <p>不必先研究哪個 AI 最強。選出你現在最需要完成的工作，再開啟對應流程。</p>
+        <div><p class="eyebrow" id="needsEyebrow">Prompt 工具箱</p><h2 id="needs-title">公益工作需求地圖</h2></div>
+        <p id="needsDescription">從單次工作開始。選出你現在最需要完成的任務，再開啟對應提示詞。</p>
       </div>
       <div class="need-grid" id="needMap" aria-live="polite"></div>
     </section>
 
     <section class="library-section" id="library" aria-labelledby="library-title">
       <div class="section-heading">
-        <div><p class="eyebrow">25 套可複用流程</p><h2 id="library-title">開啟你的工具箱</h2></div>
-        <p>所有提示詞都能先複製，再貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。</p>
+        <div><p class="eyebrow" id="libraryEyebrow">20 套 Prompt 流程</p><h2 id="library-title">開啟 Prompt 工具箱</h2></div>
+        <p id="libraryDescription">複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。</p>
       </div>
 
       <div class="filters" aria-label="工具庫篩選">
@@ -100,7 +122,7 @@
 
   <footer>
     <p><strong>公益影響力 AI 工作箱</strong><br>課後延伸工具，不代表主辦單位或任何組織的正式系統。</p>
-    <p>版本 1.1・更新日期 2026-07-19<br>所有 AI 產出都應由使用者查核後再使用。</p>
+    <p>版本 1.2・更新日期 2026-07-19<br>所有 AI 產出都應由使用者查核後再使用。</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
