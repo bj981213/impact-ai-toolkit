@@ -25,7 +25,7 @@ const expectedStageCounts = {
 };
 
 if (catalog.items.length !== 26) errors.push(`Expected 26 tools, got ${catalog.items.length}`);
-if (catalog.version !== "2.8.0") errors.push(`Expected catalog version 2.8.0, got ${catalog.version}`);
+if (catalog.version !== "2.9.0") errors.push(`Expected catalog version 2.9.0, got ${catalog.version}`);
 if (catalog.stages.length !== 7) errors.push(`Expected 7 categories, got ${catalog.stages.length}`);
 if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
 if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 21) errors.push("Prompt toolbox must contain 21 tools");
@@ -112,11 +112,11 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 const appText = await readFile("assets/app.js", "utf8");
-for (const cacheMarker of ["assets/app.js?v=2.8.0", "assets/styles.css?v=2.8.0", "no-cache, no-store, must-revalidate"]) {
+for (const cacheMarker of ["assets/app.js?v=2.9.0", "assets/styles.css?v=2.9.0", "no-cache, no-store, must-revalidate"]) {
   if (!indexText.includes(cacheMarker)) errors.push(`Homepage is missing cache refresh marker: ${cacheMarker}`);
 }
-if (!appText.includes('data/catalog.json?v=2.8.0') || !appText.includes('cache: "no-store"')) errors.push("Catalog request must bypass stale browser cache");
-for (const versionedLink of ['./?v=2.8.0', 'tools/${escapeAttr(item.id)}.html?v=2.8.0']) {
+if (!appText.includes('data/catalog.json?v=2.9.0') || !appText.includes('cache: "no-store"')) errors.push("Catalog request must bypass stale browser cache");
+for (const versionedLink of ['./?v=2.9.0', 'tools/${escapeAttr(item.id)}.html?v=2.9.0']) {
   if (!(indexText + appText).includes(versionedLink)) errors.push(`Public navigation is missing cache-busting link: ${versionedLink}`);
 }
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");

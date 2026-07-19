@@ -1,6 +1,6 @@
 {
   "title": "公益影響力 AI 工作箱",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "updatedAt": "2026-07-19",
   "kinds": ["提示詞", "工作流程", "檢查表", "Agent 流程"],
   "toolboxes": [
