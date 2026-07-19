@@ -1,5 +1,6 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { composeDetailedPrompt } from "../assets/prompt-utils.js";
 
 const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
 const demo = JSON.parse(await readFile("data/demo-project.json", "utf8"));
@@ -13,6 +14,7 @@ const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFo
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
 const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
+const agentSettingFields = ["operatingMode", "triggers", "inputSources", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "logging", "successMetrics"];
 
 if (catalog.items.length !== 25) errors.push(`Expected 25 tools, got ${catalog.items.length}`);
 if (catalog.stages.length !== 5) errors.push(`Expected 5 stages, got ${catalog.stages.length}`);
@@ -44,6 +46,18 @@ for (const item of catalog.items) {
   }
   if (!item.example?.input || !item.example?.output) errors.push(`Incomplete example on ${item.id}`);
   if (!existsSync(`tools/${item.id}.html`)) errors.push(`Missing generated page: tools/${item.id}.html`);
+  const detailedPrompt = composeDetailedPrompt(item, catalog.toolboxes.find((toolbox) => toolbox.id === item.toolbox)?.title);
+  for (const section of ["【精準執行規格】", "【輸入資料完整度檢查】", "【固定輸出契約】", "【完成前自我查核】"]) {
+    if (!detailedPrompt.includes(section)) errors.push(`Detailed prompt missing ${section} on ${item.id}`);
+  }
+  if (detailedPrompt.length < 1100) errors.push(`Detailed prompt is too short on ${item.id}: ${detailedPrompt.length}`);
+  if (item.toolbox === "agent") {
+    for (const field of agentSettingFields) {
+      if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
+      if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
+    }
+    if (!detailedPrompt.includes("【AI Agent 運作設定】") || detailedPrompt.length < 1900) errors.push(`Agent prompt settings are incomplete on ${item.id}`);
+  }
 }
 
 if (!demo.fictional || !demo.notice.includes("完全虛構")) errors.push("Demo data must be explicitly marked as completely fictional");
@@ -52,6 +66,7 @@ const publicFiles = [
   "index.html",
   "assets/app.js",
   "assets/detail.js",
+  "assets/prompt-utils.js",
   "assets/styles.css",
   "data/catalog.json",
   "data/demo-project.json",

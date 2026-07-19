@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { composeDetailedPrompt } from "../assets/prompt-utils.js";
 
 const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
 const stageMap = new Map(catalog.stages.map((stage) => [stage.id, stage]));
@@ -19,6 +20,9 @@ function renderPage(item, stage, toolbox) {
   const title = `${item.title}｜公益影響力 AI 工作箱`;
   const tools = item.supportedTools.map((tool) => `<span>${escapeHtml(tool)}</span>`).join("");
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
+  const detailedPrompt = composeDetailedPrompt(item, toolbox.title);
+  const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
+  const promptTitle = item.toolbox === "agent" ? "Agent 設定與系統提示詞" : "完整精準提示詞";
 
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -73,12 +77,15 @@ function renderPage(item, stage, toolbox) {
         ${renderList(item.steps, "ol")}
       </section>
 
+${agentSettings}
+
       <section class="detail-section full" id="prompt-section">
-        <p class="eyebrow">跨工具通用</p>
-        <h2>可直接貼上的提示詞</h2>
+        <p class="eyebrow">精準執行版・跨工具通用</p>
+        <h2>${promptTitle}</h2>
+        <p>已整合角色、資料邊界、必要輸入、執行規則、固定輸出、人工驗收與不足資料處理。</p>
         <div class="prompt-box">
-          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
-          <div class="prompt-text" id="promptText">${escapeHtml(item.prompt)}</div>
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製完整設定</button>
+          <div class="prompt-text" id="promptText">${escapeHtml(detailedPrompt)}</div>
         </div>
       </section>
 
@@ -112,7 +119,7 @@ function renderPage(item, stage, toolbox) {
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.2・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 1.3・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -126,6 +133,26 @@ function renderList(items, tag = "ul") {
 
 function renderChecklist(items) {
   return `<ul>${items.map((item) => `<li>□ ${escapeHtml(item)}</li>`).join("")}</ul>`;
+}
+
+function renderAgentSettings(settings) {
+  if (!settings) return "";
+  return `<section class="detail-section full agent-settings-section">
+        <p class="eyebrow terracotta">AI Agent 專用</p>
+        <h2>執行設定與治理規格</h2>
+        <p class="settings-intro"><strong>運作模式：</strong>${escapeHtml(settings.operatingMode)}</p>
+        <div class="agent-settings-grid">
+          <div><h3>觸發條件</h3>${renderList(settings.triggers)}</div>
+          <div><h3>允許的資料來源</h3>${renderList(settings.inputSources)}</div>
+          <div><h3>狀態流程</h3>${renderList(settings.states, "ol")}</div>
+          <div><h3>允許執行</h3>${renderList(settings.allowedActions)}</div>
+          <div class="agent-setting-warning"><h3>禁止自動執行</h3>${renderList(settings.forbiddenActions)}</div>
+          <div class="agent-setting-warning"><h3>必須人工批准</h3>${renderList(settings.humanApprovals)}</div>
+          <div><h3>例外與失敗處理</h3>${renderList(settings.exceptionHandling)}</div>
+          <div><h3>最低紀錄要求</h3>${renderList(settings.logging)}</div>
+          <div><h3>成效指標</h3>${renderList(settings.successMetrics)}</div>
+        </div>
+      </section>`;
 }
 
 function escapeHtml(value = "") {
