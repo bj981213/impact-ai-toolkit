@@ -272,10 +272,10 @@ function updateToolboxCopy() {
     prompt: {
       needsEyebrow: "Prompt 工具箱",
       needsDescription: "從單次工作開始。選出你現在最需要完成的任務，再開啟對應提示詞。",
-      libraryEyebrow: "22 套 Prompt 流程",
+      libraryEyebrow: "21 套 Prompt 流程",
       libraryTitle: "開啟 Prompt 工具箱",
       libraryDescription: "複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。",
-      activeStatus: "Prompt 工具箱・22 個工具"
+      activeStatus: "Prompt 工具箱・21 個工具"
     },
     agent: {
       needsEyebrow: "AI Agent 工具箱",
@@ -288,10 +288,10 @@ function updateToolboxCopy() {
     all: {
       needsEyebrow: "全部工具",
       needsDescription: "依工作分類瀏覽 Prompt 與 AI Agent 的全部流程。",
-      libraryEyebrow: "27 套可複用流程",
+      libraryEyebrow: "26 套可複用流程",
       libraryTitle: "開啟全部工具",
       libraryDescription: "依任務選擇單次 Prompt 或可重複執行的 Agent 規劃流程。",
-      activeStatus: "全部分類・27 個工具"
+      activeStatus: "全部分類・26 個工具"
     }
   }[state.toolbox];
   $("#needsEyebrow").textContent = copy.needsEyebrow;

@@ -1,6 +1,6 @@
 {
   "title": "公益影響力 AI 工作箱",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "updatedAt": "2026-07-19",
   "kinds": ["提示詞", "工作流程", "檢查表", "Agent 流程"],
   "toolboxes": [
@@ -8,7 +8,7 @@
     {"id": "agent", "title": "AI Agent 工具箱", "summary": "提供定期或重複工作可直接複製的 Agent 指令。"}
   ],
   "stages": [
-    {"id": "daily", "title": "日常工作", "summary": "整理會議、待辦、進度、文件、信件、交接、SOP、公告與多份報表。", "relatedIds": ["meeting-notes", "meeting-agenda", "task-deadline-tracker", "project-status-summary", "document-summary", "document-version-compare", "external-email-reply", "work-handover-checklist", "sop-process-draft", "internal-announcement", "email-batch-summary", "multi-report-consolidation"]},
+    {"id": "daily", "title": "日常工作", "summary": "整理會議、待辦、進度、文件、信件、交接、SOP、公告與多份報表。", "relatedIds": ["meeting-notes", "meeting-agenda", "task-deadline-tracker", "project-status-summary", "document-summary", "document-version-compare", "external-email-reply", "work-handover-checklist", "sop-process-draft", "internal-announcement", "multi-report-consolidation"]},
     {"id": "project", "title": "專案與活動", "summary": "規劃活動、提案、問卷與意見整理。", "relatedIds": ["event-plan-runbook", "project-proposal-outline", "survey-question-design", "feedback-analysis"]},
     {"id": "reporting", "title": "提案、報告與溝通", "summary": "檢查申請文件、整理主管摘要、成果報告與對外版本。", "relatedIds": ["application-review", "executive-summary", "impact-report-draft", "public-content-rewrite"]},
     {"id": "verification", "title": "事實查核與個資安全", "summary": "發布前查核事實與來源，使用 AI 前檢查個資風險。", "relatedIds": ["fact-check", "privacy-check"]},
@@ -146,19 +146,6 @@
       "reviewChecklist": ["事實與日期是否已確認", "適用對象與行動是否清楚", "是否增加未核准規定", "窗口與發布管道是否正確"],
       "example": {"input": "通知同仁下月起使用新版活動申請表。", "output": "產生公告正文、適用對象、開始日期與行動清單。"},
       "extensions": ["改寫成通訊軟體短訊息", "產生主管口頭說明版"], "updatedAt": "2026-07-19"
-    },
-    {
-      "id": "email-batch-summary", "title": "多封信件重點與待辦彙整", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
-      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
-      "summary": "一次整理多封去識別化信件，分出待處理、需追蹤與僅供參考的內容。",
-      "inputs": ["整理期間與目的", "附代碼的去識別化信件", "今天日期", "已知分工與優先規則"],
-      "sensitiveDataWarning": "移除寄件人姓名、電子郵件地址、電話、簽名檔、附件個資與機密內容；每封只保留代碼。",
-      "steps": ["為每封信保留代碼與日期", "抽出請求、期限與目前狀態", "人工確認優先順序與是否需要回覆"],
-      "prompt": "整理下列多封信件，只使用信件中明確出現的內容。不得自行判定已完成、指定負責人、承諾期限或撰寫不存在的回覆。\n\n【整理期間與目的】[填入]\n【今天日期】[YYYY-MM-DD]\n【分工與優先規則】[沒有請填無]\n【信件內容】[每封使用信件代碼並貼上去識別化內容]\n\n請輸出：\n1. 優先處理：信件代碼／提出角色／請求事項／原文期限／目前狀態／建議下一步。\n2. 需要追蹤：同上欄位，另列缺少資料。\n3. 僅供參考或已處理：信件代碼／判定依據。\n4. 期限衝突、同一事項多封往來與狀態不明項目。\n5. 需要人工確認或展開完整對話串的信件。",
-      "outputFormat": ["優先處理", "需要追蹤", "僅供參考或已處理", "人工確認清單"],
-      "reviewChecklist": ["每項是否保留信件代碼", "期限與狀態是否有原文依據", "同一對話是否避免重複列出", "是否移除寄件人個資"],
-      "example": {"input": "八封去識別化合作信件，包含資料請求、活動確認與發票通知。", "output": "分成優先處理、需要追蹤與僅供參考，保留原文期限與信件代碼。"},
-      "extensions": ["轉成今日待辦清單", "為需要回覆的信件建立草稿"], "updatedAt": "2026-07-19"
     },
     {
       "id": "multi-report-consolidation", "title": "多份報表彙整與差異整理", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
