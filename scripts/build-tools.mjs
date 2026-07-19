@@ -26,6 +26,7 @@ function renderPage(item, stage, toolbox) {
   const tools = item.supportedTools.map((tool) => `<span>${escapeHtml(tool)}</span>`).join("");
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
   const detailedPrompt = composeDetailedPrompt(item);
+  const agentArchitecture = item.toolbox === "agent" ? renderAgentArchitecture() : "";
   const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
   const promptTitle = item.toolbox === "agent" ? "Agent 任務指令與執行限制" : "完整提示詞";
   const promptInstruction = item.toolbox === "agent"
@@ -85,6 +86,7 @@ function renderPage(item, stage, toolbox) {
         ${renderList(item.steps, "ol")}
       </section>
 
+${agentArchitecture}
 ${agentSettings}
 
       <section class="detail-section full" id="prompt-section">
@@ -127,7 +129,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.2・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.3・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -141,6 +143,22 @@ function renderList(items, tag = "ul") {
 
 function renderChecklist(items) {
   return `<ul>${items.map((item) => `<li>□ ${escapeHtml(item)}</li>`).join("")}</ul>`;
+}
+
+function renderAgentArchitecture() {
+  return `<section class="detail-section full agent-architecture-section">
+        <p class="eyebrow terracotta">Agent Engineering</p>
+        <h2>護欄不能只寫在指令裡</h2>
+        <p>文字指令只能約束模型行為；真正的權限、確認與執行上限，必須由 Agent 平台或自動化系統強制執行。</p>
+        <div class="guardrail-layers">
+          <div><span>01</span><h3>平台護欄</h3><p>連接器白名單、最小讀寫權限、敏感動作確認、批次與重試上限。</p></div>
+          <div><span>02</span><h3>指令護欄</h3><p>任務範圍、允許來源、禁止動作、提示注入處理與轉人工條件。</p></div>
+          <div><span>03</span><h3>驗證護欄</h3><p>來源位置、必要欄位、完成條件、輸出檢查與可追溯紀錄。</p></div>
+        </div>
+        <ol class="agent-flow" aria-label="Agent 有限驗證流程">
+          <li>觸發</li><li>輸入護欄</li><li>執行</li><li>驗證</li><li>修正一次</li><li>核准或停止</li>
+        </ol>
+      </section>`;
 }
 
 function renderAgentSettings(settings) {

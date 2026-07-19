@@ -26,6 +26,7 @@ const expectedStageCounts = {
 };
 
 if (catalog.items.length !== 22) errors.push(`Expected 22 tools, got ${catalog.items.length}`);
+if (catalog.version !== "2.3.0") errors.push(`Expected catalog version 2.3.0, got ${catalog.version}`);
 if (catalog.stages.length !== 7) errors.push(`Expected 7 categories, got ${catalog.stages.length}`);
 if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
 if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 17) errors.push("Prompt toolbox must contain 17 tools");
@@ -75,6 +76,10 @@ for (const item of catalog.items) {
     }
     if (/你是[^。\n]*Agent/.test(item.prompt)) errors.push(`Agent instruction starts with a redundant role declaration on ${item.id}`);
     if (!detailedPrompt.includes("【Agent 可用工具與權限】") || !detailedPrompt.includes("【Agent 護欄（Guardrails）】") || !detailedPrompt.includes("完成條件：") || !detailedPrompt.includes("【驗證循環（Verification Loop）】") || !detailedPrompt.includes("執行與重試上限：") || detailedPrompt.length < 850 || detailedPrompt.length > 1350) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
+    const generatedPage = await readFile(`tools/${item.id}.html`, "utf8");
+    for (const marker of ["護欄不能只寫在指令裡", "平台護欄", "指令護欄", "驗證護欄", "Agent 有限驗證流程", "修正一次", "核准或停止"]) {
+      if (!generatedPage.includes(marker)) errors.push(`Agent architecture section missing ${marker} on ${item.id}`);
+    }
   }
 }
 

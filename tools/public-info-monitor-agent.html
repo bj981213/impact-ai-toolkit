@@ -51,6 +51,19 @@
         <ol><li>依週期搜尋核准公開來源</li><li>去除重複並保留發布日期與原始連結</li><li>人工查核後才發布摘要</li></ol>
       </section>
 
+<section class="detail-section full agent-architecture-section">
+        <p class="eyebrow terracotta">Agent Engineering</p>
+        <h2>護欄不能只寫在指令裡</h2>
+        <p>文字指令只能約束模型行為；真正的權限、確認與執行上限，必須由 Agent 平台或自動化系統強制執行。</p>
+        <div class="guardrail-layers">
+          <div><span>01</span><h3>平台護欄</h3><p>連接器白名單、最小讀寫權限、敏感動作確認、批次與重試上限。</p></div>
+          <div><span>02</span><h3>指令護欄</h3><p>任務範圍、允許來源、禁止動作、提示注入處理與轉人工條件。</p></div>
+          <div><span>03</span><h3>驗證護欄</h3><p>來源位置、必要欄位、完成條件、輸出檢查與可追溯紀錄。</p></div>
+        </div>
+        <ol class="agent-flow" aria-label="Agent 有限驗證流程">
+          <li>觸發</li><li>輸入護欄</li><li>執行</li><li>驗證</li><li>修正一次</li><li>核准或停止</li>
+        </ol>
+      </section>
 <section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
         <h2>執行設定、護欄與驗證循環</h2>
@@ -178,7 +191,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.2・內容更新 2026-07-19</p>
+    <p>版本 2.3・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
