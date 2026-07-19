@@ -1,6 +1,6 @@
 {
   "title": "公益影響力 AI 工作箱",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "updatedAt": "2026-07-19",
   "kinds": ["工作流", "提示詞", "檢查表"],
   "toolboxes": [

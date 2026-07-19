@@ -185,7 +185,7 @@ function handleDocumentClick(event) {
   const copyButton = event.target.closest("[data-copy]");
   if (copyButton) {
     const item = findItem(copyButton.dataset.copy);
-    if (item) copyText(composeDetailedPrompt(item, findToolbox(item.toolbox)?.title), `已複製「${item.title}」提示詞`);
+    if (item) copyText(composeDetailedPrompt(item), `已複製「${item.title}」提示詞`);
     return;
   }
 

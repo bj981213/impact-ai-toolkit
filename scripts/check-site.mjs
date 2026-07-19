@@ -46,18 +46,21 @@ for (const item of catalog.items) {
   }
   if (!item.example?.input || !item.example?.output) errors.push(`Incomplete example on ${item.id}`);
   if (!existsSync(`tools/${item.id}.html`)) errors.push(`Missing generated page: tools/${item.id}.html`);
-  const detailedPrompt = composeDetailedPrompt(item, catalog.toolboxes.find((toolbox) => toolbox.id === item.toolbox)?.title);
-  for (const section of ["【執行規格】", "【必要輸入】", "【開始條件】", "【執行規則】", "【輸出格式】", "【交付前檢查】"]) {
+  const detailedPrompt = composeDetailedPrompt(item);
+  for (const section of ["【執行限制】", "【交付前檢查】"]) {
     if (!detailedPrompt.includes(section)) errors.push(`Detailed prompt missing ${section} on ${item.id}`);
   }
+  for (const nonPromptMetadata of ["【執行規格】", "任務名稱：", "工具箱：", "目標："]) {
+    if (detailedPrompt.includes(nonPromptMetadata)) errors.push(`Prompt contains non-prompt metadata ${nonPromptMetadata} on ${item.id}`);
+  }
   if ((item.prompt.match(/\[[^\]]+\]/g) || []).length < 2) errors.push(`Prompt needs at least 2 fillable fields on ${item.id}`);
-  if (item.toolbox === "prompt" && (detailedPrompt.length < 900 || detailedPrompt.length > 1400)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
+  if (item.toolbox === "prompt" && (detailedPrompt.length < 500 || detailedPrompt.length > 750)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
   if (item.toolbox === "agent") {
     for (const field of agentSettingFields) {
       if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
       if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
     }
-    if (!detailedPrompt.includes("【AI Agent 運作設定】") || detailedPrompt.length < 1700 || detailedPrompt.length > 2200) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
+    if (!detailedPrompt.includes("【Agent 執行限制】") || detailedPrompt.length < 850 || detailedPrompt.length > 1100) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
   }
 }
 
