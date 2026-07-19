@@ -29,7 +29,7 @@
       <div class="hero-copy">
         <p class="eyebrow">課後補充工具箱</p>
         <h1 id="hero-title">公益影響力<br><span>AI 工作箱</span></h1>
-        <p class="hero-lead">給企業 CSR／ESG、基金會與 NPO 的實用工具。先選 Prompt 或 AI Agent，再從工作情境取得可直接使用的流程與查核清單。</p>
+        <p class="hero-lead">給企業 CSR／ESG、基金會與 NPO 的實用工具。選擇工作情境，填入資料後直接複製指令。</p>
         <div class="hero-actions">
           <a class="button primary" href="#toolboxes">選擇工具箱</a>
           <a class="button secondary" href="#library">瀏覽 Prompt 工具</a>
@@ -54,7 +54,7 @@
     <section class="toolbox-section" id="toolboxes" aria-labelledby="toolboxes-title">
       <div class="section-heading">
         <div><p class="eyebrow">先選使用方式</p><h2 id="toolboxes-title">兩種工具箱，一個工作入口</h2></div>
-        <p>只做一次就選 Prompt。需要讀取工具或系統、依內容做有限判斷並重複執行，才考慮 Agent；固定欄位搬運優先使用一般自動化。</p>
+        <p>單次工作選 Prompt；需要定期或重複處理的工作選 AI Agent。</p>
       </div>
       <div class="toolbox-chooser" role="group" aria-label="選擇工具箱">
         <button class="toolbox-choice prompt-choice" type="button" data-toolbox-choice="prompt" aria-pressed="true">
@@ -66,13 +66,12 @@
         <button class="toolbox-choice agent-choice" type="button" data-toolbox-choice="agent" aria-pressed="false">
           <span class="toolbox-state">目前選擇</span>
           <span class="toolbox-number">5</span>
-          <span class="toolbox-choice-copy"><strong>AI Agent 工具箱</strong><small>重複流程、資料來源、觸發與人工關卡</small></span>
+          <span class="toolbox-choice-copy"><strong>AI Agent 工具箱</strong><small>定期或重複執行的工作指令</small></span>
           <span class="toolbox-arrow" aria-hidden="true">→</span>
         </button>
         <button class="toolbox-all" type="button" data-toolbox-choice="all" aria-pressed="false">顯示全部 22 個工具</button>
       </div>
       <p class="active-toolbox-status" id="activeToolboxStatus" role="status"><span>目前顯示</span><strong>Prompt 工具箱・17 個工具</strong></p>
-      <p class="agent-boundary">網站提供 Agent 設定藍圖。平台權限、任務指令與輸出驗證構成三層護欄；產出未通過驗證時最多修正一次，仍未通過就轉人工。</p>
     </section>
 
     <section class="needs-section" id="needs" aria-labelledby="needs-title">
@@ -123,7 +122,7 @@
 
   <footer>
     <p><strong>公益影響力 AI 工作箱</strong><br>課後延伸工具，不代表主辦單位或任何組織的正式系統。</p>
-    <p>版本 2.4・更新日期 2026-07-19<br>所有 AI 產出都應由使用者查核後再使用。</p>
+    <p>版本 2.5・更新日期 2026-07-19<br>所有 AI 產出都應由使用者查核後再使用。</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

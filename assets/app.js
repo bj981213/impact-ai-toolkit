@@ -279,10 +279,10 @@ function updateToolboxCopy() {
     },
     agent: {
       needsEyebrow: "AI Agent 工具箱",
-      needsDescription: "需要讀取工具、依內容做有限判斷並重複執行時，再設計觸發、權限、輸出與人工關卡。固定規則優先使用一般自動化。",
-      libraryEyebrow: "5 套 Agent 設計流程",
+      needsDescription: "選出需要定期或重複處理的工作，再開啟對應的 Agent 指令。",
+      libraryEyebrow: "5 套 Agent 指令",
       libraryTitle: "開啟 AI Agent 工具箱",
-      libraryDescription: "網站提供 Agent 設定藍圖；實際自動執行仍須設定連接器、帳號權限與人工核准。",
+      libraryDescription: "替換指令中的欄位後，複製到使用中的 AI Agent。",
       activeStatus: "AI Agent 工具箱・5 個工具"
     },
     all: {

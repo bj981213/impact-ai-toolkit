@@ -13,7 +13,6 @@ const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFo
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
 const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
-const agentSettingFields = ["operatingMode", "triggers", "inputSources", "modelGuidance", "requiredConnections", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "completionCriteria", "verificationLoop", "executionLimits", "logging", "successMetrics", "testCases"];
 
 const expectedStageCounts = {
   daily: 7,
@@ -26,7 +25,7 @@ const expectedStageCounts = {
 };
 
 if (catalog.items.length !== 22) errors.push(`Expected 22 tools, got ${catalog.items.length}`);
-if (catalog.version !== "2.4.0") errors.push(`Expected catalog version 2.4.0, got ${catalog.version}`);
+if (catalog.version !== "2.5.0") errors.push(`Expected catalog version 2.5.0, got ${catalog.version}`);
 if (catalog.stages.length !== 7) errors.push(`Expected 7 categories, got ${catalog.stages.length}`);
 if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
 if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 17) errors.push("Prompt toolbox must contain 17 tools");
@@ -79,24 +78,20 @@ for (const item of catalog.items) {
   if (item.toolbox === "prompt" && (toolContent.length < 480 || toolContent.length > 700)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${toolContent.length}`);
   if (item.toolbox === "prompt" && !sourceText.includes("輸出")) errors.push(`Prompt lacks an explicit output request on ${item.id}`);
   if (item.toolbox === "agent") {
-    for (const field of agentSettingFields) {
-      if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
-      if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
-    }
+    if ("agentSettings" in item) errors.push(`Agent page data must not include the removed engineering settings on ${item.id}`);
     if (/你是[^。\n]*Agent/.test(item.instructions)) errors.push(`Agent instruction starts with a redundant role declaration on ${item.id}`);
     if (!/^(只在|在)/.test(item.instructions)) errors.push(`Agent instruction lacks a bounded execution condition on ${item.id}`);
     if (!/(等待|轉)人工|等待[^。]*核准/.test(item.instructions)) errors.push(`Agent instruction lacks an explicit human handoff on ${item.id}`);
-    if (!toolContent.includes("【Agent 可用工具與權限】") || !toolContent.includes("【Agent 護欄（Guardrails）】") || !toolContent.includes("完成條件：") || !toolContent.includes("【驗證循環（Verification Loop）】") || !toolContent.includes("執行與重試上限：") || toolContent.length < 850 || toolContent.length > 1350) errors.push(`Agent instructions or execution settings are incomplete or verbose on ${item.id}`);
+    if (toolContent.length < 560 || toolContent.length > 850) errors.push(`Agent instruction is incomplete or verbose on ${item.id}: ${toolContent.length}`);
     const generatedPage = await readFile(`tools/${item.id}.html`, "utf8");
     if (!generatedPage.includes("可貼入平台的 Agent 指令") || !generatedPage.includes("複製 Agent 指令")) errors.push(`Agent page labels are incorrect on ${item.id}`);
     if (generatedPage.includes("複製完整 Agent 設定")) errors.push(`Agent page incorrectly claims copied instructions are the complete platform settings on ${item.id}`);
-    for (const marker of ["護欄不能只寫在指令裡", "平台護欄", "指令護欄", "驗證護欄", "Agent 有限驗證流程", "修正一次", "核准或停止"]) {
-      if (!generatedPage.includes(marker)) errors.push(`Agent architecture section missing ${marker} on ${item.id}`);
-    }
+    if (generatedPage.indexOf('id="tool-content-section"') > generatedPage.indexOf("適用情境")) errors.push(`Agent copy section must appear before supporting information on ${item.id}`);
   } else {
     const generatedPage = await readFile(`tools/${item.id}.html`, "utf8");
     if (!generatedPage.includes("完整提示詞") || !generatedPage.includes("複製完整提示詞")) errors.push(`Prompt page labels are incorrect on ${item.id}`);
     if (generatedPage.includes("複製 Agent 指令")) errors.push(`Prompt page contains an Agent copy control on ${item.id}`);
+    if (generatedPage.indexOf('id="tool-content-section"') > generatedPage.indexOf("適用情境")) errors.push(`Prompt copy section must appear before supporting information on ${item.id}`);
   }
 }
 
@@ -117,6 +112,9 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");
+for (const removedEngineeringText of ["Agent Engineering", "AI Agent 專用", "執行設定、護欄與驗證循環", "護欄不能只寫在指令裡", "平台護欄", "指令護欄", "驗證護欄", "Agent 有限驗證流程", "Guardrails", "Verification Loop", "Agent 設定藍圖", "設定的一部分", "模型選擇與變更", "必要連接與權限", "狀態流程", "執行與重試上限", "最低紀錄要求", "成效指標", "上線前測試案例"]) {
+  if (publicText.includes(removedEngineeringText)) errors.push(`Public site contains removed Agent engineering text: ${removedEngineeringText}`);
+}
 for (const removedHomepageText of ["AI 可以協助整理證據，不能替你創造證據。", "登入步驟"]) {
   if (indexText.includes(removedHomepageText)) errors.push(`Homepage contains removed text: ${removedHomepageText}`);
 }

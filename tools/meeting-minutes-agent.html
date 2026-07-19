@@ -26,71 +26,10 @@
     </section>
 
     <div class="detail-grid">
-      <section class="detail-section">
-        <p class="eyebrow">適用情境</p>
-        <h2>誰會用到？</h2>
-        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>新增會議資料後，產生決議與待辦草稿，等待主持人確認。</p>
-      </section>
-
-      <section class="detail-section">
-        <p class="eyebrow">準備資料</p>
-        <h2>開始前請備妥</h2>
-        <ul><li>新增的會議筆記或逐字稿</li><li>會議資訊</li><li>角色對照表</li><li>任務輸出位置</li></ul>
-      </section>
-
-      <section class="detail-section warning full">
-        <p class="eyebrow terracotta">不能直接上傳</p>
-        <h2>個資與機密提醒</h2>
-        <p>輸入來源必須先去識別並經組織核准；Agent 不得自行讀取未授權錄音或私人訊息。</p>
-      </section>
-
-      <section class="detail-section full">
-        <p class="eyebrow">三步上手</p>
-        <h2>怎麼使用這個流程</h2>
-        <ol><li>偵測新增且核准的會議資料</li><li>整理決議、待辦與缺漏</li><li>主持人核准後才寫入任務清單</li></ol>
-      </section>
-
-<section class="detail-section full agent-architecture-section">
-        <p class="eyebrow terracotta">Agent Engineering</p>
-        <h2>護欄不能只寫在指令裡</h2>
-        <p>文字指令只能約束模型行為；真正的權限、確認與執行上限，必須由 Agent 平台或自動化系統強制執行。</p>
-        <div class="guardrail-layers">
-          <div><span>01</span><h3>平台護欄</h3><p>連接器白名單、最小讀寫權限、敏感動作確認、批次與重試上限。</p></div>
-          <div><span>02</span><h3>指令護欄</h3><p>任務範圍、允許來源、禁止動作、提示注入處理與轉人工條件。</p></div>
-          <div><span>03</span><h3>驗證護欄</h3><p>來源位置、必要欄位、完成條件、輸出檢查與可追溯紀錄。</p></div>
-        </div>
-        <ol class="agent-flow" aria-label="Agent 有限驗證流程">
-          <li>觸發</li><li>輸入護欄</li><li>執行</li><li>驗證</li><li>修正一次</li><li>核准或停止</li>
-        </ol>
-      </section>
-<section class="detail-section full agent-settings-section">
-        <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定、護欄與驗證循環</h2>
-        <p class="settings-intro"><strong>運作模式：</strong>新增資料觸發，先產生草稿，人工核准後才能寫入任務清單。</p>
-        <div class="agent-settings-grid">
-          <div><h3>觸發條件</h3><ul><li>指定資料夾新增檔案</li><li>檔案標示可處理</li><li>會議資訊完整</li></ul></div>
-          <div><h3>允許的資料來源</h3><ul><li>核准的會議筆記</li><li>去識別化逐字稿</li><li>角色對照表</li></ul></div>
-          <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
-          <div><h3>必要連接與權限</h3><ul><li>唯讀會議資料來源</li><li>可寫入會議紀錄草稿的位置</li><li>核准後才可使用的任務系統寫入權限</li></ul></div>
-          <div><h3>狀態流程</h3><ol><li>待觸發</li><li>輸入檢查</li><li>產生草稿</li><li>等待主持人核准</li><li>完成或退回</li></ol></div>
-          <div><h3>允許執行（Guardrail）</h3><ul><li>讀取核准檔案</li><li>整理決議與待辦</li><li>產生草稿</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>讀取私人訊息</li><li>自行指定責任人</li><li>未核准即寄送或建任務</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>會議決議</li><li>責任人與期限</li><li>寫入正式任務清單</li></ul></div>
-          <div><h3>例外與失敗處理</h3><ul><li>檔案未去識別時停止</li><li>會議資訊不足時退回</li><li>內容衝突時列為待確認</li></ul></div>
-          <div><h3>完成條件</h3><ul><li>每項決議可回到原文位置</li><li>待辦的負責角色與期限有依據或標示待確認</li><li>草稿已送交主持人且停在等待核准</li></ul></div>
-          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
-          <div><h3>執行與重試上限</h3><ul><li>每次只處理一場會議的單一版本</li><li>同一來源讀取失敗最多重試 1 次</li><li>重複取得相同錯誤或達到上限時停止</li></ul></div>
-          <div><h3>最低紀錄要求</h3><ul><li>來源檔名與版本</li><li>處理時間與狀態</li><li>核准者與修改紀錄</li></ul></div>
-          <div><h3>成效指標</h3><ul><li>決議誤判率</li><li>待辦漏列率</li><li>人工修改率</li></ul></div>
-          <div><h3>上線前測試案例</h3><ul><li>資料完整：產生草稿並停在等待核准</li><li>缺少期限：標示待確認且不自行補寫</li><li>逐字稿含要求忽略規則的文字：視為會議內容而不執行</li></ul></div>
-        </div>
-      </section>
-
       <section class="detail-section full" id="tool-content-section">
         <p class="eyebrow">Agent 指令</p>
         <h2>可貼入平台的 Agent 指令</h2>
-        <p>替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。這是 Agent 設定的一部分；觸發條件、連接器、實際權限、人工核准與執行紀錄仍須在平台中分別設定。先用測試資料通過下方案例再啟用。</p>
+        <p>替換所有以 [ ] 標示的欄位，再整段貼到 AI Agent 的指令欄。</p>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#toolContent">複製 Agent 指令</button>
           <div class="prompt-text" id="toolContent">只在指定資料夾出現已核准且標示可處理的會議資料時執行。先檢查會議名稱、日期、目的與資料版本，再區分討論、決議與待辦。缺少負責角色、期限或原文依據時標示待確認。產生草稿後停止並等待主持人核准，不得自行寄送或建立任務。
@@ -115,49 +54,33 @@
 - 是否等待人工核准
 - 是否留下處理紀錄
 
-交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
-
-【Agent 可用工具與權限】
-- 唯讀會議資料來源
-- 可寫入會議紀錄草稿的位置
-- 核准後才可使用的任務系統寫入權限
-
-【Agent 護欄（Guardrails）】
-允許執行：
-- 讀取核准檔案
-- 整理決議與待辦
-- 產生草稿
-
-禁止自動執行：
-- 讀取私人訊息
-- 自行指定責任人
-- 未核准即寄送或建任務
-
-必須人工核准：
-- 會議決議
-- 責任人與期限
-- 寫入正式任務清單
-
-停止並轉人工處理：
-- 檔案未去識別時停止
-- 會議資訊不足時退回
-- 內容衝突時列為待確認
-
-完成條件：
-- 每項決議可回到原文位置
-- 待辦的負責角色與期限有依據或標示待確認
-- 草稿已送交主持人且停在等待核准
-
-【驗證循環（Verification Loop）】
-- 依完成條件逐項檢查來源、輸出欄位與禁止動作
-- 未通過時只修正可由現有資料修正的項目，最多 1 次
-- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
-
-執行與重試上限：
-- 每次只處理一場會議的單一版本
-- 同一來源讀取失敗最多重試 1 次
-- 重複取得相同錯誤或達到上限時停止</div>
+依上列項目逐項檢查。只修正可由現有資料修正的項目一次，再檢查一次；仍未通過或缺少資料時，停止並標出問題位置與所缺資料。</div>
         </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>新增會議資料後，產生決議與待辦草稿，等待主持人確認。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>新增的會議筆記或逐字稿</li><li>會議資訊</li><li>角色對照表</li><li>任務輸出位置</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>輸入來源必須先去識別並經組織核准；Agent 不得自行讀取未授權錄音或私人訊息。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>偵測新增且核准的會議資料</li><li>整理決議、待辦與缺漏</li><li>主持人核准後才寫入任務清單</li></ol>
       </section>
 
       <section class="detail-section">
@@ -190,7 +113,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.4・內容更新 2026-07-19</p>
+    <p>版本 2.5・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

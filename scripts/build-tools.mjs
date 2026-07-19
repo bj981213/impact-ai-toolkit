@@ -26,12 +26,10 @@ function renderPage(item, stage, toolbox) {
   const tools = item.supportedTools.map((tool) => `<span>${escapeHtml(tool)}</span>`).join("");
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
   const toolContent = composeToolContent(item);
-  const agentArchitecture = item.toolbox === "agent" ? renderAgentArchitecture() : "";
-  const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
   const contentEyebrow = item.toolbox === "agent" ? "Agent 指令" : "Prompt 工具";
   const contentTitle = item.toolbox === "agent" ? "可貼入平台的 Agent 指令" : "完整提示詞";
   const contentInstruction = item.toolbox === "agent"
-    ? "替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。這是 Agent 設定的一部分；觸發條件、連接器、實際權限、人工核准與執行紀錄仍須在平台中分別設定。先用測試資料通過下方案例再啟用。"
+    ? "替換所有以 [ ] 標示的欄位，再整段貼到 AI Agent 的指令欄。"
     : "替換所有以 [ ] 標示的欄位，再整段貼到組織核准使用的 AI。保留執行限制與交付前檢查，不要只貼任務段落。";
   const copyLabel = item.toolbox === "agent" ? "複製 Agent 指令" : "複製完整提示詞";
 
@@ -63,6 +61,16 @@ function renderPage(item, stage, toolbox) {
     </section>
 
     <div class="detail-grid">
+      <section class="detail-section full" id="tool-content-section">
+        <p class="eyebrow">${contentEyebrow}</p>
+        <h2>${contentTitle}</h2>
+        <p>${contentInstruction}</p>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#toolContent">${copyLabel}</button>
+          <div class="prompt-text" id="toolContent">${escapeHtml(toolContent)}</div>
+        </div>
+      </section>
+
       <section class="detail-section">
         <p class="eyebrow">適用情境</p>
         <h2>誰會用到？</h2>
@@ -86,19 +94,6 @@ function renderPage(item, stage, toolbox) {
         <p class="eyebrow">三步上手</p>
         <h2>怎麼使用這個流程</h2>
         ${renderList(item.steps, "ol")}
-      </section>
-
-${agentArchitecture}
-${agentSettings}
-
-      <section class="detail-section full" id="tool-content-section">
-        <p class="eyebrow">${contentEyebrow}</p>
-        <h2>${contentTitle}</h2>
-        <p>${contentInstruction}</p>
-        <div class="prompt-box">
-          <button type="button" class="copy-detail" data-copy-target="#toolContent">${copyLabel}</button>
-          <div class="prompt-text" id="toolContent">${escapeHtml(toolContent)}</div>
-        </div>
       </section>
 
       <section class="detail-section">
@@ -131,7 +126,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.4・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.5・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -145,48 +140,6 @@ function renderList(items, tag = "ul") {
 
 function renderChecklist(items) {
   return `<ul>${items.map((item) => `<li>□ ${escapeHtml(item)}</li>`).join("")}</ul>`;
-}
-
-function renderAgentArchitecture() {
-  return `<section class="detail-section full agent-architecture-section">
-        <p class="eyebrow terracotta">Agent Engineering</p>
-        <h2>護欄不能只寫在指令裡</h2>
-        <p>文字指令只能約束模型行為；真正的權限、確認與執行上限，必須由 Agent 平台或自動化系統強制執行。</p>
-        <div class="guardrail-layers">
-          <div><span>01</span><h3>平台護欄</h3><p>連接器白名單、最小讀寫權限、敏感動作確認、批次與重試上限。</p></div>
-          <div><span>02</span><h3>指令護欄</h3><p>任務範圍、允許來源、禁止動作、提示注入處理與轉人工條件。</p></div>
-          <div><span>03</span><h3>驗證護欄</h3><p>來源位置、必要欄位、完成條件、輸出檢查與可追溯紀錄。</p></div>
-        </div>
-        <ol class="agent-flow" aria-label="Agent 有限驗證流程">
-          <li>觸發</li><li>輸入護欄</li><li>執行</li><li>驗證</li><li>修正一次</li><li>核准或停止</li>
-        </ol>
-      </section>`;
-}
-
-function renderAgentSettings(settings) {
-  if (!settings) return "";
-  return `<section class="detail-section full agent-settings-section">
-        <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定、護欄與驗證循環</h2>
-        <p class="settings-intro"><strong>運作模式：</strong>${escapeHtml(settings.operatingMode)}</p>
-        <div class="agent-settings-grid">
-          <div><h3>觸發條件</h3>${renderList(settings.triggers)}</div>
-          <div><h3>允許的資料來源</h3>${renderList(settings.inputSources)}</div>
-          <div><h3>模型選擇與變更</h3>${renderList(settings.modelGuidance)}</div>
-          <div><h3>必要連接與權限</h3>${renderList(settings.requiredConnections)}</div>
-          <div><h3>狀態流程</h3>${renderList(settings.states, "ol")}</div>
-          <div><h3>允許執行（Guardrail）</h3>${renderList(settings.allowedActions)}</div>
-          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3>${renderList(settings.forbiddenActions)}</div>
-          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3>${renderList(settings.humanApprovals)}</div>
-          <div><h3>例外與失敗處理</h3>${renderList(settings.exceptionHandling)}</div>
-          <div><h3>完成條件</h3>${renderList(settings.completionCriteria)}</div>
-          <div><h3>驗證循環（Verification Loop）</h3>${renderList(settings.verificationLoop)}</div>
-          <div><h3>執行與重試上限</h3>${renderList(settings.executionLimits)}</div>
-          <div><h3>最低紀錄要求</h3>${renderList(settings.logging)}</div>
-          <div><h3>成效指標</h3>${renderList(settings.successMetrics)}</div>
-          <div><h3>上線前測試案例</h3>${renderList(settings.testCases)}</div>
-        </div>
-      </section>`;
 }
 
 function escapeHtml(value = "") {

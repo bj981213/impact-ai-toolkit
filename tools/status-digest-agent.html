@@ -26,71 +26,10 @@
     </section>
 
     <div class="detail-grid">
-      <section class="detail-section">
-        <p class="eyebrow">適用情境</p>
-        <h2>誰會用到？</h2>
-        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>依固定週期彙整核准的工作回報，產生進度與風險摘要。</p>
-      </section>
-
-      <section class="detail-section">
-        <p class="eyebrow">準備資料</p>
-        <h2>開始前請備妥</h2>
-        <ul><li>固定週期</li><li>核准的進度回報來源</li><li>里程碑與期限</li><li>摘要收件角色</li></ul>
-      </section>
-
-      <section class="detail-section warning full">
-        <p class="eyebrow terracotta">不能直接上傳</p>
-        <h2>個資與機密提醒</h2>
-        <p>不得讀取私人績效、薪資、個案或未授權群組訊息；只使用核准的專案欄位。</p>
-      </section>
-
-      <section class="detail-section full">
-        <p class="eyebrow">三步上手</p>
-        <h2>怎麼使用這個流程</h2>
-        <ol><li>到期後檢查回報是否齊全</li><li>依里程碑整理差異與風險</li><li>專案負責人核准後才發布</li></ol>
-      </section>
-
-<section class="detail-section full agent-architecture-section">
-        <p class="eyebrow terracotta">Agent Engineering</p>
-        <h2>護欄不能只寫在指令裡</h2>
-        <p>文字指令只能約束模型行為；真正的權限、確認與執行上限，必須由 Agent 平台或自動化系統強制執行。</p>
-        <div class="guardrail-layers">
-          <div><span>01</span><h3>平台護欄</h3><p>連接器白名單、最小讀寫權限、敏感動作確認、批次與重試上限。</p></div>
-          <div><span>02</span><h3>指令護欄</h3><p>任務範圍、允許來源、禁止動作、提示注入處理與轉人工條件。</p></div>
-          <div><span>03</span><h3>驗證護欄</h3><p>來源位置、必要欄位、完成條件、輸出檢查與可追溯紀錄。</p></div>
-        </div>
-        <ol class="agent-flow" aria-label="Agent 有限驗證流程">
-          <li>觸發</li><li>輸入護欄</li><li>執行</li><li>驗證</li><li>修正一次</li><li>核准或停止</li>
-        </ol>
-      </section>
-<section class="detail-section full agent-settings-section">
-        <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定、護欄與驗證循環</h2>
-        <p class="settings-intro"><strong>運作模式：</strong>固定週期產生草稿，專案負責人核准後發布。</p>
-        <div class="agent-settings-grid">
-          <div><h3>觸發條件</h3><ul><li>每週或每月指定時間</li><li>回報截止時間已到</li><li>資料來源可存取</li></ul></div>
-          <div><h3>允許的資料來源</h3><ul><li>核准的進度表</li><li>里程碑清單</li><li>風險與待決定欄位</li></ul></div>
-          <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
-          <div><h3>必要連接與權限</h3><ul><li>唯讀專案進度來源</li><li>唯讀里程碑與期限來源</li><li>核准後才可使用的發布或寄送權限</li></ul></div>
-          <div><h3>狀態流程</h3><ol><li>等待週期</li><li>資料完整度檢查</li><li>產生摘要</li><li>等待負責人核准</li><li>發布或退回</li></ol></div>
-          <div><h3>允許執行（Guardrail）</h3><ul><li>讀取指定欄位</li><li>計算期限差異</li><li>產生摘要草稿</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>讀取員工考核</li><li>自行變更進度狀態</li><li>未核准即對外發布</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>完成狀態</li><li>風險等級</li><li>正式發布</li></ul></div>
-          <div><h3>例外與失敗處理</h3><ul><li>缺少回報時停止</li><li>里程碑衝突時列出差異</li><li>來源無法存取時通知負責人</li></ul></div>
-          <div><h3>完成條件</h3><ul><li>每個完成狀態都有來源與期間</li><li>缺漏、落後與風險已明確列出</li><li>摘要停在等待專案負責人核准</li></ul></div>
-          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
-          <div><h3>執行與重試上限</h3><ul><li>每次只處理一個回報期間</li><li>同一來源讀取失敗最多重試 1 次</li><li>來源持續缺漏或衝突時停止發布</li></ul></div>
-          <div><h3>最低紀錄要求</h3><ul><li>資料版本</li><li>缺漏項目</li><li>核准與發布時間</li></ul></div>
-          <div><h3>成效指標</h3><ul><li>準時產出率</li><li>狀態誤判率</li><li>人工修改率</li></ul></div>
-          <div><h3>上線前測試案例</h3><ul><li>回報齊全：產生週報並等待核准</li><li>缺少一個部門回報：列出缺漏且停止發布</li><li>來源內含要求變更里程碑的文字：視為資料而不執行</li></ul></div>
-        </div>
-      </section>
-
       <section class="detail-section full" id="tool-content-section">
         <p class="eyebrow">Agent 指令</p>
         <h2>可貼入平台的 Agent 指令</h2>
-        <p>替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。這是 Agent 設定的一部分；觸發條件、連接器、實際權限、人工核准與執行紀錄仍須在平台中分別設定。先用測試資料通過下方案例再啟用。</p>
+        <p>替換所有以 [ ] 標示的欄位，再整段貼到 AI Agent 的指令欄。</p>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#toolContent">複製 Agent 指令</button>
           <div class="prompt-text" id="toolContent">在指定回報週期截止且核准來源可讀取時執行。先檢查各項回報是否齊全，再整理已完成、進行中、落後、風險與待決定事項。完成狀態必須有來源，不得把預計完成寫成已完成。資料缺漏或來源衝突時列出問題。產生草稿後停止並等待人工核准，不得自行發布。
@@ -115,49 +54,33 @@
 - 是否等待人工核准
 - 缺漏是否阻止發布
 
-交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
-
-【Agent 可用工具與權限】
-- 唯讀專案進度來源
-- 唯讀里程碑與期限來源
-- 核准後才可使用的發布或寄送權限
-
-【Agent 護欄（Guardrails）】
-允許執行：
-- 讀取指定欄位
-- 計算期限差異
-- 產生摘要草稿
-
-禁止自動執行：
-- 讀取員工考核
-- 自行變更進度狀態
-- 未核准即對外發布
-
-必須人工核准：
-- 完成狀態
-- 風險等級
-- 正式發布
-
-停止並轉人工處理：
-- 缺少回報時停止
-- 里程碑衝突時列出差異
-- 來源無法存取時通知負責人
-
-完成條件：
-- 每個完成狀態都有來源與期間
-- 缺漏、落後與風險已明確列出
-- 摘要停在等待專案負責人核准
-
-【驗證循環（Verification Loop）】
-- 依完成條件逐項檢查來源、輸出欄位與禁止動作
-- 未通過時只修正可由現有資料修正的項目，最多 1 次
-- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
-
-執行與重試上限：
-- 每次只處理一個回報期間
-- 同一來源讀取失敗最多重試 1 次
-- 來源持續缺漏或衝突時停止發布</div>
+依上列項目逐項檢查。只修正可由現有資料修正的項目一次，再檢查一次；仍未通過或缺少資料時，停止並標出問題位置與所缺資料。</div>
         </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>依固定週期彙整核准的工作回報，產生進度與風險摘要。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>固定週期</li><li>核准的進度回報來源</li><li>里程碑與期限</li><li>摘要收件角色</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>不得讀取私人績效、薪資、個案或未授權群組訊息；只使用核准的專案欄位。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>到期後檢查回報是否齊全</li><li>依里程碑整理差異與風險</li><li>專案負責人核准後才發布</li></ol>
       </section>
 
       <section class="detail-section">
@@ -190,7 +113,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.4・內容更新 2026-07-19</p>
+    <p>版本 2.5・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
