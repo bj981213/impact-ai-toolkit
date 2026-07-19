@@ -42,19 +42,19 @@ function renderPage(item, stage, toolbox) {
   <meta name="description" content="${escapeAttr(item.summary)}">
   <meta name="theme-color" content="#164f4a">
   <title>${escapeHtml(title)}</title>
-  <link rel="stylesheet" href="../assets/styles.css?v=2.9.0">
-  <script src="../assets/detail.js?v=2.9.0" type="module"></script>
+  <link rel="stylesheet" href="../assets/styles.css?v=20260719b">
+  <script src="../assets/detail.js?v=20260719b" type="module"></script>
 </head>
 <body class="detail-body" data-item-id="${escapeAttr(item.id)}" data-item-title="${escapeAttr(item.title)}" data-item-kind="${escapeAttr(item.kind)}" data-item-toolbox="${escapeAttr(item.toolbox)}">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
-    <a class="brand" href="../index.html?v=2.9.0" aria-label="回到公益影響力 AI 工作箱首頁">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
       <span class="brand-mark" aria-hidden="true">AI</span>
       <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
     </a>
   </header>
   <main class="detail-main" id="main">
-    <a class="detail-back" href="../index.html?v=2.9.0#library">← 回到工具箱</a>
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
     <section class="detail-hero">
       <div class="detail-tags"><span>${escapeHtml(toolbox.title)}</span><span>${escapeHtml(item.kind)}</span><span>${escapeHtml(stage.title)}</span>${tools}</div>
       <h1>${escapeHtml(item.title)}</h1>

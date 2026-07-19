@@ -112,13 +112,13 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 const appText = await readFile("assets/app.js", "utf8");
-for (const cacheMarker of ["assets/app.js?v=2.9.0", "assets/styles.css?v=2.9.0", "no-cache, no-store, must-revalidate"]) {
+for (const cacheMarker of ["assets/app.js?v=20260719b", "assets/styles.css?v=20260719b", "no-cache, no-store, must-revalidate"]) {
   if (!indexText.includes(cacheMarker)) errors.push(`Homepage is missing cache refresh marker: ${cacheMarker}`);
 }
-if (!appText.includes('data/catalog.json?v=2.9.0') || !appText.includes('cache: "no-store"')) errors.push("Catalog request must bypass stale browser cache");
-for (const versionedLink of ['./?v=2.9.0', 'tools/${escapeAttr(item.id)}.html?v=2.9.0']) {
-  if (!(indexText + appText).includes(versionedLink)) errors.push(`Public navigation is missing cache-busting link: ${versionedLink}`);
-}
+if (!appText.includes('data/catalog.json?v=20260719b') || !appText.includes('cache: "no-store"')) errors.push("Catalog request must bypass stale browser cache");
+if (indexText.includes('href="./?v=')) errors.push("Homepage URL must not show a version query");
+if (appText.includes('.html?v=')) errors.push("Tool URLs must not show a version query");
+if (publicText.includes('index.html?v=')) errors.push("Homepage navigation must not show a version query");
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");
 for (const removedEngineeringText of ["Agent Engineering", "AI Agent 專用", "執行設定、護欄與驗證循環", "護欄不能只寫在指令裡", "平台護欄", "指令護欄", "驗證護欄", "Agent 有限驗證流程", "Guardrails", "Verification Loop", "Agent 設定藍圖", "設定的一部分", "模型選擇與變更", "必要連接與權限", "狀態流程", "執行與重試上限", "最低紀錄要求", "成效指標", "上線前測試案例"]) {
   if (publicText.includes(removedEngineeringText)) errors.push(`Public site contains removed Agent engineering text: ${removedEngineeringText}`);

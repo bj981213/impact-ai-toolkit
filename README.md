@@ -22,7 +22,7 @@ npm run serve
 
 ## 發布邊界
 
-正式網站：<https://bj981213.github.io/impact-ai-toolkit/?v=2.9.0>
+正式網站：<https://bj981213.github.io/impact-ai-toolkit/>
 
 原始碼：<https://github.com/bj981213/impact-ai-toolkit>
 
