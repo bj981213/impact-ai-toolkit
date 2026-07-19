@@ -163,7 +163,7 @@ function renderCard(item) {
   const toolbox = findToolbox(item.toolbox);
   const favorite = state.favorites.has(item.id);
   return `
-    <article class="tool-card">
+    <article class="tool-card ${escapeAttr(item.toolbox)}-card">
       <div class="card-meta">
         <div><span class="toolbox-chip ${escapeAttr(item.toolbox)}">${escapeHtml(toolbox?.title || item.toolbox)}</span> <span class="kind">${escapeHtml(item.kind)}</span> <span class="stage-chip">${escapeHtml(stage?.title || item.stage)}</span></div>
         <button type="button" class="fav-btn ${favorite ? "active" : ""}" data-favorite="${escapeAttr(item.id)}" aria-label="${favorite ? "移除收藏" : "加入收藏"}：${escapeAttr(item.title)}" aria-pressed="${String(favorite)}">${favorite ? "已藏" : "收藏"}</button>
@@ -262,21 +262,24 @@ function updateToolboxCopy() {
       needsDescription: "從單次工作開始。選出你現在最需要完成的任務，再開啟對應提示詞。",
       libraryEyebrow: "20 套 Prompt 流程",
       libraryTitle: "開啟 Prompt 工具箱",
-      libraryDescription: "複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。"
+      libraryDescription: "複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。",
+      activeStatus: "Prompt 工具箱・20 個工具"
     },
     agent: {
       needsEyebrow: "AI Agent 工具箱",
       needsDescription: "先判斷是否適合自動化，再設計觸發、資料、輸出與必須由人確認的關卡。",
       libraryEyebrow: "5 套 Agent 設計流程",
       libraryTitle: "開啟 AI Agent 工具箱",
-      libraryDescription: "這裡提供 Agent 規劃藍圖，不會直接執行外部動作，也不需要提供 API。"
+      libraryDescription: "這裡提供 Agent 規劃藍圖，不會直接執行外部動作，也不需要提供 API。",
+      activeStatus: "AI Agent 工具箱・5 個工具"
     },
     all: {
       needsEyebrow: "全部工具",
       needsDescription: "依工作階段瀏覽 Prompt 與 AI Agent 的全部流程。",
       libraryEyebrow: "25 套可複用流程",
       libraryTitle: "開啟全部工具",
-      libraryDescription: "依任務選擇單次 Prompt 或可重複執行的 Agent 規劃流程。"
+      libraryDescription: "依任務選擇單次 Prompt 或可重複執行的 Agent 規劃流程。",
+      activeStatus: "全部分類・25 個工具"
     }
   }[state.toolbox];
   $("#needsEyebrow").textContent = copy.needsEyebrow;
@@ -284,6 +287,7 @@ function updateToolboxCopy() {
   $("#libraryEyebrow").textContent = copy.libraryEyebrow;
   $("#library-title").textContent = copy.libraryTitle;
   $("#libraryDescription").textContent = copy.libraryDescription;
+  $("#activeToolboxStatus").querySelector("strong").textContent = copy.activeStatus;
 }
 
 function toolboxItems() {

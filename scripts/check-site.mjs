@@ -64,6 +64,9 @@ if (indexText.includes("現場示範") || indexText.includes('id="demo"')) error
 for (const toolboxChoice of ['data-toolbox-choice="prompt"', 'data-toolbox-choice="agent"', 'data-toolbox-choice="all"']) {
   if (!indexText.includes(toolboxChoice)) errors.push(`Homepage missing toolbox choice: ${toolboxChoice}`);
 }
+for (const toolboxMarker of ['class="toolbox-state"', 'id="activeToolboxStatus"']) {
+  if (!indexText.includes(toolboxMarker)) errors.push(`Homepage missing visible toolbox marker: ${toolboxMarker}`);
+}
 for (const removedBioText of ["講師：江逸之", "《關鍵評論網》總編輯", "人工智慧科技基金會顧問", "聯絡方式請以講師於活動現場提供的管道為準"]) {
   if (indexText.includes(removedBioText)) errors.push(`Homepage must not include removed speaker bio text: ${removedBioText}`);
 }

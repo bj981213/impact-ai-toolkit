@@ -60,17 +60,20 @@
       </div>
       <div class="toolbox-chooser" role="group" aria-label="選擇工具箱">
         <button class="toolbox-choice prompt-choice" type="button" data-toolbox-choice="prompt" aria-pressed="true">
+          <span class="toolbox-state">目前選擇</span>
           <span class="toolbox-number">20</span>
           <span class="toolbox-choice-copy"><strong>Prompt 工具箱</strong><small>單次整理、分析、寫作與查核</small></span>
           <span class="toolbox-arrow" aria-hidden="true">→</span>
         </button>
         <button class="toolbox-choice agent-choice" type="button" data-toolbox-choice="agent" aria-pressed="false">
+          <span class="toolbox-state">目前選擇</span>
           <span class="toolbox-number">5</span>
           <span class="toolbox-choice-copy"><strong>AI Agent 工具箱</strong><small>重複流程、資料來源、觸發與人工關卡</small></span>
           <span class="toolbox-arrow" aria-hidden="true">→</span>
         </button>
         <button class="toolbox-all" type="button" data-toolbox-choice="all" aria-pressed="false">顯示全部 25 個工具</button>
       </div>
+      <p class="active-toolbox-status" id="activeToolboxStatus" role="status"><span>目前顯示</span><strong>Prompt 工具箱・20 個工具</strong></p>
       <p class="agent-boundary">AI Agent 工具箱提供規劃藍圖，不會在網站內自動執行任務，也不需要提供 API。</p>
     </section>
 
