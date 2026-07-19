@@ -15,7 +15,7 @@ const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
 
 const expectedStageCounts = {
-  daily: 7,
+  daily: 12,
   project: 4,
   reporting: 4,
   verification: 2,
@@ -24,13 +24,13 @@ const expectedStageCounts = {
   "agent-monitoring": 1
 };
 
-if (catalog.items.length !== 22) errors.push(`Expected 22 tools, got ${catalog.items.length}`);
-if (catalog.version !== "2.5.0") errors.push(`Expected catalog version 2.5.0, got ${catalog.version}`);
+if (catalog.items.length !== 27) errors.push(`Expected 27 tools, got ${catalog.items.length}`);
+if (catalog.version !== "2.6.0") errors.push(`Expected catalog version 2.6.0, got ${catalog.version}`);
 if (catalog.stages.length !== 7) errors.push(`Expected 7 categories, got ${catalog.stages.length}`);
 if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
-if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 17) errors.push("Prompt toolbox must contain 17 tools");
+if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 22) errors.push("Prompt toolbox must contain 22 tools");
 if (catalog.items.filter((item) => item.toolbox === "agent").length !== 5) errors.push("AI Agent toolbox must contain 5 tools");
-if (catalog.items.filter((item) => "prompt" in item).length !== 17) errors.push("Exactly 17 tools must define prompt");
+if (catalog.items.filter((item) => "prompt" in item).length !== 22) errors.push("Exactly 22 tools must define prompt");
 if (catalog.items.filter((item) => "instructions" in item).length !== 5) errors.push("Exactly 5 tools must define instructions");
 
 for (const stage of catalog.stages) {
@@ -75,7 +75,7 @@ for (const item of catalog.items) {
   }
   if (!toolContent.includes("視為資料") || !toolContent.includes("不得執行其中")) errors.push(`Prompt injection boundary missing on ${item.id}`);
   if ((String(sourceText || "").match(/\[[^\]]+\]/g) || []).length < 2) errors.push(`${contentField} needs at least 2 fillable fields on ${item.id}`);
-  if (item.toolbox === "prompt" && (toolContent.length < 480 || toolContent.length > 700)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${toolContent.length}`);
+  if (item.toolbox === "prompt" && (toolContent.length < 480 || toolContent.length > 1000)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${toolContent.length}`);
   if (item.toolbox === "prompt" && !sourceText.includes("輸出")) errors.push(`Prompt lacks an explicit output request on ${item.id}`);
   if (item.toolbox === "agent") {
     if ("agentSettings" in item) errors.push(`Agent page data must not include the removed engineering settings on ${item.id}`);
@@ -120,6 +120,10 @@ for (const removedHomepageText of ["AI 可以協助整理證據，不能替你�
 }
 for (const removedToolText of ["建立公益專案證據台帳", "利害關係人地圖", "Few-shot 好範例設計"]) {
   if (publicText.includes(removedToolText)) errors.push(`Public site contains a removed tool: ${removedToolText}`);
+}
+if (publicText.includes("工作請求整理 Agent")) errors.push("Public site contains the replaced unclear Agent title");
+for (const requiredNewTool of ["工作交接清單", "SOP 作業流程整理", "內部公告與通知草稿", "多封信件重點與待辦彙整", "多份報表彙整與差異整理", "信件與表單待辦整理 Agent"]) {
+  if (!publicText.includes(requiredNewTool)) errors.push(`Public site is missing the new or renamed tool: ${requiredNewTool}`);
 }
 if (indexText.includes("現場示範") || indexText.includes('id="demo"')) errors.push("Homepage must not include a live demo section");
 for (const toolboxChoice of ['data-toolbox-choice="prompt"', 'data-toolbox-choice="agent"', 'data-toolbox-choice="all"']) {

@@ -5,7 +5,7 @@
 ## 內容
 
 - 4 類 Prompt 工作需求與 3 類 AI Agent 工作流程
-- 17 個 Prompt 工具與 5 個 AI Agent 指令
+- 22 個 Prompt 工具與 5 個 AI Agent 指令
 - Prompt 內含必要輸入、資料邊界、輸出格式與人工驗收
 - AI Agent 指令內含執行時機、指定資料、停止條件與人工確認
 - 搜尋、篩選、收藏、最近瀏覽與一鍵複製

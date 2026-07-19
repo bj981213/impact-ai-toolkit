@@ -126,7 +126,7 @@ function renderPage(item, stage, toolbox) {
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.5・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.6・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

@@ -1,6 +1,6 @@
 {
   "title": "公益影響力 AI 工作箱",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "updatedAt": "2026-07-19",
   "kinds": ["提示詞", "工作流程", "檢查表", "Agent 流程"],
   "toolboxes": [
@@ -8,11 +8,11 @@
     {"id": "agent", "title": "AI Agent 工具箱", "summary": "提供定期或重複工作可直接複製的 Agent 指令。"}
   ],
   "stages": [
-    {"id": "daily", "title": "日常工作", "summary": "整理會議、待辦、進度、文件與對外信件。", "relatedIds": ["meeting-notes", "meeting-agenda", "task-deadline-tracker", "project-status-summary", "document-summary", "document-version-compare", "external-email-reply"]},
+    {"id": "daily", "title": "日常工作", "summary": "整理會議、待辦、進度、文件、信件、交接、SOP、公告與多份報表。", "relatedIds": ["meeting-notes", "meeting-agenda", "task-deadline-tracker", "project-status-summary", "document-summary", "document-version-compare", "external-email-reply", "work-handover-checklist", "sop-process-draft", "internal-announcement", "email-batch-summary", "multi-report-consolidation"]},
     {"id": "project", "title": "專案與活動", "summary": "規劃活動、提案、問卷與意見整理。", "relatedIds": ["event-plan-runbook", "project-proposal-outline", "survey-question-design", "feedback-analysis"]},
     {"id": "reporting", "title": "提案、報告與溝通", "summary": "檢查申請文件、整理主管摘要、成果報告與對外版本。", "relatedIds": ["application-review", "executive-summary", "impact-report-draft", "public-content-rewrite"]},
     {"id": "verification", "title": "事實查核與個資安全", "summary": "發布前查核事實與來源，使用 AI 前檢查個資風險。", "relatedIds": ["fact-check", "privacy-check"]},
-    {"id": "agent-coordination", "title": "會議與專案協作 Agent", "summary": "將固定輸入轉成會議待辦、進度摘要與工作請求。", "relatedIds": ["meeting-minutes-agent", "status-digest-agent", "request-triage-agent"]},
+    {"id": "agent-coordination", "title": "會議與專案協作 Agent", "summary": "將固定輸入轉成會議待辦、進度摘要與信件／表單待辦。", "relatedIds": ["meeting-minutes-agent", "status-digest-agent", "request-triage-agent"]},
     {"id": "agent-documents", "title": "文件管理 Agent", "summary": "在人工確認後協助文件分類、命名與版本整理。", "relatedIds": ["document-intake-agent"]},
     {"id": "agent-monitoring", "title": "公開資訊追蹤 Agent", "summary": "定期整理公開政策、新聞、統計與原始連結。", "relatedIds": ["public-info-monitor-agent"]}
   ],
@@ -100,13 +100,78 @@
       "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
       "summary": "依收件對象、目的、已知事實與希望對方採取的行動草擬信件。",
       "inputs": ["收件對象與關係", "來信或背景摘要", "已確認事實", "希望對方採取的行動與期限"],
-      "sensitiveDataWarning": "不要貼真實 電子郵件、電話、個案或未公開合作條件；寄出前須由本人核對收件人與附件。",
+      "sensitiveDataWarning": "不要貼真實電子郵件地址、電話、個案或未公開合作條件；寄出前須由本人核對收件人與附件。",
       "steps": ["確認回信目的與關係", "鎖定可使用的事實與不能承諾事項", "人工確認語氣、收件人、附件與期限"],
       "prompt": "依下列資料草擬對外信件。不得增加未確認的承諾、日期、費用或合作條件。\n\n【收件對象與關係】[填入角色]\n【來信或背景摘要】[去識別化後填入]\n【已確認事實】[填入]\n【不能承諾的事項】[填入]\n【希望對方採取的行動】[填入]\n【期限】[沒有請填無]\n【語氣】[正式、友善、簡潔等]\n\n請輸出主旨與內文。內文包含來意、必要背景、明確行動、期限及結尾。另列出寄出前必須人工確認的事項。",
-      "outputFormat": ["電子郵件 主旨", "電子郵件 內文", "行動與期限", "寄出前檢查"],
+      "outputFormat": ["電子郵件主旨", "電子郵件內文", "行動與期限", "寄出前檢查"],
       "reviewChecklist": ["是否增加未確認承諾", "行動與期限是否清楚", "語氣是否符合關係", "收件人與附件是否提醒人工確認"],
       "example": {"input": "回覆合作夥伴，確認下週提供活動資料。", "output": "產生主旨、簡潔內文與寄出前檢查。"},
       "extensions": ["改寫成不同正式程度", "產生後續提醒信"], "updatedAt": "2026-07-19"
+    },
+    {
+      "id": "work-handover-checklist", "title": "工作交接清單", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
+      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
+      "summary": "把進行中工作、例行任務、重要文件、期限與待確認事項整理成可執行的交接清單。",
+      "inputs": ["交接期間與角色", "進行中工作", "固定例行工作", "重要文件位置", "未解決問題與期限"],
+      "sensitiveDataWarning": "不得提供密碼、驗證碼、私人聯絡方式或未核准權限；帳號只寫用途與申請窗口。",
+      "steps": ["列出進行中與固定工作", "補上期限、文件位置與完成條件", "由交接雙方逐項確認"],
+      "prompt": "依下列資料整理工作交接清單。沒有明確負責角色、期限、文件位置或完成條件時標示待確認，不得自行補寫。\n\n【交接期間】[填入]\n【交接角色】[使用角色，不放姓名]\n【進行中工作】[填入]\n【固定例行工作】[填入]\n【重要文件與存放位置】[填入]\n【未解決問題】[填入]\n\n請輸出：\n1. 交接總覽。\n2. 進行中工作表：事項／目前狀態／下一步／負責角色／期限／完成條件／文件位置。\n3. 例行工作表：頻率／執行時間／輸入資料／產出／注意事項。\n4. 待申請的系統權限或資源，不得列出密碼。\n5. 交接雙方需確認的問題。",
+      "outputFormat": ["交接總覽", "進行中工作表", "例行工作表", "待確認清單"],
+      "reviewChecklist": ["每項工作是否有下一步與期限", "文件位置是否可找到", "是否誤放帳號密碼或個資", "待確認事項是否明確"],
+      "example": {"input": "活動專案承辦交接，包含報名、場地與合作夥伴聯繫。", "output": "整理進行中事項、固定工作、文件位置與交接確認問題。"},
+      "extensions": ["產生到職第一週清單", "整理離職前完成事項"], "updatedAt": "2026-07-19"
+    },
+    {
+      "id": "sop-process-draft", "title": "SOP 作業流程整理", "stage": "daily", "kind": "工作流程", "toolbox": "prompt",
+      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
+      "summary": "把零散步驟整理成有輸入、操作、判斷、產出與例外處理的 SOP 初稿。",
+      "inputs": ["流程目的與適用角色", "現行操作步驟", "使用的表單或系統", "核准點與例外情況"],
+      "sensitiveDataWarning": "不要貼帳號、密碼、存取權杖、真實個資或未公開系統畫面；以欄位名稱與虛構範例說明。",
+      "steps": ["按實際先後整理現行步驟", "補上每一步的輸入、產出與負責角色", "由實際執行者試走並修正"],
+      "prompt": "依下列資料整理 SOP 初稿。只整理已提供的實際做法；缺少步驟、判斷標準或負責角色時標示待確認，不得自行建立組織規定。\n\n【流程名稱與目的】[填入]\n【適用角色】[填入]\n【啟動條件】[填入]\n【現行操作步驟】[依順序填入]\n【使用表單、文件或系統】[填入]\n【核准點與例外情況】[填入]\n\n請輸出：\n1. 適用範圍與開始條件。\n2. SOP 表格：步驟／負責角色／輸入／操作／判斷標準／產出／下一步。\n3. 例外處理：情況／停止點／通知角色／所需紀錄。\n4. 需要的表單與文件。\n5. 試走時必須確認的問題。",
+      "outputFormat": ["適用範圍", "SOP 步驟表", "例外處理", "試走檢查"],
+      "reviewChecklist": ["步驟是否符合實際順序", "每一步是否有輸入與產出", "判斷與核准點是否明確", "是否誤放密碼或個資"],
+      "example": {"input": "活動報名名單整理與通知流程。", "output": "整理開始條件、逐步操作、例外處理與試走問題。"},
+      "extensions": ["改寫成新人操作手冊", "產生流程改善問題清單"], "updatedAt": "2026-07-19"
+    },
+    {
+      "id": "internal-announcement", "title": "內部公告與通知草稿", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
+      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
+      "summary": "依已確認事實，整理給同仁的公告、行動要求、期限與常見問題。",
+      "inputs": ["公告目的與對象", "已確認事實", "同仁需要採取的行動", "生效日與期限", "聯絡窗口角色"],
+      "sensitiveDataWarning": "不提供同仁姓名、聯絡方式、個別績效、人事決定或未公開敏感資訊；使用角色名稱代替個人。",
+      "steps": ["確認公告目的與必須知道的事實", "寫清楚受影響對象、行動與期限", "由發布單位核對日期與窗口"],
+      "prompt": "依下列資料草擬內部公告。不得增加未確認的政策、日期、例外、承諾或處分；資訊不足處標示待確認。\n\n【公告目的】[填入]\n【閱讀對象】[填入]\n【已確認事實】[填入]\n【生效日與重要日期】[填入]\n【同仁需要採取的行動】[填入]\n【期限】[沒有請填無]\n【聯絡窗口角色】[填入]\n【發布管道】[電子郵件、內部網站或通訊軟體]\n\n請輸出：\n1. 公告標題。\n2. 150 至 300 字公告正文。\n3. 行動清單：適用對象／要做什麼／期限／需要準備的資料。\n4. 三題以內常見問題；無資料可回答時標示待確認。\n5. 發布前核對項目。",
+      "outputFormat": ["公告標題", "公告正文", "行動清單", "常見問題"],
+      "reviewChecklist": ["事實與日期是否已確認", "適用對象與行動是否清楚", "是否增加未核准規定", "窗口與發布管道是否正確"],
+      "example": {"input": "通知同仁下月起使用新版活動申請表。", "output": "產生公告正文、適用對象、開始日期與行動清單。"},
+      "extensions": ["改寫成通訊軟體短訊息", "產生主管口頭說明版"], "updatedAt": "2026-07-19"
+    },
+    {
+      "id": "email-batch-summary", "title": "多封信件重點與待辦彙整", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
+      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude"],
+      "summary": "一次整理多封去識別化信件，分出待處理、需追蹤與僅供參考的內容。",
+      "inputs": ["整理期間與目的", "附代碼的去識別化信件", "今天日期", "已知分工與優先規則"],
+      "sensitiveDataWarning": "移除寄件人姓名、電子郵件地址、電話、簽名檔、附件個資與機密內容；每封只保留代碼。",
+      "steps": ["為每封信保留代碼與日期", "抽出請求、期限與目前狀態", "人工確認優先順序與是否需要回覆"],
+      "prompt": "整理下列多封信件，只使用信件中明確出現的內容。不得自行判定已完成、指定負責人、承諾期限或撰寫不存在的回覆。\n\n【整理期間與目的】[填入]\n【今天日期】[YYYY-MM-DD]\n【分工與優先規則】[沒有請填無]\n【信件內容】[每封使用信件代碼並貼上去識別化內容]\n\n請輸出：\n1. 優先處理：信件代碼／提出角色／請求事項／原文期限／目前狀態／建議下一步。\n2. 需要追蹤：同上欄位，另列缺少資料。\n3. 僅供參考或已處理：信件代碼／判定依據。\n4. 期限衝突、同一事項多封往來與狀態不明項目。\n5. 需要人工確認或展開完整對話串的信件。",
+      "outputFormat": ["優先處理", "需要追蹤", "僅供參考或已處理", "人工確認清單"],
+      "reviewChecklist": ["每項是否保留信件代碼", "期限與狀態是否有原文依據", "同一對話是否避免重複列出", "是否移除寄件人個資"],
+      "example": {"input": "八封去識別化合作信件，包含資料請求、活動確認與發票通知。", "output": "分成優先處理、需要追蹤與僅供參考，保留原文期限與信件代碼。"},
+      "extensions": ["轉成今日待辦清單", "為需要回覆的信件建立草稿"], "updatedAt": "2026-07-19"
+    },
+    {
+      "id": "multi-report-consolidation", "title": "多份報表彙整與差異整理", "stage": "daily", "kind": "提示詞", "toolbox": "prompt",
+      "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT", "Gemini", "Claude", "NotebookLM"],
+      "summary": "彙整不同部門、期間或專案的多份報表，保留來源並找出數字口徑、差異與缺漏。",
+      "inputs": ["彙整目的與使用者", "附代碼的多份報表", "各報表期間與版本", "指標定義與單位", "希望得到的彙整格式"],
+      "sensitiveDataWarning": "先移除姓名、聯絡方式、個案明細、未公開財務資料與機密欄位；每份報表使用代碼並保留核准版本。",
+      "steps": ["為每份報表標示代碼、期間與版本", "先核對指標定義、單位與可比較性", "彙整共同指標並列出衝突與缺漏"],
+      "prompt": "彙整下列多份報表。先檢查期間、單位、欄位定義、計算方式與版本是否一致；口徑不同的數字不得直接相加或比較。每個數字與結論都要保留報表代碼。\n\n【彙整目的與閱讀者】[填入]\n【彙整期間】[填入]\n【指標定義與單位】[填入]\n【報表內容】[每份使用報表代碼，附名稱、期間、版本與內容]\n【希望的彙整格式】[填入]\n\n請輸出：\n1. 可比較性檢查表：報表代碼／期間／版本／單位／定義／可否合併／理由。\n2. 彙整表：指標／各報表數值／合計或比較結果／來源代碼／狀態。\n3. 主要共同點、差異與變化。\n4. 數字衝突、重複、缺漏及不能比較的項目。\n5. 五點以內摘要；無法確認的結論標示未核實。",
+      "outputFormat": ["可比較性檢查", "多報表彙整表", "差異與變化", "衝突與缺漏"],
+      "reviewChecklist": ["期間、單位與定義是否一致", "每個數字是否保留來源代碼", "是否誤加總不可比較數字", "缺漏與衝突是否明確標示"],
+      "example": {"input": "四個專案的月報，服務人次定義與報告期間不完全相同。", "output": "先分出可比較與不可比較項目，再產生附來源代碼的彙整表與差異摘要。"},
+      "extensions": ["產生主管摘要", "建立下期統一報表欄位"], "updatedAt": "2026-07-19"
     },
     {
       "id": "event-plan-runbook", "title": "活動企畫與執行表", "stage": "project", "kind": "工作流程", "toolbox": "prompt",
@@ -265,17 +330,17 @@
       "extensions": ["核准後寄送主管", "建立下週追蹤清單"], "updatedAt": "2026-07-19"
     },
     {
-      "id": "request-triage-agent", "title": "工作請求整理 Agent", "stage": "agent-coordination", "kind": "Agent 流程", "toolbox": "agent",
+      "id": "request-triage-agent", "title": "信件與表單待辦整理 Agent", "stage": "agent-coordination", "kind": "Agent 流程", "toolbox": "agent",
       "audiences": ["企業 CSR／ESG", "基金會", "NPO"], "supportedTools": ["ChatGPT（需 Agent 功能）", "Gemini（需 Agent 功能）", "Claude（需 Agent 功能）"],
-      "summary": "收到核准來源的電子郵件或表單後，整理請求、期限與建議負責角色。",
-      "inputs": ["核准的信箱或表單", "部門分工規則", "期限判讀規則", "人工指派角色"],
-      "sensitiveDataWarning": "只能讀取指定信箱或表單欄位；不得讀取私人信箱、附件個資或自行回信。",
-      "steps": ["新請求進入後抽取事項與期限", "依規則提出分類與建議負責角色", "由人工確認指派與回覆"],
-      "instructions": "只在指定信箱或表單收到符合條件的新請求時執行。抽出提出角色、工作內容、期限、附件與缺少資訊；期限必須保留原文。可依核准的分工規則建議負責角色，但不得自行指派、回信或承諾期限。涉及個資、金錢、申訴或權限不足時停止並轉人工。\n\n【資料來源】[填入]\n【部門分工規則】[填入]\n【期限判讀規則】[填入]\n【人工確認角色】[填入]",
-      "outputFormat": ["請求摘要", "期限與附件", "建議分類", "待人工指派"],
-      "reviewChecklist": ["是否只處理指定來源", "期限是否有原文依據", "是否避免自行指派或回信", "敏感請求是否轉人工"],
-      "example": {"input": "合作表單新增一筆場地借用請求。", "output": "整理請求與期限，等待人工指派。"},
-      "extensions": ["核准後建立待辦", "產生回信草稿"], "updatedAt": "2026-07-19"
+      "summary": "指定共用信箱或表單收到新內容後，自動整理成待辦草稿，交由人員確認。",
+      "inputs": ["指定共用信箱或表單", "需要整理的信件或表單類型", "分類與負責單位參考表", "人工確認角色"],
+      "sensitiveDataWarning": "只能讀取指定共用信箱或核准表單欄位；不得讀取私人信箱、未授權附件或自行回信。",
+      "steps": ["讀取指定來源的新信件或表單", "整理待辦、原文期限、附件與缺少資料", "由人員確認分類、負責角色與回覆"],
+      "instructions": "只在指定的共用信箱或表單收到符合條件的新內容時執行。把每一筆整理成待辦草稿，列出來源代碼、提出角色、希望完成的事項、原文期限、附件與缺少資料。沒有明確期限時標示待確認；不得自行指派負責人、回信或承諾完成日。涉及個資、付款、申訴或無權限附件時停止並轉人工。\n\n【指定共用信箱或表單】[填入]\n【需要整理的內容類型】[填入]\n【分類與負責單位參考表】[填入]\n【人工確認角色】[填入]",
+      "outputFormat": ["待辦草稿", "原文期限與附件", "缺少資料", "待人工確認"],
+      "reviewChecklist": ["是否只讀取指定來源", "待辦與期限是否有原文依據", "是否避免自行指派或回信", "敏感內容是否停止並轉人工"],
+      "example": {"input": "合作信箱收到一封場地借用信與一筆物資申請表。", "output": "分別整理成待辦草稿，保留原文期限並等待人員確認。"},
+      "extensions": ["人工確認後建立待辦", "為需要回覆的項目產生信件草稿"], "updatedAt": "2026-07-19"
     },
     {
       "id": "document-intake-agent", "title": "文件整理 Agent", "stage": "agent-documents", "kind": "Agent 流程", "toolbox": "agent",
