@@ -22,7 +22,10 @@ function renderPage(item, stage, toolbox) {
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
   const detailedPrompt = composeDetailedPrompt(item, toolbox.title);
   const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
-  const promptTitle = item.toolbox === "agent" ? "Agent 設定與系統提示詞" : "完整精準提示詞";
+  const promptTitle = item.toolbox === "agent" ? "Agent 設定與系統提示詞" : "完整提示詞";
+  const promptInstruction = item.toolbox === "agent"
+    ? "先替換所有 [填入] 欄位，再貼入 Agent 的自訂指令或系統設定。沒有設定區時，貼到新對話的第一則訊息；先用虛構資料測試。"
+    : "先替換所有 [填入] 欄位，再整段貼到組織核准使用的 AI。保留執行規格，不要只貼任務段落。";
 
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -80,9 +83,9 @@ function renderPage(item, stage, toolbox) {
 ${agentSettings}
 
       <section class="detail-section full" id="prompt-section">
-        <p class="eyebrow">精準執行版・跨工具通用</p>
+        <p class="eyebrow">執行版・跨工具通用</p>
         <h2>${promptTitle}</h2>
-        <p>已整合角色、資料邊界、必要輸入、執行規則、固定輸出、人工驗收與不足資料處理。</p>
+        <p>${promptInstruction}</p>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#promptText">複製完整設定</button>
           <div class="prompt-text" id="promptText">${escapeHtml(detailedPrompt)}</div>
@@ -119,7 +122,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.3・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 1.4・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
