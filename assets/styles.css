@@ -76,12 +76,11 @@ h1 span { color: var(--terracotta); }
 .hero-card { padding: 2rem; border-radius: 24px; background: var(--teal-950); color: var(--white); box-shadow: 14px 16px 0 var(--terracotta-light); }
 .step-label { margin: 0 0 1rem; color: #b8d4ce; font-size: .78rem; font-weight: 800; letter-spacing: .15em; }
 .hero-card h2 { margin-bottom: .8rem; color: var(--white); font-family: "Iowan Old Style", "Songti TC", serif; font-size: clamp(1.7rem, 3vw, 2.25rem); }
-.hero-card > p:not(.step-label):not(.hero-note) { margin: 0; color: #bdd2ce; }
-.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 1.5rem 0 0; }
+.hero-card > p:not(.step-label) { margin: 0; color: #bdd2ce; }
+.hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin: 1.5rem 0 0; }
 .hero-stats div { padding: .8rem .45rem; border-radius: 12px; background: rgba(255,255,255,.08); text-align: center; }
 .hero-stats dt { font-family: Georgia, serif; font-size: 1.65rem; font-weight: 700; }
 .hero-stats dd { margin: .15rem 0 0; color: #bdd2ce; font-size: .72rem; }
-.hero-note { margin: 1.2rem 0 0; color: #f6d7c9; font-family: "Iowan Old Style", "Songti TC", serif; font-size: 1.05rem; }
 
 .section-heading { display: grid; grid-template-columns: 1fr minmax(260px, 440px); gap: 2rem; align-items: end; margin-bottom: 2rem; }
 .section-heading.compact { align-items: center; }
@@ -230,7 +229,6 @@ footer p:last-child { text-align: right; }
   .hero-card h2 { font-size: 1.55rem; }
   .hero-stats { margin-top: 1rem; }
   .hero-stats div { padding: .6rem .25rem; }
-  .hero-note { margin-top: .85rem; font-size: .92rem; }
   .toolbox-choice { grid-template-columns: auto 1fr; min-height: 130px; padding: 1.9rem 1.2rem 1.2rem; }
   .toolbox-arrow { display: none; }
   .toolbox-number { width: 52px; height: 52px; border-radius: 15px; font-size: 1.45rem; }

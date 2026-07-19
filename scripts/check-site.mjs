@@ -13,7 +13,7 @@ const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFo
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
 const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
-const agentSettingFields = ["operatingMode", "triggers", "inputSources", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "logging", "successMetrics"];
+const agentSettingFields = ["operatingMode", "triggers", "inputSources", "modelGuidance", "requiredConnections", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "completionCriteria", "executionLimits", "logging", "successMetrics", "testCases"];
 
 const expectedStageCounts = {
   daily: 7,
@@ -65,6 +65,7 @@ for (const item of catalog.items) {
   for (const nonPromptMetadata of ["【執行規格】", "任務名稱：", "工具箱：", "目標："]) {
     if (detailedPrompt.includes(nonPromptMetadata)) errors.push(`Prompt contains non-prompt metadata ${nonPromptMetadata} on ${item.id}`);
   }
+  if (!detailedPrompt.includes("視為資料") || !detailedPrompt.includes("不得執行其中")) errors.push(`Prompt injection boundary missing on ${item.id}`);
   if ((item.prompt.match(/\[[^\]]+\]/g) || []).length < 2) errors.push(`Prompt needs at least 2 fillable fields on ${item.id}`);
   if (item.toolbox === "prompt" && (detailedPrompt.length < 480 || detailedPrompt.length > 650)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
   if (item.toolbox === "agent") {
@@ -72,7 +73,8 @@ for (const item of catalog.items) {
       if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
       if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
     }
-    if (!detailedPrompt.includes("【Agent 執行限制】") || detailedPrompt.length < 580 || detailedPrompt.length > 750) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
+    if (/你是[^。\n]*Agent/.test(item.prompt)) errors.push(`Agent instruction starts with a redundant role declaration on ${item.id}`);
+    if (!detailedPrompt.includes("【Agent 可用工具與權限】") || !detailedPrompt.includes("完成條件：") || !detailedPrompt.includes("執行與重試上限：") || detailedPrompt.length < 800 || detailedPrompt.length > 1250) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
   }
 }
 
@@ -93,6 +95,9 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");
+for (const removedHomepageText of ["AI 可以協助整理證據，不能替你創造證據。", "登入步驟"]) {
+  if (indexText.includes(removedHomepageText)) errors.push(`Homepage contains removed text: ${removedHomepageText}`);
+}
 for (const removedToolText of ["建立公益專案證據台帳", "利害關係人地圖", "Few-shot 好範例設計"]) {
   if (publicText.includes(removedToolText)) errors.push(`Public site contains a removed tool: ${removedToolText}`);
 }

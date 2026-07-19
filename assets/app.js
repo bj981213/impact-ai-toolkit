@@ -184,7 +184,7 @@ function renderCard(item) {
       <p class="summary">${escapeHtml(item.summary)}</p>
       <div class="card-tools" aria-label="支援工具">${(item.supportedTools || []).map((tool) => `<span class="tool-chip">${escapeHtml(tool)}</span>`).join("")}</div>
       <div class="card-actions">
-        <button type="button" data-copy="${escapeAttr(item.id)}">複製提示詞</button>
+        <button type="button" data-copy="${escapeAttr(item.id)}">${item.toolbox === "agent" ? "複製 Agent 設定" : "複製提示詞"}</button>
         <a href="tools/${escapeAttr(item.id)}.html" data-open="${escapeAttr(item.id)}">開啟工具</a>
       </div>
     </article>
@@ -195,7 +195,7 @@ function handleDocumentClick(event) {
   const copyButton = event.target.closest("[data-copy]");
   if (copyButton) {
     const item = findItem(copyButton.dataset.copy);
-    if (item) copyText(composeDetailedPrompt(item), `已複製「${item.title}」提示詞`);
+    if (item) copyText(composeDetailedPrompt(item), `已複製「${item.title}」${item.toolbox === "agent" ? "設定" : "提示詞"}`);
     return;
   }
 
@@ -279,7 +279,7 @@ function updateToolboxCopy() {
     },
     agent: {
       needsEyebrow: "AI Agent 工具箱",
-      needsDescription: "先判斷是否適合自動化，再設計觸發、資料、輸出與必須由人確認的關卡。",
+      needsDescription: "需要讀取工具、依內容做有限判斷並重複執行時，再設計觸發、權限、輸出與人工關卡。固定規則優先使用一般自動化。",
       libraryEyebrow: "5 套 Agent 設計流程",
       libraryTitle: "開啟 AI Agent 工具箱",
       libraryDescription: "網站提供 Agent 設定藍圖；實際自動執行仍須設定連接器、帳號權限與人工核准。",

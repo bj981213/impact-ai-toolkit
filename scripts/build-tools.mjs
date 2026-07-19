@@ -27,9 +27,9 @@ function renderPage(item, stage, toolbox) {
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
   const detailedPrompt = composeDetailedPrompt(item);
   const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
-  const promptTitle = item.toolbox === "agent" ? "Agent 設定與系統提示詞" : "完整提示詞";
+  const promptTitle = item.toolbox === "agent" ? "Agent 任務指令與執行限制" : "完整提示詞";
   const promptInstruction = item.toolbox === "agent"
-    ? "先替換所有以 [ ] 標示的欄位，再貼入 Agent 的自訂指令或系統設定。沒有設定區時，貼到新對話的第一則訊息；先用虛構資料測試。"
+    ? "先替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。工具、連接器、觸發與權限必須在平台中另外設定；先以測試資料通過下方案例再啟用。"
     : "先替換所有以 [ ] 標示的欄位，再整段貼到組織核准使用的 AI。保留執行限制與交付前檢查，不要只貼任務段落。";
 
   return `<!doctype html>
@@ -127,7 +127,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.0・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.1・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -152,13 +152,18 @@ function renderAgentSettings(settings) {
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3>${renderList(settings.triggers)}</div>
           <div><h3>允許的資料來源</h3>${renderList(settings.inputSources)}</div>
+          <div><h3>模型選擇與變更</h3>${renderList(settings.modelGuidance)}</div>
+          <div><h3>必要連接與權限</h3>${renderList(settings.requiredConnections)}</div>
           <div><h3>狀態流程</h3>${renderList(settings.states, "ol")}</div>
           <div><h3>允許執行</h3>${renderList(settings.allowedActions)}</div>
           <div class="agent-setting-warning"><h3>禁止自動執行</h3>${renderList(settings.forbiddenActions)}</div>
           <div class="agent-setting-warning"><h3>必須人工核准</h3>${renderList(settings.humanApprovals)}</div>
           <div><h3>例外與失敗處理</h3>${renderList(settings.exceptionHandling)}</div>
+          <div><h3>完成條件</h3>${renderList(settings.completionCriteria)}</div>
+          <div><h3>執行與重試上限</h3>${renderList(settings.executionLimits)}</div>
           <div><h3>最低紀錄要求</h3>${renderList(settings.logging)}</div>
           <div><h3>成效指標</h3>${renderList(settings.successMetrics)}</div>
+          <div><h3>上線前測試案例</h3>${renderList(settings.testCases)}</div>
         </div>
       </section>`;
 }
