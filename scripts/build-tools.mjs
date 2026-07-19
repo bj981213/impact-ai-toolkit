@@ -48,13 +48,13 @@ function renderPage(item, stage, toolbox) {
 <body class="detail-body" data-item-id="${escapeAttr(item.id)}" data-item-title="${escapeAttr(item.title)}" data-item-kind="${escapeAttr(item.kind)}" data-item-toolbox="${escapeAttr(item.toolbox)}">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
-    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+    <a class="brand" href="../index.html?v=2.8.0" aria-label="回到公益影響力 AI 工作箱首頁">
       <span class="brand-mark" aria-hidden="true">AI</span>
       <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
     </a>
   </header>
   <main class="detail-main" id="main">
-    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <a class="detail-back" href="../index.html?v=2.8.0#library">← 回到工具箱</a>
     <section class="detail-hero">
       <div class="detail-tags"><span>${escapeHtml(toolbox.title)}</span><span>${escapeHtml(item.kind)}</span><span>${escapeHtml(stage.title)}</span>${tools}</div>
       <h1>${escapeHtml(item.title)}</h1>

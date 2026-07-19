@@ -120,7 +120,7 @@ function renderNeedMap() {
       <div class="need-links">
         ${stage.visibleIds.map((id) => {
           const item = findItem(id);
-          return item ? `<a href="tools/${escapeAttr(item.id)}.html" data-open="${escapeAttr(item.id)}">${escapeHtml(item.title)}</a>` : "";
+          return item ? `<a href="tools/${escapeAttr(item.id)}.html?v=2.8.0" data-open="${escapeAttr(item.id)}">${escapeHtml(item.title)}</a>` : "";
         }).join("")}
       </div>
     </article>
@@ -179,7 +179,7 @@ function renderCard(item) {
       <div class="card-tools" aria-label="支援工具">${(item.supportedTools || []).map((tool) => `<span class="tool-chip">${escapeHtml(tool)}</span>`).join("")}</div>
       <div class="card-actions">
         <button type="button" data-copy="${escapeAttr(item.id)}">${item.toolbox === "agent" ? "複製 Agent 指令" : "複製提示詞"}</button>
-        <a href="tools/${escapeAttr(item.id)}.html" data-open="${escapeAttr(item.id)}">開啟工具</a>
+        <a href="tools/${escapeAttr(item.id)}.html?v=2.8.0" data-open="${escapeAttr(item.id)}">開啟工具</a>
       </div>
     </article>
   `;
@@ -226,7 +226,7 @@ function addRecent(item) {
 function renderRecent() {
   const entries = state.recent.map((entry) => ({ ...entry, item: findItem(entry.id) })).filter((entry) => entry.item);
   $("#recentList").innerHTML = entries.length
-    ? entries.map((entry) => `<li><a href="tools/${escapeAttr(entry.id)}.html" data-open="${escapeAttr(entry.id)}">${escapeHtml(entry.title)}</a><br><span>${escapeHtml(entry.kind)}・${formatDate(entry.visitedAt)}</span></li>`).join("")
+    ? entries.map((entry) => `<li><a href="tools/${escapeAttr(entry.id)}.html?v=2.8.0" data-open="${escapeAttr(entry.id)}">${escapeHtml(entry.title)}</a><br><span>${escapeHtml(entry.kind)}・${formatDate(entry.visitedAt)}</span></li>`).join("")
     : "<li><span>尚無瀏覽紀錄。開啟工具後會顯示在這裡。</span></li>";
 }
 

@@ -116,6 +116,9 @@ for (const cacheMarker of ["assets/app.js?v=2.8.0", "assets/styles.css?v=2.8.0",
   if (!indexText.includes(cacheMarker)) errors.push(`Homepage is missing cache refresh marker: ${cacheMarker}`);
 }
 if (!appText.includes('data/catalog.json?v=2.8.0') || !appText.includes('cache: "no-store"')) errors.push("Catalog request must bypass stale browser cache");
+for (const versionedLink of ['./?v=2.8.0', 'tools/${escapeAttr(item.id)}.html?v=2.8.0']) {
+  if (!(indexText + appText).includes(versionedLink)) errors.push(`Public navigation is missing cache-busting link: ${versionedLink}`);
+}
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");
 for (const removedEngineeringText of ["Agent Engineering", "AI Agent 專用", "執行設定、護欄與驗證循環", "護欄不能只寫在指令裡", "平台護欄", "指令護欄", "驗證護欄", "Agent 有限驗證流程", "Guardrails", "Verification Loop", "Agent 設定藍圖", "設定的一部分", "模型選擇與變更", "必要連接與權限", "狀態流程", "執行與重試上限", "最低紀錄要求", "成效指標", "上線前測試案例"]) {
   if (publicText.includes(removedEngineeringText)) errors.push(`Public site contains removed Agent engineering text: ${removedEngineeringText}`);
