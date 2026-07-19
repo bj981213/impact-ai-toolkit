@@ -1,9 +1,8 @@
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { composeDetailedPrompt } from "../assets/prompt-utils.js";
 
 const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
-const demo = JSON.parse(await readFile("data/demo-project.json", "utf8"));
 const errors = [];
 const requiredFields = [
   "id", "title", "stage", "kind", "toolbox", "audiences", "supportedTools", "summary",
@@ -16,17 +15,30 @@ const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
 const agentSettingFields = ["operatingMode", "triggers", "inputSources", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "logging", "successMetrics"];
 
-if (catalog.items.length !== 25) errors.push(`Expected 25 tools, got ${catalog.items.length}`);
-if (catalog.stages.length !== 5) errors.push(`Expected 5 stages, got ${catalog.stages.length}`);
+const expectedStageCounts = {
+  daily: 7,
+  project: 4,
+  reporting: 4,
+  verification: 2,
+  "agent-coordination": 3,
+  "agent-documents": 1,
+  "agent-monitoring": 1
+};
+
+if (catalog.items.length !== 22) errors.push(`Expected 22 tools, got ${catalog.items.length}`);
+if (catalog.stages.length !== 7) errors.push(`Expected 7 categories, got ${catalog.stages.length}`);
 if (catalog.toolboxes.length !== 2 || !toolboxIds.has("prompt") || !toolboxIds.has("agent")) errors.push("Catalog must define prompt and agent toolboxes");
-if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 20) errors.push("Prompt toolbox must contain 20 tools");
+if (catalog.items.filter((item) => item.toolbox === "prompt").length !== 17) errors.push("Prompt toolbox must contain 17 tools");
 if (catalog.items.filter((item) => item.toolbox === "agent").length !== 5) errors.push("AI Agent toolbox must contain 5 tools");
 
 for (const stage of catalog.stages) {
   const count = catalog.items.filter((item) => item.stage === stage.id).length;
-  if (count !== 5) errors.push(`Stage ${stage.id} should contain 5 tools, got ${count}`);
+  if (count !== expectedStageCounts[stage.id]) errors.push(`Category ${stage.id} should contain ${expectedStageCounts[stage.id]} tools, got ${count}`);
+  if ((stage.relatedIds || []).length !== count) errors.push(`Category ${stage.id} relatedIds do not match its tools`);
   for (const relatedId of stage.relatedIds || []) {
-    if (!catalog.items.some((item) => item.id === relatedId)) errors.push(`Unknown related ID ${relatedId} in ${stage.id}`);
+    const relatedItem = catalog.items.find((item) => item.id === relatedId);
+    if (!relatedItem) errors.push(`Unknown related ID ${relatedId} in ${stage.id}`);
+    else if (relatedItem.stage !== stage.id) errors.push(`Related ID ${relatedId} is assigned to another category`);
   }
 }
 
@@ -54,17 +66,19 @@ for (const item of catalog.items) {
     if (detailedPrompt.includes(nonPromptMetadata)) errors.push(`Prompt contains non-prompt metadata ${nonPromptMetadata} on ${item.id}`);
   }
   if ((item.prompt.match(/\[[^\]]+\]/g) || []).length < 2) errors.push(`Prompt needs at least 2 fillable fields on ${item.id}`);
-  if (item.toolbox === "prompt" && (detailedPrompt.length < 500 || detailedPrompt.length > 750)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
+  if (item.toolbox === "prompt" && (detailedPrompt.length < 480 || detailedPrompt.length > 650)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
   if (item.toolbox === "agent") {
     for (const field of agentSettingFields) {
       if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
       if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
     }
-    if (!detailedPrompt.includes("【Agent 執行限制】") || detailedPrompt.length < 850 || detailedPrompt.length > 1100) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
+    if (!detailedPrompt.includes("【Agent 執行限制】") || detailedPrompt.length < 580 || detailedPrompt.length > 750) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
   }
 }
 
-if (!demo.fictional || !demo.notice.includes("完全虛構")) errors.push("Demo data must be explicitly marked as completely fictional");
+const generatedPages = (await readdir("tools")).filter((file) => file.endsWith(".html")).sort();
+const expectedPages = catalog.items.map((item) => `${item.id}.html`).sort();
+if (generatedPages.join("\n") !== expectedPages.join("\n")) errors.push("Generated tool pages do not exactly match the current catalog");
 
 const publicFiles = [
   "index.html",
@@ -73,13 +87,15 @@ const publicFiles = [
   "assets/prompt-utils.js",
   "assets/styles.css",
   "data/catalog.json",
-  "data/demo-project.json",
   ...catalog.items.map((item) => `tools/${item.id}.html`)
 ];
 
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 if (publicText.includes("精準")) errors.push("Public site must not use the removed promotional term: 精準");
+for (const removedToolText of ["建立公益專案證據台帳", "利害關係人地圖", "Few-shot 好範例設計"]) {
+  if (publicText.includes(removedToolText)) errors.push(`Public site contains a removed tool: ${removedToolText}`);
+}
 if (indexText.includes("現場示範") || indexText.includes('id="demo"')) errors.push("Homepage must not include a live demo section");
 for (const toolboxChoice of ['data-toolbox-choice="prompt"', 'data-toolbox-choice="agent"', 'data-toolbox-choice="all"']) {
   if (!indexText.includes(toolboxChoice)) errors.push(`Homepage missing toolbox choice: ${toolboxChoice}`);
@@ -100,10 +116,7 @@ for (const forbidden of ["中國信託", "CTBC", "聯經出版", "聯經報系",
 if (/\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b/.test(publicText)) errors.push("Email address found in public site");
 if (/09\d{2}[- ]?\d{3}[- ]?\d{3}/.test(publicText)) errors.push("Taiwan mobile number found in public site");
 
-const sroi = catalog.items.find((item) => item.id === "sroi-evidence-gap");
-if (!sroi || !sroi.prompt.includes("禁止") || !sroi.prompt.includes("財務代理值")) {
-  errors.push("SROI tool must explicitly prohibit invented financial proxies");
-}
+if (catalog.stages.find((stage) => stage.id === "verification")?.title !== "事實查核與個資安全") errors.push("Verification category title is incorrect");
 
 for (const requiredFile of ["index.html", "assets/styles.css", "assets/app.js", "assets/detail.js", "講師使用說明.md"]) {
   if (!existsSync(requiredFile)) errors.push(`Missing required site file: ${requiredFile}`);

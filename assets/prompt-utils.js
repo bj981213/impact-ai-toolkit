@@ -28,7 +28,7 @@ ${bullets(settings.allowedActions)}
 禁止自動執行：
 ${bullets(settings.forbiddenActions)}
 
-必須人工批准：
+必須人工核准：
 ${bullets(settings.humanApprovals)}
 
 停止並轉人工處理：

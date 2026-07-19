@@ -93,8 +93,18 @@ function bindEvents() {
 }
 
 function populateFilters() {
-  $("#stageFilter").insertAdjacentHTML("beforeend", state.stages.map((stage) => `<option value="${escapeAttr(stage.id)}">${escapeHtml(stage.title)}</option>`).join(""));
+  updateStageFilter();
   $("#kindFilter").insertAdjacentHTML("beforeend", (state.catalog.kinds || []).map((kind) => `<option value="${escapeAttr(kind)}">${escapeHtml(kind)}</option>`).join(""));
+}
+
+function updateStageFilter() {
+  const visibleStages = state.stages.filter((stage) =>
+    state.toolbox === "all" || state.items.some((item) => item.stage === stage.id && item.toolbox === state.toolbox)
+  );
+  $("#stageFilter").innerHTML = `<option value="all">全部分類</option>${visibleStages
+    .map((stage) => `<option value="${escapeAttr(stage.id)}">${escapeHtml(stage.title)}</option>`)
+    .join("")}`;
+  $("#stageFilter").value = state.stage;
 }
 
 function renderNeedMap() {
@@ -245,7 +255,7 @@ function selectToolbox(toolbox) {
   state.stage = "all";
   state.kind = "all";
   state.favoritesOnly = false;
-  $("#stageFilter").value = "all";
+  updateStageFilter();
   $("#kindFilter").value = "all";
   $("#favOnlyBtn").setAttribute("aria-pressed", "false");
   document.querySelectorAll("[data-toolbox-choice]").forEach((button) => {
@@ -262,26 +272,26 @@ function updateToolboxCopy() {
     prompt: {
       needsEyebrow: "Prompt 工具箱",
       needsDescription: "從單次工作開始。選出你現在最需要完成的任務，再開啟對應提示詞。",
-      libraryEyebrow: "20 套 Prompt 流程",
+      libraryEyebrow: "17 套 Prompt 流程",
       libraryTitle: "開啟 Prompt 工具箱",
       libraryDescription: "複製提示詞後，貼到組織核准使用的 AI。請勿貼入未去識別化的敏感資料。",
-      activeStatus: "Prompt 工具箱・20 個工具"
+      activeStatus: "Prompt 工具箱・17 個工具"
     },
     agent: {
       needsEyebrow: "AI Agent 工具箱",
       needsDescription: "先判斷是否適合自動化，再設計觸發、資料、輸出與必須由人確認的關卡。",
       libraryEyebrow: "5 套 Agent 設計流程",
       libraryTitle: "開啟 AI Agent 工具箱",
-      libraryDescription: "這裡提供 Agent 規劃藍圖，不會直接執行外部動作，也不需要提供 API。",
+      libraryDescription: "網站提供 Agent 設定藍圖；實際自動執行仍須設定連接器、帳號權限與人工核准。",
       activeStatus: "AI Agent 工具箱・5 個工具"
     },
     all: {
       needsEyebrow: "全部工具",
-      needsDescription: "依工作階段瀏覽 Prompt 與 AI Agent 的全部流程。",
-      libraryEyebrow: "25 套可複用流程",
+      needsDescription: "依工作分類瀏覽 Prompt 與 AI Agent 的全部流程。",
+      libraryEyebrow: "22 套可複用流程",
       libraryTitle: "開啟全部工具",
       libraryDescription: "依任務選擇單次 Prompt 或可重複執行的 Agent 規劃流程。",
-      activeStatus: "全部分類・25 個工具"
+      activeStatus: "全部分類・22 個工具"
     }
   }[state.toolbox];
   $("#needsEyebrow").textContent = copy.needsEyebrow;

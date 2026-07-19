@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 import { composeDetailedPrompt } from "../assets/prompt-utils.js";
 
 const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
@@ -6,6 +6,11 @@ const stageMap = new Map(catalog.stages.map((stage) => [stage.id, stage]));
 const toolboxMap = new Map(catalog.toolboxes.map((toolbox) => [toolbox.id, toolbox]));
 
 await mkdir("tools", { recursive: true });
+
+const currentPages = new Set(catalog.items.map((item) => `${item.id}.html`));
+for (const file of await readdir("tools")) {
+  if (file.endsWith(".html") && !currentPages.has(file)) await unlink(`tools/${file}`);
+}
 
 for (const item of catalog.items) {
   const stage = stageMap.get(item.stage);
@@ -121,8 +126,8 @@ ${agentSettings}
     </div>
   </main>
   <footer class="detail-footer">
-    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.5・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
+    <p>版本 2.0・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -150,7 +155,7 @@ function renderAgentSettings(settings) {
           <div><h3>狀態流程</h3>${renderList(settings.states, "ol")}</div>
           <div><h3>允許執行</h3>${renderList(settings.allowedActions)}</div>
           <div class="agent-setting-warning"><h3>禁止自動執行</h3>${renderList(settings.forbiddenActions)}</div>
-          <div class="agent-setting-warning"><h3>必須人工批准</h3>${renderList(settings.humanApprovals)}</div>
+          <div class="agent-setting-warning"><h3>必須人工核准</h3>${renderList(settings.humanApprovals)}</div>
           <div><h3>例外與失敗處理</h3>${renderList(settings.exceptionHandling)}</div>
           <div><h3>最低紀錄要求</h3>${renderList(settings.logging)}</div>
           <div><h3>成效指標</h3>${renderList(settings.successMetrics)}</div>

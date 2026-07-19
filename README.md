@@ -4,8 +4,8 @@
 
 ## 內容
 
-- 5 類公益工作需求地圖
-- 20 個 Prompt 工具與 5 個 AI Agent 規劃工具
+- 4 類 Prompt 工作需求與 3 類 AI Agent 工作流程
+- 17 個 Prompt 工具與 5 個 AI Agent 設定藍圖
 - Prompt 內含角色、資料邊界、必要輸入、輸出契約與人工驗收
 - AI Agent 另含觸發條件、狀態流程、權限邊界、例外處理、紀錄與成效指標
 - 搜尋、篩選、收藏、最近瀏覽與一鍵複製
@@ -26,10 +26,10 @@ npm run serve
 
 原始碼：<https://github.com/bj981213/impact-ai-toolkit>
 
-本資料夾使用獨立 repository，推送到 `main` 後會由 GitHub Actions 自動更新 GitHub Pages。不得推送到外層中國信託網站既有的 GitHub origin。
+本資料夾使用獨立 repository，推送到 `main` 後會由 GitHub Actions 自動更新 GitHub Pages。不得推送到其他既有專案的 GitHub origin。
 
 ## 內容原則
 
-- AI 只協助整理、提問與草擬，不代替專業判斷。
-- 不得要求 AI 虛構受益者故事、財務代理值、因果關係或 SROI 金額。
+- AI 只協助整理、提問、草擬與檢查，不代替專業判斷。
+- 不得要求 AI 虛構人物、數字、引述、來源、研究、政策或因果關係。
 - 真實資料使用前應完成去識別化，並遵循組織內部資安規範。
