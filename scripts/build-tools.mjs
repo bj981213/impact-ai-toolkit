@@ -110,7 +110,7 @@ function renderPage(item, stage) {
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.0・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 1.1・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="設計讓人與 AI 都找得到、找得準、能溯源的活動欄位與命名規則。">
+  <meta name="theme-color" content="#164f4a">
+  <title>活動紀錄表與檔案規範｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="activity-data-standard" data-item-title="活動紀錄表與檔案規範" data-item-kind="工作流">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>工作流</span><span>資料整理與證據</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>活動紀錄表與檔案規範</h1>
+      <p>設計讓人與 AI 都找得到、找得準、能溯源的活動欄位與命名規則。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>設計讓人與 AI 都找得到、找得準、能溯源的活動欄位與命名規則。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>專案名稱與活動類型</li><li>未來要回答的成果問題</li><li>目前紀錄欄位或表單</li><li>更新與保管角色</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>先設計欄位結構，不貼真實名冊；只蒐集確實需要的個資，並依組織規範保存。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>從未來要回答的問題反推必要欄位</li><li>為欄位補上定義、格式、來源與缺漏標示</li><li>訂定檔名、版本、日期與責任角色規則</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">請為【專案名稱】設計一份符合資料治理原則的活動紀錄表，未來會用於 AI 檢索、報告撰寫與歷年趨勢比較。
+
+【活動類型】[填入]
+【未來要回答的問題】[填入]
+【現有欄位】[填入]
+【更新與保管角色】[填入]
+
+請產出欄位表：欄位名稱／定義／資料型態／允許格式／虛構範例值／來源／是否必填／缺漏標示／個資風險。必須包含版本、更新日期、資料來源與責任角色。
+
+再提出：
+1. 檔名規則「專案名稱_日期_版本」。
+2. 日期、對象、人次、費用與活動類型的標準格式。
+3. 不留空白的缺漏值規則。
+4. 舊版封存與最新版辨識方式。
+5. 說明此設計如何做到找得到、找得準、能溯源。
+
+不要要求加入與成果問題無關的個資欄位。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>欄位規格表</li><li>檔名與版本規則</li><li>缺漏值規則</li><li>資料治理說明</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 每個欄位是否有明確定義與格式</li><li>□ 版本、日期、來源是否完整</li><li>□ 缺漏是否使用一致代碼而非留白</li><li>□ 是否蒐集了未來不會使用的個資</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>閱讀活動紀錄散落在不同試算表，日期與人次格式不一。</p></div>
+          <div><h3>合理輸出</h3><p>統一活動日期為 YYYY-MM-DD、人數拆成報名與完成、每筆附來源檔與更新日期，缺值使用待補或不適用。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>輸出成試算表欄位規格</li><li>搭配專案證據清單建立單一資料源</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

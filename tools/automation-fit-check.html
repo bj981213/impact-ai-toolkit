@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="把專案進度與證據濃縮成主管能快速決策的一頁內容。">
+  <meta name="description" content="依頻率、規律性、格式與風險判斷任務適合手動、半自動或自動化。">
   <meta name="theme-color" content="#164f4a">
-  <title>一頁主管摘要｜公益影響力 AI 工作箱</title>
+  <title>自動化適合度評估｜公益影響力 AI 工作箱</title>
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="../assets/detail.js" type="module"></script>
 </head>
-<body class="detail-body" data-item-id="executive-one-pager" data-item-title="一頁主管摘要" data-item-kind="提示詞">
+<body class="detail-body" data-item-id="automation-fit-check" data-item-title="自動化適合度評估" data-item-kind="檢查表">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
     <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
@@ -20,9 +20,9 @@
   <main class="detail-main" id="main">
     <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
     <section class="detail-hero">
-      <div class="detail-tags"><span>提示詞</span><span>成果報告與分眾溝通</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>NotebookLM</span></div>
-      <h1>一頁主管摘要</h1>
-      <p>把專案進度與證據濃縮成主管能快速決策的一頁內容。</p>
+      <div class="detail-tags"><span>檢查表</span><span>專案設計與目標</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>自動化適合度評估</h1>
+      <p>依頻率、規律性、格式與風險判斷任務適合手動、半自動或自動化。</p>
     </section>
 
     <div class="detail-grid">
@@ -30,25 +30,25 @@
         <p class="eyebrow">適用情境</p>
         <h2>誰會用到？</h2>
         <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>把專案進度與證據濃縮成主管能快速決策的一頁內容。</p>
+        <p>依頻率、規律性、格式與風險判斷任務適合手動、半自動或自動化。</p>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">準備資料</p>
         <h2>開始前請備妥</h2>
-        <ul><li>專案目標與期間</li><li>已查核的關鍵數字</li><li>主要成果與限制</li><li>需要主管決定的事項</li></ul>
+        <ul><li>候選任務清單</li><li>每項任務頻率與耗時</li><li>輸入與輸出格式</li><li>錯誤後果與敏感程度</li></ul>
       </section>
 
       <section class="detail-section warning full">
         <p class="eyebrow terracotta">不能直接上傳</p>
         <h2>個資與機密提醒</h2>
-        <p>只提供核准分享的彙總內容；機密預算、個案與合作談判資訊需依組織規範處理。</p>
+        <p>評估時只需提供任務類型與風險，不需要提供真實業務資料或帳號權限。</p>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">三步上手</p>
         <h2>怎麼使用這個流程</h2>
-        <ol><li>先完成數字與證據查核</li><li>將決策需求放在提示詞最前面</li><li>檢查 AI 是否刪除了重要限制</li></ol>
+        <ol><li>列出三至十項重複任務</li><li>逐項評估規律性、格式穩定度與風險</li><li>先挑低風險高重複任務做半自動測試</li></ol>
       </section>
 
       <section class="detail-section full" id="prompt-section">
@@ -56,56 +56,52 @@
         <h2>可直接貼上的提示詞</h2>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
-          <div class="prompt-text" id="promptText">請把以下公益專案資料整理成一頁主管摘要。只使用我提供且已查核的資訊，不增加數字、因果、引述或外部背景。
+          <div class="prompt-text" id="promptText">請評估下列公益工作是否適合使用 AI 半自動或自動化。不要因為技術上可能就直接建議自動化。
 
-【專案目標與期間】[填入]
-【三項關鍵進度】[填入]
-【已查核成果與來源】[填入]
-【限制與風險】[填入]
-【需要主管決定或支持的事項】[填入]
+【候選任務】[逐項填入]
+【頻率與每次耗時】[填入]
+【輸入來源與格式】[填入]
+【輸出格式與使用者】[填入]
+【資料敏感度】[填入]
+【錯誤可能造成的後果】[填入]
 
-請依序輸出：
-1. 一句話結論。
-2. 三項關鍵進度（數字需附來源代碼）。
-3. 已觀察到的成果與不能下的結論。
-4. 風險與資料缺口。
-5. 需要主管決定的事項（選項、影響、期限）。
+請依高頻重複、規律可預期、輸出格式固定、耗時但不複雜四項評分，再加入個資風險、外部發布、不可逆操作與專業判斷四項風險。
 
-全文控制在 650 字內，使用繁體中文與台灣用語。</div>
+輸出表格：任務／適合度／建議層級（手動、AI 輔助、半自動、暫不自動化）／理由／必要人工關卡／最小測試方式。高風險任務即使重複，也不得建議無人監督自動執行。</div>
         </div>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">建議格式</p>
         <h2>應該得到什麼</h2>
-        <ul><li>一句話結論</li><li>關鍵進度</li><li>成果與限制</li><li>決策事項</li></ul>
+        <ul><li>任務適合度矩陣</li><li>建議自動化層級</li><li>風險與人工關卡</li><li>試辦優先順序</li></ul>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">人工負責</p>
         <h2>交付前驗收</h2>
-        <ul><li>□ 主管需要決定什麼是否一眼可見</li><li>□ 所有數字是否附來源</li><li>□ 重要限制是否被保留</li><li>□ 是否把活動量誤寫成影響力</li></ul>
+        <ul><li>□ 是否把高頻誤當成一定適合自動化</li><li>□ 輸入格式是否真的穩定</li><li>□ 錯誤是否可能傷害個人或組織信譽</li><li>□ 是否從可回復的小範圍測試開始</li></ul>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">虛構示例</p>
         <h2>輸入與輸出對照</h2>
         <div class="example-box">
-          <div><h3>示範輸入</h3><p>完成 12 場；27 人完成；前後測平均 2.8 至 3.6；配對樣本待查。</p></div>
-          <div><h3>合理輸出</h3><p>初步觀察閱讀信心上升，但配對樣本尚待確認；目前不宜宣稱因果，建議先完成資料核對。</p></div>
+          <div><h3>示範輸入</h3><p>每週整理公開新聞；每季核定補助資格。</p></div>
+          <div><h3>合理輸出</h3><p>公開新聞整理可先半自動；補助資格涉及權益與專業判斷，AI 只宜輔助整理，不應自動核定。</p></div>
         </div>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">繼續使用</p>
         <h2>延伸用途</h2>
-        <ul><li>改寫成董事會口頭報告</li><li>搭配不同利害關係人版本改寫</li></ul>
+        <ul><li>把優先任務交給 AI 工作流程設計</li><li>建立部門自動化候選清單</li></ul>
       </section>
     </div>
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.1・內容更新 2026-07-17</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

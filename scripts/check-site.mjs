@@ -13,12 +13,12 @@ const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFo
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
 const itemIds = new Set();
 
-if (catalog.items.length !== 15) errors.push(`Expected 15 tools, got ${catalog.items.length}`);
+if (catalog.items.length !== 25) errors.push(`Expected 25 tools, got ${catalog.items.length}`);
 if (catalog.stages.length !== 5) errors.push(`Expected 5 stages, got ${catalog.stages.length}`);
 
 for (const stage of catalog.stages) {
   const count = catalog.items.filter((item) => item.stage === stage.id).length;
-  if (count !== 3) errors.push(`Stage ${stage.id} should contain 3 tools, got ${count}`);
+  if (count !== 5) errors.push(`Stage ${stage.id} should contain 5 tools, got ${count}`);
   for (const relatedId of stage.relatedIds || []) {
     if (!catalog.items.some((item) => item.id === relatedId)) errors.push(`Unknown related ID ${relatedId} in ${stage.id}`);
   }
@@ -54,6 +54,11 @@ const publicFiles = [
 ];
 
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
+const indexText = await readFile("index.html", "utf8");
+if (indexText.includes("現場示範") || indexText.includes('id="demo"')) errors.push("Homepage must not include a live demo section");
+if (!(indexText.indexOf('id="needs"') < indexText.indexOf('id="library"') && indexText.indexOf('id="library"') < indexText.indexOf('id="safety"'))) {
+  errors.push("Homepage section order must be needs, library, then safety");
+}
 for (const forbidden of ["中國信託", "CTBC", "聯經出版", "聯經報系", "人文企業獎"]) {
   if (publicText.includes(forbidden)) errors.push(`Forbidden organizer or reference branding in public files: ${forbidden}`);
 }

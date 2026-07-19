@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="把專案進度與證據濃縮成主管能快速決策的一頁內容。">
+  <meta name="description" content="在活動開始前設計可比的基準線、追蹤時間、配對方式與限制說明。">
   <meta name="theme-color" content="#164f4a">
-  <title>一頁主管摘要｜公益影響力 AI 工作箱</title>
+  <title>基準線與前後比較設計｜公益影響力 AI 工作箱</title>
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="../assets/detail.js" type="module"></script>
 </head>
-<body class="detail-body" data-item-id="executive-one-pager" data-item-title="一頁主管摘要" data-item-kind="提示詞">
+<body class="detail-body" data-item-id="baseline-comparison-plan" data-item-title="基準線與前後比較設計" data-item-kind="工作流">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
     <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
@@ -20,9 +20,9 @@
   <main class="detail-main" id="main">
     <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
     <section class="detail-hero">
-      <div class="detail-tags"><span>提示詞</span><span>成果報告與分眾溝通</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>NotebookLM</span></div>
-      <h1>一頁主管摘要</h1>
-      <p>把專案進度與證據濃縮成主管能快速決策的一頁內容。</p>
+      <div class="detail-tags"><span>工作流</span><span>成效與影響力評估</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
+      <h1>基準線與前後比較設計</h1>
+      <p>在活動開始前設計可比的基準線、追蹤時間、配對方式與限制說明。</p>
     </section>
 
     <div class="detail-grid">
@@ -30,25 +30,25 @@
         <p class="eyebrow">適用情境</p>
         <h2>誰會用到？</h2>
         <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>把專案進度與證據濃縮成主管能快速決策的一頁內容。</p>
+        <p>在活動開始前設計可比的基準線、追蹤時間、配對方式與限制說明。</p>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">準備資料</p>
         <h2>開始前請備妥</h2>
-        <ul><li>專案目標與期間</li><li>已查核的關鍵數字</li><li>主要成果與限制</li><li>需要主管決定的事項</li></ul>
+        <ul><li>預期成果與指標</li><li>服務對象與活動時間</li><li>現有資料欄位</li><li>可行的追蹤方式</li></ul>
       </section>
 
       <section class="detail-section warning full">
         <p class="eyebrow terracotta">不能直接上傳</p>
         <h2>個資與機密提醒</h2>
-        <p>只提供核准分享的彙總內容；機密預算、個案與合作談判資訊需依組織規範處理。</p>
+        <p>設計時只提供欄位與方法；實際配對識別碼應留在核准系統，不貼入公開 AI。</p>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">三步上手</p>
         <h2>怎麼使用這個流程</h2>
-        <ol><li>先完成數字與證據查核</li><li>將決策需求放在提示詞最前面</li><li>檢查 AI 是否刪除了重要限制</li></ol>
+        <ol><li>選定最重要的成果與同一測量方式</li><li>確認前測、後測與追蹤時間</li><li>規劃配對、流失與外部因素的記錄方式</li></ol>
       </section>
 
       <section class="detail-section full" id="prompt-section">
@@ -56,56 +56,52 @@
         <h2>可直接貼上的提示詞</h2>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
-          <div class="prompt-text" id="promptText">請把以下公益專案資料整理成一頁主管摘要。只使用我提供且已查核的資訊，不增加數字、因果、引述或外部背景。
+          <div class="prompt-text" id="promptText">請為下列公益專案設計最低可行的基準線與前後比較方案。不要把前後差異直接解讀為專案造成，也不要建議蒐集不必要個資。
 
-【專案目標與期間】[填入]
-【三項關鍵進度】[填入]
-【已查核成果與來源】[填入]
-【限制與風險】[填入]
-【需要主管決定或支持的事項】[填入]
+【預期成果】[填入]
+【指標或題項】[填入]
+【服務對象與人數】[使用彙總描述]
+【活動與期間】[填入]
+【現有資料與工具】[填入]
+【人力限制】[填入]
 
-請依序輸出：
-1. 一句話結論。
-2. 三項關鍵進度（數字需附來源代碼）。
-3. 已觀察到的成果與不能下的結論。
-4. 風險與資料缺口。
-5. 需要主管決定的事項（選項、影響、期限）。
+請產出：測量時間／相同題項或指標／匿名配對方式／有效樣本定義／未完成與流失紀錄／可能外部因素／最低可行版本／進階版本。
 
-全文控制在 650 字內，使用繁體中文與台灣用語。</div>
+最後提供報告用限制句型，清楚區分「觀察到變化」與「證明因果」。</div>
         </div>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">建議格式</p>
         <h2>應該得到什麼</h2>
-        <ul><li>一句話結論</li><li>關鍵進度</li><li>成果與限制</li><li>決策事項</li></ul>
+        <ul><li>前後比較設計表</li><li>匿名配對規則</li><li>流失與外部因素</li><li>限制說明句型</li></ul>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">人工負責</p>
         <h2>交付前驗收</h2>
-        <ul><li>□ 主管需要決定什麼是否一眼可見</li><li>□ 所有數字是否附來源</li><li>□ 重要限制是否被保留</li><li>□ 是否把活動量誤寫成影響力</li></ul>
+        <ul><li>□ 前後是否使用相同定義與題項</li><li>□ 是否記錄有效配對樣本與流失</li><li>□ 追蹤時間是否符合成果發生速度</li><li>□ 是否避免把前後差異寫成因果</li></ul>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">虛構示例</p>
         <h2>輸入與輸出對照</h2>
         <div class="example-box">
-          <div><h3>示範輸入</h3><p>完成 12 場；27 人完成；前後測平均 2.8 至 3.6；配對樣本待查。</p></div>
-          <div><h3>合理輸出</h3><p>初步觀察閱讀信心上升，但配對樣本尚待確認；目前不宜宣稱因果，建議先完成資料核對。</p></div>
+          <div><h3>示範輸入</h3><p>五個月閱讀陪伴，希望提升閱讀信心。</p></div>
+          <div><h3>合理輸出</h3><p>活動前與結束後使用相同信心題項，以隨機代碼配對；報告配對樣本數、流失原因與不能證明因果的限制。</p></div>
         </div>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">繼續使用</p>
         <h2>延伸用途</h2>
-        <ul><li>改寫成董事會口頭報告</li><li>搭配不同利害關係人版本改寫</li></ul>
+        <ul><li>把比較方案加入資料蒐集計畫</li><li>搭配數字與來源查核確認前後數值</li></ul>
       </section>
     </div>
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.1・內容更新 2026-07-17</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用來源與日期限制搜尋近期政策、統計、研究與新聞，補足專案問題脈絡。">
+  <meta name="theme-color" content="#164f4a">
+  <title>社會脈絡證據搜尋｜公益影響力 AI 工作箱</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script src="../assets/detail.js" type="module"></script>
+</head>
+<body class="detail-body" data-item-id="social-context-search" data-item-title="社會脈絡證據搜尋" data-item-kind="提示詞">
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="detail-header">
+    <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
+      <span class="brand-mark" aria-hidden="true">AI</span>
+      <span><strong>公益影響力 AI 工作箱</strong><small>課後可重複使用的工作流程</small></span>
+    </a>
+  </header>
+  <main class="detail-main" id="main">
+    <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
+    <section class="detail-hero">
+      <div class="detail-tags"><span>提示詞</span><span>成效與影響力評估</span><span>Perplexity</span><span>Gemini</span><span>ChatGPT</span><span>Claude</span></div>
+      <h1>社會脈絡證據搜尋</h1>
+      <p>用來源與日期限制搜尋近期政策、統計、研究與新聞，補足專案問題脈絡。</p>
+    </section>
+
+    <div class="detail-grid">
+      <section class="detail-section">
+        <p class="eyebrow">適用情境</p>
+        <h2>誰會用到？</h2>
+        <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
+        <p>用來源與日期限制搜尋近期政策、統計、研究與新聞，補足專案問題脈絡。</p>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">準備資料</p>
+        <h2>開始前請備妥</h2>
+        <ul><li>議題主題與地區</li><li>時間範圍</li><li>目標對象</li><li>要佐證或釐清的問題</li></ul>
+      </section>
+
+      <section class="detail-section warning full">
+        <p class="eyebrow terracotta">不能直接上傳</p>
+        <h2>個資與機密提醒</h2>
+        <p>只搜尋公開資訊；不要把未公開專案資料、個案或合作談判內容放入搜尋提示詞。</p>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">三步上手</p>
+        <h2>怎麼使用這個流程</h2>
+        <ol><li>把主題、地區、對象與期間寫清楚</li><li>要求只收有發布單位、日期與原始連結的來源</li><li>逐一開啟來源並確認內容真的支持摘要</li></ol>
+      </section>
+
+      <section class="detail-section full" id="prompt-section">
+        <p class="eyebrow">跨工具通用</p>
+        <h2>可直接貼上的提示詞</h2>
+        <div class="prompt-box">
+          <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
+          <div class="prompt-text" id="promptText">請搜尋近期與下列公益議題相關、可查證的公開資料。若你無法連網，請直接說明，不得編造連結或來源。
+
+【主題】[填入]
+【地區與對象】[填入]
+【時間範圍】[例如最近 3 至 6 個月]
+【要回答的問題】[填入]
+
+限制：
+1. 只採用有明確發布單位、發布日期與原始連結的資料。
+2. 優先政府機關、學術機構、國際組織、具公信力媒體與社福組織的一手資料。
+3. 新聞轉述統計時，盡量回到原始報告。
+4. 不確定或找不到時標示「未找到可靠來源」。
+
+輸出表格：日期／來源單位／資料類型／重點摘要／與專案問題的關聯／限制／原始連結。最後列出仍缺少的證據與建議搜尋詞。</div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">建議格式</p>
+        <h2>應該得到什麼</h2>
+        <ul><li>可查證來源表</li><li>來源限制</li><li>專案關聯</li><li>待補證據與搜尋詞</li></ul>
+      </section>
+
+      <section class="detail-section">
+        <p class="eyebrow">人工負責</p>
+        <h2>交付前驗收</h2>
+        <ul><li>□ 每列是否有可開啟的原始連結</li><li>□ 來源日期與地區是否符合需求</li><li>□ 摘要是否真的出現在來源中</li><li>□ 外部趨勢是否被誤當成專案自身成果</li></ul>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">虛構示例</p>
+        <h2>輸入與輸出對照</h2>
+        <div class="example-box">
+          <div><h3>示範輸入</h3><p>最近半年台灣偏鄉兒童閱讀議題與公開統計。</p></div>
+          <div><h3>合理輸出</h3><p>優先列政府統計與原始研究；每筆附日期與連結，新聞若無法回到原始數據則降級標示。</p></div>
+        </div>
+      </section>
+
+      <section class="detail-section full">
+        <p class="eyebrow">繼續使用</p>
+        <h2>延伸用途</h2>
+        <ul><li>建立定期議題監測的來源清單</li><li>把外部證據放入成果報告的問題脈絡章節</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer class="detail-footer">
+    <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

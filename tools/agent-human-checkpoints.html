@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="在使用 AI 前辨識直接識別碼、間接識別線索與小樣本重新識別風險。">
+  <meta name="description" content="在導入 Agent 前標出權限、外部動作、失敗處理與必須由人批准的關卡。">
   <meta name="theme-color" content="#164f4a">
-  <title>資料去識別化檢查表｜公益影響力 AI 工作箱</title>
+  <title>AI Agent 人工關卡與風險檢查｜公益影響力 AI 工作箱</title>
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="../assets/detail.js" type="module"></script>
 </head>
-<body class="detail-body" data-item-id="deidentification-check" data-item-title="資料去識別化檢查表" data-item-kind="檢查表">
+<body class="detail-body" data-item-id="agent-human-checkpoints" data-item-title="AI Agent 人工關卡與風險檢查" data-item-kind="檢查表">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
     <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
@@ -21,8 +21,8 @@
     <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
     <section class="detail-hero">
       <div class="detail-tags"><span>檢查表</span><span>個資安全與品質查核</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
-      <h1>資料去識別化檢查表</h1>
-      <p>在使用 AI 前辨識直接識別碼、間接識別線索與小樣本重新識別風險。</p>
+      <h1>AI Agent 人工關卡與風險檢查</h1>
+      <p>在導入 Agent 前標出權限、外部動作、失敗處理與必須由人批准的關卡。</p>
     </section>
 
     <div class="detail-grid">
@@ -30,25 +30,25 @@
         <p class="eyebrow">適用情境</p>
         <h2>誰會用到？</h2>
         <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>在使用 AI 前辨識直接識別碼、間接識別線索與小樣本重新識別風險。</p>
+        <p>在導入 Agent 前標出權限、外部動作、失敗處理與必須由人批准的關卡。</p>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">準備資料</p>
         <h2>開始前請備妥</h2>
-        <ul><li>準備使用的欄位名稱</li><li>資料用途</li><li>使用工具與帳號類型</li><li>組織資料分級規範</li></ul>
+        <ul><li>預計自動化的完整流程</li><li>會使用的系統與資料</li><li>Agent 可執行的動作</li><li>責任人與回復方式</li></ul>
       </section>
 
       <section class="detail-section warning full">
         <p class="eyebrow terracotta">不能直接上傳</p>
         <h2>個資與機密提醒</h2>
-        <p>不要把真正要檢查的敏感內容貼給公開 AI；只提供欄位名稱、虛構範例與資料結構。</p>
+        <p>只做風險設計，不提供密碼、API 金鑰、真實個資或系統存取權限。</p>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">三步上手</p>
         <h2>怎麼使用這個流程</h2>
-        <ol><li>先依組織規範判斷工具是否核准</li><li>只用欄位名稱與虛構值做初步檢查</li><li>由資料管理或法遵角色確認後再使用</li></ol>
+        <ol><li>列出 Agent 會讀取、產生、修改與傳送的內容</li><li>依影響與可逆性設定人工批准點</li><li>設計錯誤偵測、停止、回復與稽核紀錄</li></ol>
       </section>
 
       <section class="detail-section full" id="prompt-section">
@@ -56,50 +56,53 @@
         <h2>可直接貼上的提示詞</h2>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
-          <div class="prompt-text" id="promptText">我只會提供欄位名稱與虛構範例。請協助建立去識別化檢查表，不要要求我貼上真實資料。
+          <div class="prompt-text" id="promptText">請審查下列 AI Agent 工作流程，找出必須由人負責判斷與批准的關卡。這是規劃工作，不要執行任何外部動作。
 
-【資料用途】[填入]
-【預計使用的 AI／帳號類型】[填入]
-【欄位名稱與虛構範例】[填入]
-【組織規範摘要】[若無填待確認]
+【Agent 目標】[填入]
+【觸發條件】[填入]
+【資料來源】[填入]
+【處理步驟】[填入]
+【可能修改或傳送的內容】[填入]
+【使用系統與權限】[填入]
+【責任人與回復方式】[填入]
 
-請將欄位分為：直接識別碼、間接識別碼、敏感屬性、低風險彙總欄位。每欄提供處理建議：刪除、泛化、代碼化、分組、保留或不得使用。
+請逐步輸出：動作／讀寫資料／錯誤後果／可逆性／風險等級／是否需人工批准／批准角色／停止條件／稽核紀錄。
 
-另檢查：自由文字、罕見事件、精確日期地點、小樣本交叉分群、照片與檔案中繼資料。最後給出紅黃綠燈判定與必須人工確認事項。</div>
+以下情況預設必須人工批准：對外發布、寄送訊息、個資處理、金錢或資格決定、刪除或覆寫資料、法律或專業判斷。最後提供最小權限、測試環境、失敗回復與定期複查清單。</div>
         </div>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">建議格式</p>
         <h2>應該得到什麼</h2>
-        <ul><li>欄位風險分類</li><li>處理建議</li><li>重新識別風險</li><li>紅黃綠燈</li></ul>
+        <ul><li>逐步風險表</li><li>人工批准關卡</li><li>停止與回復設計</li><li>最小權限清單</li></ul>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">人工負責</p>
         <h2>交付前驗收</h2>
-        <ul><li>□ 是否依組織規範而非只依 AI 建議</li><li>□ 自由文字是否仍含身分線索</li><li>□ 小樣本分群是否可能被回推</li><li>□ 照片、檔名與中繼資料是否一併處理</li></ul>
+        <ul><li>□ 是否列出所有外部與不可逆動作</li><li>□ 高風險步驟是否有具名責任角色</li><li>□ 是否具備停止、回復與稽核紀錄</li><li>□ Agent 權限是否遵循最小必要原則</li></ul>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">虛構示例</p>
         <h2>輸入與輸出對照</h2>
         <div class="example-box">
-          <div><h3>示範輸入</h3><p>欄位：姓名、學校、年級、精確日期、開放式心得。</p></div>
-          <div><h3>合理輸出</h3><p>姓名刪除；學校與精確日期需泛化；開放式心得需人工移除罕見事件與人名。</p></div>
+          <div><h3>示範輸入</h3><p>每週彙整公開新聞後寄給主管。</p></div>
+          <div><h3>合理輸出</h3><p>蒐集與草擬可自動進行；寄送前由負責人核對來源與收件人，寄送失敗需停止並保留紀錄。</p></div>
         </div>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">繼續使用</p>
         <h2>延伸用途</h2>
-        <ul><li>建立組織內部的 AI 資料紅黃綠燈表</li><li>在每次資料匯出前加入第二人複核</li></ul>
+        <ul><li>轉成上線前風險檢核表</li><li>搭配自動化適合度評估決定是否進入試辦</li></ul>
       </section>
     </div>
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.1・內容更新 2026-07-17</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

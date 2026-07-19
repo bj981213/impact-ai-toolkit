@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。">
+  <meta name="description" content="規劃來源範圍、檔名、版本與更新節奏，建立能回查來源的專案知識庫。">
   <meta name="theme-color" content="#164f4a">
-  <title>利害關係人地圖｜公益影響力 AI 工作箱</title>
+  <title>NotebookLM 知識庫建置清單｜公益影響力 AI 工作箱</title>
   <link rel="stylesheet" href="../assets/styles.css">
   <script src="../assets/detail.js" type="module"></script>
 </head>
-<body class="detail-body" data-item-id="stakeholder-map" data-item-title="利害關係人地圖" data-item-kind="工作流">
+<body class="detail-body" data-item-id="notebooklm-knowledge-base" data-item-title="NotebookLM 知識庫建置清單" data-item-kind="工作流">
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="detail-header">
     <a class="brand" href="../index.html" aria-label="回到公益影響力 AI 工作箱首頁">
@@ -20,9 +20,9 @@
   <main class="detail-main" id="main">
     <a class="detail-back" href="../index.html#library">← 回到工具箱</a>
     <section class="detail-hero">
-      <div class="detail-tags"><span>工作流</span><span>專案設計與目標</span><span>ChatGPT</span><span>Gemini</span><span>Claude</span></div>
-      <h1>利害關係人地圖</h1>
-      <p>從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。</p>
+      <div class="detail-tags"><span>工作流</span><span>資料整理與證據</span><span>NotebookLM</span><span>Gemini</span></div>
+      <h1>NotebookLM 知識庫建置清單</h1>
+      <p>規劃來源範圍、檔名、版本與更新節奏，建立能回查來源的專案知識庫。</p>
     </section>
 
     <div class="detail-grid">
@@ -30,25 +30,25 @@
         <p class="eyebrow">適用情境</p>
         <h2>誰會用到？</h2>
         <div class="detail-tags" style="color:#17332f"><span>企業 CSR／ESG</span><span>基金會</span><span>NPO</span></div>
-        <p>從專案資料辨識受影響者、影響方式、參與程度與需要補問的觀點。</p>
+        <p>規劃來源範圍、檔名、版本與更新節奏，建立能回查來源的專案知識庫。</p>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">準備資料</p>
         <h2>開始前請備妥</h2>
-        <ul><li>專案目標與主要活動</li><li>已知參與單位與服務對象</li><li>現有訪談、會議或合作紀錄</li></ul>
+        <ul><li>知識庫要回答的問題</li><li>候選檔案與公開來源清單</li><li>資料版本與權限</li><li>維護責任角色</li></ul>
       </section>
 
       <section class="detail-section warning full">
         <p class="eyebrow terracotta">不能直接上傳</p>
         <h2>個資與機密提醒</h2>
-        <p>只提供角色與群體，不貼姓名、聯絡方式、個案身分或可回推特定個人的描述。</p>
+        <p>上傳前確認帳號與分享權限；未去識別化個資、機密合約與未公開財務資料不得放入未核准空間。</p>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">三步上手</p>
         <h2>怎麼使用這個流程</h2>
-        <ol><li>先列出已知角色，不要求 AI 自行補齊真實名單</li><li>請 AI 依影響程度、決策權與參與方式整理</li><li>由專案團隊確認遺漏者與權力不對等風險</li></ol>
+        <ol><li>先定義知識庫範圍與要回答的問題</li><li>盤點來源、版本、權限與可引用性</li><li>小量匯入後測試引用，再建立固定更新流程</li></ol>
       </section>
 
       <section class="detail-section full" id="prompt-section">
@@ -56,58 +56,55 @@
         <h2>可直接貼上的提示詞</h2>
         <div class="prompt-box">
           <button type="button" class="copy-detail" data-copy-target="#promptText">複製提示詞</button>
-          <div class="prompt-text" id="promptText">你是公益專案的利害關係人分析助理。請只根據我提供的內容整理，不要自行創造人物或組織。
+          <div class="prompt-text" id="promptText">請協助我規劃一個公益專案的 NotebookLM 知識庫。你只負責設計清單與測試問題，不要要求我上傳任何敏感內容。
 
-【專案目標】
-[填入目標]
-
-【主要活動】
-[填入活動]
-
-【已知相關角色】
-[以角色或群體填寫，不放姓名]
+【知識庫用途】[填入]
+【希望回答的問題】[填入]
+【候選來源】[檔名、日期、版本、來源單位、權限]
+【維護角色與更新頻率】[填入]
 
 請產出：
-1. 利害關係人表格：角色／受到的正負面影響／影響程度／決策權／目前參與方式。
-2. 目前缺少的觀點與應優先訪談的角色。
-3. 可能存在的權力不對等或代表性風險。
-4. 需要由專案團隊人工確認的假設。
+1. 建議納入、排除、待確認的來源清單與理由。
+2. 統一檔名、版本與日期規則。
+3. 來源衝突與過期資料的處理方式。
+4. 十題驗收問題，包含可回答、不可回答與跨來源比對。
+5. 每月更新與權限複查清單。
 
-若資料不足，請標示「待確認」，不要自行推測。</div>
+所有回答都應要求引用來源；找不到時要回答「目前來源不足」，不得靠一般常識補齊專案事實。</div>
         </div>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">建議格式</p>
         <h2>應該得到什麼</h2>
-        <ul><li>利害關係人矩陣</li><li>缺少觀點清單</li><li>優先訪談建議</li><li>待確認假設</li></ul>
+        <ul><li>來源納入清單</li><li>命名與版本規則</li><li>驗收問題</li><li>更新維護清單</li></ul>
       </section>
 
       <section class="detail-section">
         <p class="eyebrow">人工負責</p>
         <h2>交付前驗收</h2>
-        <ul><li>□ 是否包含直接與間接受影響者</li><li>□ 是否把決策權高者誤當成影響最大者</li><li>□ 是否有任何 AI 自行補出的真實人物或組織</li><li>□ 是否納入可能承擔負面影響的群體</li></ul>
+        <ul><li>□ 知識庫範圍是否清楚</li><li>□ 每份來源是否有日期、版本與權限</li><li>□ 測試是否包含答不出來的問題</li><li>□ 分享設定是否經資料負責人確認</li></ul>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">虛構示例</p>
         <h2>輸入與輸出對照</h2>
         <div class="example-box">
-          <div><h3>示範輸入</h3><p>山城閱讀陪伴計畫；角色包含學生、教師、志工、家長與贊助者。</p></div>
-          <div><h3>合理輸出</h3><p>學生為直接受影響者；教師與志工同時是執行者與觀察者。家長觀點尚缺，需補充訪談。</p></div>
+          <div><h3>示範輸入</h3><p>年度專案包含會議紀錄、公開報告、成果表與舊版提案。</p></div>
+          <div><h3>合理輸出</h3><p>舊版提案保留但標示已過期；成果表需確認權限；先以公開報告測試來源引用，再逐步加入核准文件。</p></div>
         </div>
       </section>
 
       <section class="detail-section full">
         <p class="eyebrow">繼續使用</p>
         <h2>延伸用途</h2>
-        <ul><li>把優先利害關係人轉成訪談邀請清單</li><li>搭配影響路徑整理，確認每一條成果影響到誰</li></ul>
+        <ul><li>建立新進同仁專案問答庫</li><li>搭配數字與來源查核回查報告</li></ul>
       </section>
     </div>
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理與提出問題，但不能代替資料來源、專業判斷或利害關係人的聲音。</p>
-    <p>版本 1.1・內容更新 2026-07-17</p>
+    <p>版本 1.1・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
