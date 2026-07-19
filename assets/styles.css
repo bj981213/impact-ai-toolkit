@@ -143,11 +143,6 @@ kbd { padding: .1rem .4rem; border: 1px solid #c6cfcb; border-radius: 5px; backg
 .safety-points li { display: grid; grid-template-columns: 100px 1fr; gap: .8rem; align-items: center; padding: .75rem 1rem; border-radius: 12px; background: rgba(255,255,255,.08); }
 .safety-points strong { color: #f6d7c9; }
 .safety-points span { color: #e2ece9; font-size: .88rem; }
-.about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 4.5rem 0; }
-.about-section h2 { margin-bottom: 0; font-family: "Iowan Old Style", "Songti TC", serif; font-size: clamp(1.8rem, 3vw, 2.6rem); }
-.about-section p { margin-top: 0; }
-.muted { color: var(--muted); }
-
 footer { display: flex; justify-content: space-between; gap: 2rem; padding: 2.2rem 0 3rem; border-top: 1px solid #c7d0cd; color: var(--muted); font-size: .82rem; }
 footer p:last-child { text-align: right; }
 .toast { position: fixed; z-index: 100; left: 50%; bottom: 1.5rem; padding: .75rem 1.1rem; border-radius: 999px; background: var(--teal-950); color: var(--white); box-shadow: var(--shadow); opacity: 0; transform: translate(-50%, 1rem); pointer-events: none; transition: .2s ease; }
@@ -212,7 +207,7 @@ footer p:last-child { text-align: right; }
   .results-heading { align-items: flex-start; }
   .results-heading span { display: none; }
   .safety-points li { grid-template-columns: 1fr; gap: .15rem; }
-  .about-section, footer { grid-template-columns: 1fr; display: grid; }
+  footer { grid-template-columns: 1fr; display: grid; }
   footer p:last-child { text-align: left; }
   .detail-grid, .example-box { grid-template-columns: 1fr; }
   .detail-section.full { grid-column: auto; }

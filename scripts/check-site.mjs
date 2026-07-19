@@ -56,6 +56,9 @@ const publicFiles = [
 const publicText = (await Promise.all(publicFiles.map((file) => readFile(file, "utf8")))).join("\n");
 const indexText = await readFile("index.html", "utf8");
 if (indexText.includes("現場示範") || indexText.includes('id="demo"')) errors.push("Homepage must not include a live demo section");
+for (const removedBioText of ["講師：江逸之", "《關鍵評論網》總編輯", "人工智慧科技基金會顧問", "聯絡方式請以講師於活動現場提供的管道為準"]) {
+  if (indexText.includes(removedBioText)) errors.push(`Homepage must not include removed speaker bio text: ${removedBioText}`);
+}
 if (!(indexText.indexOf('id="needs"') < indexText.indexOf('id="library"') && indexText.indexOf('id="library"') < indexText.indexOf('id="safety"'))) {
   errors.push("Homepage section order must be needs, library, then safety");
 }
