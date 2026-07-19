@@ -1,5 +1,5 @@
 import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
-import { composeDetailedPrompt } from "../assets/prompt-utils.js";
+import { composeToolContent } from "../assets/tool-content.js";
 
 const catalog = JSON.parse(await readFile("data/catalog.json", "utf8"));
 const stageMap = new Map(catalog.stages.map((stage) => [stage.id, stage]));
@@ -25,13 +25,15 @@ function renderPage(item, stage, toolbox) {
   const title = `${item.title}｜公益影響力 AI 工作箱`;
   const tools = item.supportedTools.map((tool) => `<span>${escapeHtml(tool)}</span>`).join("");
   const audiences = item.audiences.map((audience) => `<span>${escapeHtml(audience)}</span>`).join("");
-  const detailedPrompt = composeDetailedPrompt(item);
+  const toolContent = composeToolContent(item);
   const agentArchitecture = item.toolbox === "agent" ? renderAgentArchitecture() : "";
   const agentSettings = item.toolbox === "agent" ? renderAgentSettings(item.agentSettings) : "";
-  const promptTitle = item.toolbox === "agent" ? "Agent 任務指令與執行限制" : "完整提示詞";
-  const promptInstruction = item.toolbox === "agent"
-    ? "先替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。工具、連接器、觸發與權限必須在平台中另外設定；先以測試資料通過下方案例再啟用。"
-    : "先替換所有以 [ ] 標示的欄位，再整段貼到組織核准使用的 AI。保留執行限制與交付前檢查，不要只貼任務段落。";
+  const contentEyebrow = item.toolbox === "agent" ? "Agent 指令" : "Prompt 工具";
+  const contentTitle = item.toolbox === "agent" ? "可貼入平台的 Agent 指令" : "完整提示詞";
+  const contentInstruction = item.toolbox === "agent"
+    ? "替換所有以 [ ] 標示的欄位，再貼入平台的 Agent 指令欄。這是 Agent 設定的一部分；觸發條件、連接器、實際權限、人工核准與執行紀錄仍須在平台中分別設定。先用測試資料通過下方案例再啟用。"
+    : "替換所有以 [ ] 標示的欄位，再整段貼到組織核准使用的 AI。保留執行限制與交付前檢查，不要只貼任務段落。";
+  const copyLabel = item.toolbox === "agent" ? "複製 Agent 指令" : "複製完整提示詞";
 
   return `<!doctype html>
 <html lang="zh-Hant">
@@ -89,13 +91,13 @@ function renderPage(item, stage, toolbox) {
 ${agentArchitecture}
 ${agentSettings}
 
-      <section class="detail-section full" id="prompt-section">
-        <p class="eyebrow">跨工具通用</p>
-        <h2>${promptTitle}</h2>
-        <p>${promptInstruction}</p>
+      <section class="detail-section full" id="tool-content-section">
+        <p class="eyebrow">${contentEyebrow}</p>
+        <h2>${contentTitle}</h2>
+        <p>${contentInstruction}</p>
         <div class="prompt-box">
-          <button type="button" class="copy-detail" data-copy-target="#promptText">複製完整設定</button>
-          <div class="prompt-text" id="promptText">${escapeHtml(detailedPrompt)}</div>
+          <button type="button" class="copy-detail" data-copy-target="#toolContent">${copyLabel}</button>
+          <div class="prompt-text" id="toolContent">${escapeHtml(toolContent)}</div>
         </div>
       </section>
 
@@ -129,7 +131,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.3・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.4・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

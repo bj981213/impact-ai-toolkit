@@ -1,4 +1,4 @@
-import { composeDetailedPrompt } from "./prompt-utils.js";
+import { composeToolContent } from "./tool-content.js";
 
 const STORAGE = {
   favorites: "impact-ai-toolkit.favorites",
@@ -184,7 +184,7 @@ function renderCard(item) {
       <p class="summary">${escapeHtml(item.summary)}</p>
       <div class="card-tools" aria-label="支援工具">${(item.supportedTools || []).map((tool) => `<span class="tool-chip">${escapeHtml(tool)}</span>`).join("")}</div>
       <div class="card-actions">
-        <button type="button" data-copy="${escapeAttr(item.id)}">${item.toolbox === "agent" ? "複製 Agent 設定" : "複製提示詞"}</button>
+        <button type="button" data-copy="${escapeAttr(item.id)}">${item.toolbox === "agent" ? "複製 Agent 指令" : "複製提示詞"}</button>
         <a href="tools/${escapeAttr(item.id)}.html" data-open="${escapeAttr(item.id)}">開啟工具</a>
       </div>
     </article>
@@ -195,7 +195,7 @@ function handleDocumentClick(event) {
   const copyButton = event.target.closest("[data-copy]");
   if (copyButton) {
     const item = findItem(copyButton.dataset.copy);
-    if (item) copyText(composeDetailedPrompt(item), `已複製「${item.title}」${item.toolbox === "agent" ? "設定" : "提示詞"}`);
+    if (item) copyText(composeToolContent(item), `已複製「${item.title}」${item.toolbox === "agent" ? "的 Agent 指令" : "提示詞"}`);
     return;
   }
 

@@ -2,7 +2,8 @@ const body = document.body;
 const item = {
   id: body.dataset.itemId,
   title: body.dataset.itemTitle,
-  kind: body.dataset.itemKind
+  kind: body.dataset.itemKind,
+  toolbox: body.dataset.itemToolbox
 };
 const recentKey = "impact-ai-toolkit.recent";
 
@@ -14,7 +15,9 @@ document.addEventListener("click", async (event) => {
   const target = document.querySelector(button.dataset.copyTarget);
   if (!target) return;
   await copyText(target.textContent.trim());
-  showToast("已複製提示詞，可貼到組織核准使用的 AI");
+  showToast(item.toolbox === "agent"
+    ? "已複製 Agent 指令，可貼到平台的 Agent 指令欄"
+    : "已複製提示詞，可貼到組織核准使用的 AI");
 });
 
 function rememberItem() {

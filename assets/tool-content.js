@@ -1,4 +1,5 @@
-export function composeDetailedPrompt(item) {
+export function composeToolContent(item) {
+  const sourceText = item.toolbox === "agent" ? item.instructions : item.prompt;
   const checks = bullets(item.reviewChecklist);
   const postCheckInstruction = item.toolbox === "agent"
     ? "交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。"
@@ -7,7 +8,7 @@ export function composeDetailedPrompt(item) {
     ? `\n\n${composeAgentRules(item.agentSettings)}`
     : "";
 
-  return `${String(item.prompt || "").trim()}
+  return `${String(sourceText || "").trim()}
 
 【執行限制】
 1. 所有以 [ ] 標示的欄位都必須替換。缺少會影響結論的資料時，只列出缺少欄位與補充方式，停止執行。
