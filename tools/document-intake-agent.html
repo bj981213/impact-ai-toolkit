@@ -53,7 +53,7 @@
 
 <section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定與治理規格</h2>
+        <h2>執行設定、護欄與驗證循環</h2>
         <p class="settings-intro"><strong>運作模式：</strong>新文件觸發，只提出建議，人工核准後才能變更檔案。</p>
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3><ul><li>指定資料夾新增文件</li><li>文件在核准範圍</li><li>檔案掃描完成</li></ul></div>
@@ -61,11 +61,12 @@
           <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
           <div><h3>必要連接與權限</h3><ul><li>唯讀指定資料夾與中繼資料</li><li>唯讀分類、檔名與版本規則</li><li>核准後才可使用的檔案變更權限</li></ul></div>
           <div><h3>狀態流程</h3><ol><li>偵測新文件</li><li>規則檢查</li><li>產生建議</li><li>等待人工核准</li><li>執行或退回</li></ol></div>
-          <div><h3>允許執行</h3><ul><li>讀取核准中繼資料</li><li>建議分類與檔名</li><li>標示重複或版本衝突</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行</h3><ul><li>未核准即改名或移動</li><li>覆寫或刪除檔案</li><li>開啟未授權內容</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准</h3><ul><li>分類與保存位置</li><li>檔名與版本</li><li>任何檔案變更</li></ul></div>
+          <div><h3>允許執行（Guardrail）</h3><ul><li>讀取核准中繼資料</li><li>建議分類與檔名</li><li>標示重複或版本衝突</li></ul></div>
+          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>未核准即改名或移動</li><li>覆寫或刪除檔案</li><li>開啟未授權內容</li></ul></div>
+          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>分類與保存位置</li><li>檔名與版本</li><li>任何檔案變更</li></ul></div>
           <div><h3>例外與失敗處理</h3><ul><li>規則衝突時停止</li><li>疑似重複時並列比較</li><li>敏感度不明時轉人工</li></ul></div>
           <div><h3>完成條件</h3><ul><li>每項建議保留原檔名與位置</li><li>重複、版本衝突與敏感度不明均已標示</li><li>變更前停在等待人工核准</li></ul></div>
+          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
           <div><h3>執行與重試上限</h3><ul><li>每次只處理一個觸發批次</li><li>同一檔案讀取失敗最多重試 1 次</li><li>規則衝突或無法判定版本時停止</li></ul></div>
           <div><h3>最低紀錄要求</h3><ul><li>原檔名與位置</li><li>建議與核准結果</li><li>變更前後紀錄</li></ul></div>
           <div><h3>成效指標</h3><ul><li>分類正確率</li><li>命名人工修改率</li><li>未授權變更件數為 0</li></ul></div>
@@ -101,14 +102,14 @@
 - 版本衝突是否保留
 - 是否有完整變更紀錄
 
-未通過的項目先修正；無法修正時，標出問題位置與所缺資料。
+交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
 
 【Agent 可用工具與權限】
 - 唯讀指定資料夾與中繼資料
 - 唯讀分類、檔名與版本規則
 - 核准後才可使用的檔案變更權限
 
-【Agent 執行限制】
+【Agent 護欄（Guardrails）】
 允許執行：
 - 讀取核准中繼資料
 - 建議分類與檔名
@@ -133,6 +134,11 @@
 - 每項建議保留原檔名與位置
 - 重複、版本衝突與敏感度不明均已標示
 - 變更前停在等待人工核准
+
+【驗證循環（Verification Loop）】
+- 依完成條件逐項檢查來源、輸出欄位與禁止動作
+- 未通過時只修正可由現有資料修正的項目，最多 1 次
+- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
 
 執行與重試上限：
 - 每次只處理一個觸發批次
@@ -171,7 +177,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.1・內容更新 2026-07-19</p>
+    <p>版本 2.2・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

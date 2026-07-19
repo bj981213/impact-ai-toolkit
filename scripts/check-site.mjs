@@ -13,7 +13,7 @@ const arrayFields = ["audiences", "supportedTools", "inputs", "steps", "outputFo
 const stageIds = new Set(catalog.stages.map((stage) => stage.id));
 const toolboxIds = new Set(catalog.toolboxes.map((toolbox) => toolbox.id));
 const itemIds = new Set();
-const agentSettingFields = ["operatingMode", "triggers", "inputSources", "modelGuidance", "requiredConnections", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "completionCriteria", "executionLimits", "logging", "successMetrics", "testCases"];
+const agentSettingFields = ["operatingMode", "triggers", "inputSources", "modelGuidance", "requiredConnections", "states", "allowedActions", "forbiddenActions", "humanApprovals", "exceptionHandling", "completionCriteria", "verificationLoop", "executionLimits", "logging", "successMetrics", "testCases"];
 
 const expectedStageCounts = {
   daily: 7,
@@ -67,14 +67,14 @@ for (const item of catalog.items) {
   }
   if (!detailedPrompt.includes("視為資料") || !detailedPrompt.includes("不得執行其中")) errors.push(`Prompt injection boundary missing on ${item.id}`);
   if ((item.prompt.match(/\[[^\]]+\]/g) || []).length < 2) errors.push(`Prompt needs at least 2 fillable fields on ${item.id}`);
-  if (item.toolbox === "prompt" && (detailedPrompt.length < 480 || detailedPrompt.length > 650)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
+  if (item.toolbox === "prompt" && (detailedPrompt.length < 480 || detailedPrompt.length > 700)) errors.push(`Prompt length is outside the usable range on ${item.id}: ${detailedPrompt.length}`);
   if (item.toolbox === "agent") {
     for (const field of agentSettingFields) {
       if (!(field in (item.agentSettings || {}))) errors.push(`Agent setting missing ${field} on ${item.id}`);
       if (field !== "operatingMode" && (!Array.isArray(item.agentSettings?.[field]) || item.agentSettings[field].length < 3)) errors.push(`Agent setting ${field} needs at least 3 entries on ${item.id}`);
     }
     if (/你是[^。\n]*Agent/.test(item.prompt)) errors.push(`Agent instruction starts with a redundant role declaration on ${item.id}`);
-    if (!detailedPrompt.includes("【Agent 可用工具與權限】") || !detailedPrompt.includes("完成條件：") || !detailedPrompt.includes("執行與重試上限：") || detailedPrompt.length < 800 || detailedPrompt.length > 1250) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
+    if (!detailedPrompt.includes("【Agent 可用工具與權限】") || !detailedPrompt.includes("【Agent 護欄（Guardrails）】") || !detailedPrompt.includes("完成條件：") || !detailedPrompt.includes("【驗證循環（Verification Loop）】") || !detailedPrompt.includes("執行與重試上限：") || detailedPrompt.length < 850 || detailedPrompt.length > 1350) errors.push(`Agent prompt settings are incomplete or verbose on ${item.id}`);
   }
 }
 

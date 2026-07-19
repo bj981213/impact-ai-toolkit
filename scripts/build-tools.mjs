@@ -127,7 +127,7 @@ ${agentSettings}
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.1・內容更新 ${escapeHtml(item.updatedAt)}</p>
+    <p>版本 2.2・內容更新 ${escapeHtml(item.updatedAt)}</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
@@ -147,7 +147,7 @@ function renderAgentSettings(settings) {
   if (!settings) return "";
   return `<section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定與治理規格</h2>
+        <h2>執行設定、護欄與驗證循環</h2>
         <p class="settings-intro"><strong>運作模式：</strong>${escapeHtml(settings.operatingMode)}</p>
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3>${renderList(settings.triggers)}</div>
@@ -155,11 +155,12 @@ function renderAgentSettings(settings) {
           <div><h3>模型選擇與變更</h3>${renderList(settings.modelGuidance)}</div>
           <div><h3>必要連接與權限</h3>${renderList(settings.requiredConnections)}</div>
           <div><h3>狀態流程</h3>${renderList(settings.states, "ol")}</div>
-          <div><h3>允許執行</h3>${renderList(settings.allowedActions)}</div>
-          <div class="agent-setting-warning"><h3>禁止自動執行</h3>${renderList(settings.forbiddenActions)}</div>
-          <div class="agent-setting-warning"><h3>必須人工核准</h3>${renderList(settings.humanApprovals)}</div>
+          <div><h3>允許執行（Guardrail）</h3>${renderList(settings.allowedActions)}</div>
+          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3>${renderList(settings.forbiddenActions)}</div>
+          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3>${renderList(settings.humanApprovals)}</div>
           <div><h3>例外與失敗處理</h3>${renderList(settings.exceptionHandling)}</div>
           <div><h3>完成條件</h3>${renderList(settings.completionCriteria)}</div>
+          <div><h3>驗證循環（Verification Loop）</h3>${renderList(settings.verificationLoop)}</div>
           <div><h3>執行與重試上限</h3>${renderList(settings.executionLimits)}</div>
           <div><h3>最低紀錄要求</h3>${renderList(settings.logging)}</div>
           <div><h3>成效指標</h3>${renderList(settings.successMetrics)}</div>

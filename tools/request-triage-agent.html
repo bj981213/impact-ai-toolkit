@@ -53,7 +53,7 @@
 
 <section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定與治理規格</h2>
+        <h2>執行設定、護欄與驗證循環</h2>
         <p class="settings-intro"><strong>運作模式：</strong>新請求觸發，只產生分類草稿，人工確認後才能指派。</p>
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3><ul><li>指定信箱收到新信</li><li>表單新增回覆</li><li>內容符合工作請求條件</li></ul></div>
@@ -61,11 +61,12 @@
           <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
           <div><h3>必要連接與權限</h3><ul><li>唯讀指定信箱或表單</li><li>唯讀部門分工規則</li><li>核准後才可使用的任務系統寫入權限</li></ul></div>
           <div><h3>狀態流程</h3><ol><li>收到請求</li><li>抽取欄位</li><li>分類與期限檢查</li><li>等待人工指派</li><li>完成或退回</li></ol></div>
-          <div><h3>允許執行</h3><ul><li>摘要請求</li><li>抽取期限</li><li>建議分類與角色</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行</h3><ul><li>自行回信</li><li>自行承諾期限</li><li>讀取私人信箱或未授權附件</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准</h3><ul><li>請求分類</li><li>負責人指派</li><li>任何對外回覆</li></ul></div>
+          <div><h3>允許執行（Guardrail）</h3><ul><li>摘要請求</li><li>抽取期限</li><li>建議分類與角色</li></ul></div>
+          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>自行回信</li><li>自行承諾期限</li><li>讀取私人信箱或未授權附件</li></ul></div>
+          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>請求分類</li><li>負責人指派</li><li>任何對外回覆</li></ul></div>
           <div><h3>例外與失敗處理</h3><ul><li>期限不明時標示待確認</li><li>附件無權限時停止</li><li>涉及個資或金錢時轉人工</li></ul></div>
           <div><h3>完成條件</h3><ul><li>每筆請求保留來源與收到時間</li><li>期限、附件與缺少資訊已分開列出</li><li>結果停在等待人工分類與指派</li></ul></div>
+          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
           <div><h3>執行與重試上限</h3><ul><li>每次只處理一個觸發批次</li><li>同一來源讀取失敗最多重試 1 次</li><li>附件無權限或內容無法判讀時停止</li></ul></div>
           <div><h3>最低紀錄要求</h3><ul><li>來源與收到時間</li><li>抽取結果</li><li>人工修改與指派紀錄</li></ul></div>
           <div><h3>成效指標</h3><ul><li>請求漏列率</li><li>期限判讀正確率</li><li>分類人工修改率</li></ul></div>
@@ -101,14 +102,14 @@
 - 是否避免自行指派或回信
 - 敏感請求是否轉人工
 
-未通過的項目先修正；無法修正時，標出問題位置與所缺資料。
+交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
 
 【Agent 可用工具與權限】
 - 唯讀指定信箱或表單
 - 唯讀部門分工規則
 - 核准後才可使用的任務系統寫入權限
 
-【Agent 執行限制】
+【Agent 護欄（Guardrails）】
 允許執行：
 - 摘要請求
 - 抽取期限
@@ -133,6 +134,11 @@
 - 每筆請求保留來源與收到時間
 - 期限、附件與缺少資訊已分開列出
 - 結果停在等待人工分類與指派
+
+【驗證循環（Verification Loop）】
+- 依完成條件逐項檢查來源、輸出欄位與禁止動作
+- 未通過時只修正可由現有資料修正的項目，最多 1 次
+- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
 
 執行與重試上限：
 - 每次只處理一個觸發批次
@@ -171,7 +177,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.1・內容更新 2026-07-19</p>
+    <p>版本 2.2・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

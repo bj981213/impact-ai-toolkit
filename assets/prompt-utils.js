@@ -1,5 +1,8 @@
 export function composeDetailedPrompt(item) {
   const checks = bullets(item.reviewChecklist);
+  const postCheckInstruction = item.toolbox === "agent"
+    ? "交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。"
+    : "依上列項目逐項檢查。只修正可由現有資料修正的項目一次，再檢查一次；仍未通過或缺少資料時，停止並標出問題位置與所缺資料。";
   const agentRules = item.toolbox === "agent" && item.agentSettings
     ? `\n\n${composeAgentRules(item.agentSettings)}`
     : "";
@@ -18,14 +21,14 @@ export function composeDetailedPrompt(item) {
 【交付前檢查】
 ${checks}
 
-未通過的項目先修正；無法修正時，標出問題位置與所缺資料。${agentRules}`;
+${postCheckInstruction}${agentRules}`;
 }
 
 function composeAgentRules(settings) {
   return `【Agent 可用工具與權限】
 ${bullets(settings.requiredConnections)}
 
-【Agent 執行限制】
+【Agent 護欄（Guardrails）】
 允許執行：
 ${bullets(settings.allowedActions)}
 
@@ -40,6 +43,9 @@ ${bullets(settings.exceptionHandling)}
 
 完成條件：
 ${bullets(settings.completionCriteria)}
+
+【驗證循環（Verification Loop）】
+${bullets(settings.verificationLoop)}
 
 執行與重試上限：
 ${bullets(settings.executionLimits)}`;

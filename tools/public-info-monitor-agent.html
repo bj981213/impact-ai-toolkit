@@ -53,7 +53,7 @@
 
 <section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定與治理規格</h2>
+        <h2>執行設定、護欄與驗證循環</h2>
         <p class="settings-intro"><strong>運作模式：</strong>固定週期搜尋公開來源，人工查核後發布。</p>
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3><ul><li>每週或每月指定時間</li><li>追蹤條件已核准</li><li>公開來源可存取</li></ul></div>
@@ -61,11 +61,12 @@
           <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
           <div><h3>必要連接與權限</h3><ul><li>公開網頁搜尋與讀取功能</li><li>唯讀核准來源白名單</li><li>核准後才可使用的摘要發布權限</li></ul></div>
           <div><h3>狀態流程</h3><ol><li>等待週期</li><li>搜尋與去重</li><li>來源檢查</li><li>等待人工查核</li><li>發布或退回</li></ol></div>
-          <div><h3>允許執行</h3><ul><li>搜尋公開網頁</li><li>摘要可開啟內容</li><li>保留原始連結與日期</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行</h3><ul><li>編造來源或連結</li><li>繞過登入或付費限制</li><li>蒐集私人社群與個人資料</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准</h3><ul><li>來源可信度</li><li>摘要是否忠於原文</li><li>正式發布</li></ul></div>
+          <div><h3>允許執行（Guardrail）</h3><ul><li>搜尋公開網頁</li><li>摘要可開啟內容</li><li>保留原始連結與日期</li></ul></div>
+          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>編造來源或連結</li><li>繞過登入或付費限制</li><li>蒐集私人社群與個人資料</li></ul></div>
+          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>來源可信度</li><li>摘要是否忠於原文</li><li>正式發布</li></ul></div>
           <div><h3>例外與失敗處理</h3><ul><li>來源無法開啟時排除</li><li>內容衝突時並列差異</li><li>重大敏感事件時轉人工</li></ul></div>
           <div><h3>完成條件</h3><ul><li>每則摘要都有可開啟的原始連結與日期</li><li>重複、衝突與未核實內容已分開標示</li><li>草稿停在等待人工查核</li></ul></div>
+          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
           <div><h3>執行與重試上限</h3><ul><li>每次只處理一個追蹤週期</li><li>同一來源開啟失敗最多重試 1 次</li><li>達到核准來源清單末端後停止，不擴大搜尋範圍</li></ul></div>
           <div><h3>最低紀錄要求</h3><ul><li>查詢條件與時間</li><li>來源與擷取日期</li><li>人工排除與修改紀錄</li></ul></div>
           <div><h3>成效指標</h3><ul><li>有效原始連結比例</li><li>重複來源比例</li><li>摘要人工修正率</li></ul></div>
@@ -102,14 +103,14 @@
 - 摘要是否忠於來源
 - 是否等待人工查核
 
-未通過的項目先修正；無法修正時，標出問題位置與所缺資料。
+交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
 
 【Agent 可用工具與權限】
 - 公開網頁搜尋與讀取功能
 - 唯讀核准來源白名單
 - 核准後才可使用的摘要發布權限
 
-【Agent 執行限制】
+【Agent 護欄（Guardrails）】
 允許執行：
 - 搜尋公開網頁
 - 摘要可開啟內容
@@ -134,6 +135,11 @@
 - 每則摘要都有可開啟的原始連結與日期
 - 重複、衝突與未核實內容已分開標示
 - 草稿停在等待人工查核
+
+【驗證循環（Verification Loop）】
+- 依完成條件逐項檢查來源、輸出欄位與禁止動作
+- 未通過時只修正可由現有資料修正的項目，最多 1 次
+- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
 
 執行與重試上限：
 - 每次只處理一個追蹤週期
@@ -172,7 +178,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.1・內容更新 2026-07-19</p>
+    <p>版本 2.2・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

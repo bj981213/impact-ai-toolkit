@@ -53,7 +53,7 @@
 
 <section class="detail-section full agent-settings-section">
         <p class="eyebrow terracotta">AI Agent 專用</p>
-        <h2>執行設定與治理規格</h2>
+        <h2>執行設定、護欄與驗證循環</h2>
         <p class="settings-intro"><strong>運作模式：</strong>新增資料觸發，先產生草稿，人工核准後才能寫入任務清單。</p>
         <div class="agent-settings-grid">
           <div><h3>觸發條件</h3><ul><li>指定資料夾新增檔案</li><li>檔案標示可處理</li><li>會議資訊完整</li></ul></div>
@@ -61,11 +61,12 @@
           <div><h3>模型選擇與變更</h3><ul><li>使用組織核准且支援所需連接器的模型</li><li>先以三類測試案例建立可接受結果</li><li>更換模型、工具或指令後重新測試</li></ul></div>
           <div><h3>必要連接與權限</h3><ul><li>唯讀會議資料來源</li><li>可寫入會議紀錄草稿的位置</li><li>核准後才可使用的任務系統寫入權限</li></ul></div>
           <div><h3>狀態流程</h3><ol><li>待觸發</li><li>輸入檢查</li><li>產生草稿</li><li>等待主持人核准</li><li>完成或退回</li></ol></div>
-          <div><h3>允許執行</h3><ul><li>讀取核准檔案</li><li>整理決議與待辦</li><li>產生草稿</li></ul></div>
-          <div class="agent-setting-warning"><h3>禁止自動執行</h3><ul><li>讀取私人訊息</li><li>自行指定責任人</li><li>未核准即寄送或建任務</li></ul></div>
-          <div class="agent-setting-warning"><h3>必須人工核准</h3><ul><li>會議決議</li><li>責任人與期限</li><li>寫入正式任務清單</li></ul></div>
+          <div><h3>允許執行（Guardrail）</h3><ul><li>讀取核准檔案</li><li>整理決議與待辦</li><li>產生草稿</li></ul></div>
+          <div class="agent-setting-warning"><h3>禁止自動執行（Guardrail）</h3><ul><li>讀取私人訊息</li><li>自行指定責任人</li><li>未核准即寄送或建任務</li></ul></div>
+          <div class="agent-setting-warning"><h3>必須人工核准（Guardrail）</h3><ul><li>會議決議</li><li>責任人與期限</li><li>寫入正式任務清單</li></ul></div>
           <div><h3>例外與失敗處理</h3><ul><li>檔案未去識別時停止</li><li>會議資訊不足時退回</li><li>內容衝突時列為待確認</li></ul></div>
           <div><h3>完成條件</h3><ul><li>每項決議可回到原文位置</li><li>待辦的負責角色與期限有依據或標示待確認</li><li>草稿已送交主持人且停在等待核准</li></ul></div>
+          <div><h3>驗證循環（Verification Loop）</h3><ul><li>依完成條件逐項檢查來源、輸出欄位與禁止動作</li><li>未通過時只修正可由現有資料修正的項目，最多 1 次</li><li>再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工</li></ul></div>
           <div><h3>執行與重試上限</h3><ul><li>每次只處理一場會議的單一版本</li><li>同一來源讀取失敗最多重試 1 次</li><li>重複取得相同錯誤或達到上限時停止</li></ul></div>
           <div><h3>最低紀錄要求</h3><ul><li>來源檔名與版本</li><li>處理時間與狀態</li><li>核准者與修改紀錄</li></ul></div>
           <div><h3>成效指標</h3><ul><li>決議誤判率</li><li>待辦漏列率</li><li>人工修改率</li></ul></div>
@@ -101,14 +102,14 @@
 - 是否等待人工核准
 - 是否留下處理紀錄
 
-未通過的項目先修正；無法修正時，標出問題位置與所缺資料。
+交付前先依下方驗證循環執行；未通過時不得進入發布或寫入狀態。
 
 【Agent 可用工具與權限】
 - 唯讀會議資料來源
 - 可寫入會議紀錄草稿的位置
 - 核准後才可使用的任務系統寫入權限
 
-【Agent 執行限制】
+【Agent 護欄（Guardrails）】
 允許執行：
 - 讀取核准檔案
 - 整理決議與待辦
@@ -133,6 +134,11 @@
 - 每項決議可回到原文位置
 - 待辦的負責角色與期限有依據或標示待確認
 - 草稿已送交主持人且停在等待核准
+
+【驗證循環（Verification Loop）】
+- 依完成條件逐項檢查來源、輸出欄位與禁止動作
+- 未通過時只修正可由現有資料修正的項目，最多 1 次
+- 再次檢查；仍未通過、缺資料或需高風險動作時停止並轉人工
 
 執行與重試上限：
 - 每次只處理一場會議的單一版本
@@ -171,7 +177,7 @@
   </main>
   <footer class="detail-footer">
     <p><strong>提醒：</strong>AI 可以協助整理、草擬與檢查，但不能代替資料來源、專業判斷或最後核准。</p>
-    <p>版本 2.1・內容更新 2026-07-19</p>
+    <p>版本 2.2・內容更新 2026-07-19</p>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
